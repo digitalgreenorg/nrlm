@@ -1,8 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.models import UserManager
-from django.utils import timezone
-from django.contrib.auth.hashers import make_password
 # Create your models here.
 
 Month = (
@@ -152,7 +149,7 @@ class Target(UserModel):
     Seven_8=models.IntegerField()
     Seven_9=models.DecimalField(max_digits=15, decimal_places=7)
     def __unicode__(self):
-        return self.state+" "+self.project+" "+self.month+" "+str(self.year)
+        return self.state.state_name+" "+self.project.project_name+" "+str(self.year)
     
 class HrUnits(models.Model):
     unit_name=models.CharField(max_length=20, db_column="UNIT_NAME", unique=True)

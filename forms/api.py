@@ -66,6 +66,8 @@ class ProgressResource(BaseResource):
     #hydrate_project = partial(dict_to_foreign_uri, field_name = 'Project', resource_name = 'Project')
 
 class TargetResource(BaseResource):
+    state=fields.ForeignKey(StateResource,'state',full=True)
+    project=fields.ForeignKey(ProjectResource,'project',full=True)
     class Meta:
         queryset=Target.objects.all()
         resource_name = 'Target'

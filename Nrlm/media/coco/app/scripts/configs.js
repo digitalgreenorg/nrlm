@@ -177,7 +177,7 @@ function() {
 	        'sort_field': 'state',
 	};
 	
-	/*var target_configs = {
+	var target_configs = {
 			'entity_name' : 'target',
 			'rest_api_url' : '/api/v1/Target/',
 			'dashboard_display' : {
@@ -205,7 +205,7 @@ function() {
 	        },
 	        'unique_together_fields': ['state', 'project', 'month', 'year'],
 	        'sort_field': 'state',
-	};*/
+	};
 	
 	
         var misc = {
@@ -220,6 +220,7 @@ function() {
         state: state_configs,
         project: project_configs,
         progress: progress_configs,
+        target: target_configs,
         misc:misc
     }
 
