@@ -151,18 +151,18 @@ class Target(UserModel):
     def __unicode__(self):
         return self.state.state_name+" "+self.project.project_name+" "+str(self.year)
     
-class HrUnits(models.Model):
-    unit_name=models.CharField(max_length=20, db_column="UNIT_NAME", unique=True)
+class HrUnit(models.Model):
+    hrunit_name=models.CharField(max_length=20, db_column="UNIT_NAME", unique=True)
     def __unicode__(self):
-        return self.unit_name
+        return self.hrunit_name
 
 class HrDetails(UserModel):
 #    user = models.ForeignKey(User, null = True, db_column="USER")
     state=models.ForeignKey(State)
     project=models.ForeignKey(Project)
+    hrunit=models.ForeignKey(HrUnit)
     month=models.CharField(max_length=3, choices=Month, db_column="Month")
     year=models.CharField(max_length=4)
-    unit=models.ForeignKey(HrUnits)
     Col_2=models.IntegerField()
     Col_3=models.IntegerField()
     Col_4=models.IntegerField()
@@ -172,7 +172,7 @@ class HrDetails(UserModel):
     Col_8=models.IntegerField()
     Col_9=models.IntegerField()
     def __unicode__(self):
-        return self.unit+" "+self.state+" "+self.project+" "+self.month+" "+str(self.year)
+        return self.hrunit.hrunit_name+" "+self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
 
 class Category(models.Model):
     category_name=models.CharField(max_length=20, db_column="CATEGORY_NAME", unique=True)
@@ -194,7 +194,7 @@ class FinancialAssistance(UserModel):
     Col_7=models.IntegerField()
     Col_8=models.DecimalField(max_digits=15, decimal_places=7)
     def __unicode__(self):
-        return self.category+" "+self.state+" "+self.project+" "+self.month+" "+str(self.year)
+        return self.category.category_name+" "+self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
     
 """class UserProfile(models.Model):  
     username = models.CharField( max_length=30, unique=True)

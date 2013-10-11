@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from forms.api import StateResource, ProjectResource, ProgressResource, TargetResource, HrUnitsResource, HrDetailsResource, CategoryResource, FinancialAssistanceResource
+from forms.api import StateResource, ProjectResource, ProgressResource, TargetResource, HrUnitResource, HrDetailsResource, CategoryResource, FinancialAssistanceResource
 from forms.views import login, logout, debug, coco_v2
 from tastypie.api import Api
 
@@ -13,7 +13,7 @@ v1_api.register(ProjectResource())
 v1_api.register(StateResource())
 v1_api.register(ProgressResource())
 v1_api.register(TargetResource())
-v1_api.register(HrUnitsResource())
+v1_api.register(HrUnitResource())
 v1_api.register(HrDetailsResource())
 v1_api.register(CategoryResource())
 v1_api.register(FinancialAssistanceResource())

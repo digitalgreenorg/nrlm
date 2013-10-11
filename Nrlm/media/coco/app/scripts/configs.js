@@ -203,11 +203,81 @@ function() {
 	        		},
 	        	},
 	        },
-	        'unique_together_fields': ['state', 'project', 'month', 'year'],
+	        'unique_together_fields': ['state', 'project', 'year'],
 	        'sort_field': 'state',
 	};
 	
+	var hrunit_configs = {
+			'entity_name' : 'hrunit',
+			'list_table_header_template': 'hrunit_table_template', 
+	        'list_table_row_template': 'hrunit_list_item_template',
+	        'page_header' : 'HR Unit',
+	    	//'add_template_name': 'hrunit_add_edit_template',
+	        //'edit_template_name': 'hrunit_add_edit_template',
+	        'rest_api_url': '/api/v1/HrUnit/',
+	        'dashboard_display': {
+	            listing: true,
+	            add: false
+	        },
+	        'sort_field': 'hrunit_name'
+	};
 	
+	var hrdetails_configs = {
+			'entity_name' : 'hrdetails',
+			'rest_api_url' : '/api/v1/HrDetails/',
+			'dashboard_display' : {
+	    		listing : true,
+	    		add : true
+	    	},
+			'page_header': 'HR Detail',
+			'list_table_header_template': 'hrdetails_table_template',
+			'list_table_row_template': 'hrdetails_list_item_template',
+	    	'add_template_name': 'hrdetails_add_template',
+	        'edit_template_name': 'hrdetails_add_edit_template',
+	        'unique_together_fields': ['state', 'project', 'month', 'year', 'hrunit'],
+	        'sort_field': 'state',
+	        'add':{
+	        	'foreign_entities': {
+		        	'state':{
+		        		'state':{
+		        			'placeholder': 'id_state',
+		        			'name_field': 'state_name'
+		        		},
+		        	},
+		        	'project':{
+		        		'project':{
+		        			'placeholder': 'id_project',
+		        			'name_field': 'project_name'
+		        		},
+		        	},
+		        	'hrunit':{
+		        		'hrunit':{
+		        			'placeholder': 'id_hrunit',
+		        			'name_field': 'hrunit_name'
+		        		},
+		        	},
+		        },
+	        },
+	        'bulk':{
+	        	foreign_fields: {
+	        		"state": {
+                        state: {
+                            'name_field': 'state_name'
+                        }
+                    },
+                    "project": {
+                        project: {
+                            'name_field': 'project_name'
+                        }
+                    },
+                    "hrunit": {
+                        hrunit:{
+                            'name_field': 'hrunit_name'
+                        }
+                    }
+	        	},
+	        },
+	};
         var misc = {
         download_chunk_size: 2000,
         background_download_interval: 5 * 60 * 1000,
@@ -221,6 +291,8 @@ function() {
         project: project_configs,
         progress: progress_configs,
         target: target_configs,
+        hrunit: hrunit_configs,
+        hrdetails: hrdetails_configs,
         misc:misc
     }
 
