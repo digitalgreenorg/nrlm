@@ -1,0 +1,9 @@
+Assumptions for models.py:
+
+1) In class progress and targets, the column name that starts with a number (e.g. Two_1 starts with number 2) maps to the questions asked in the forms. Example column Two_1 refers to question 2.1 i.e. Total number of blocks in which intensive strategy implementation is in progress.
+
+2) In class HrDetails, the column name that starts with word "Col" (e.g Col2_smmu) represents the column number in the form. Example, Col_2 represent column (ii) i.e. No. of units setup that are approved.
+
+3) In class FinancialAssistance, the column name that starts with word "Col" represents a column in form. Ex. Col2_SC represents "Total no. of SHGs (For SCs)"
+
+

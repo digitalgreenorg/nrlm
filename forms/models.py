@@ -151,7 +151,7 @@ class Target(UserModel):
     def __unicode__(self):
         return self.state.state_name+" "+self.project.project_name+" "+str(self.year)
     
-class HrUnit(models.Model):
+"""class HrUnit(models.Model):
     hrunit_name=models.CharField(max_length=20, db_column="UNIT_NAME", unique=True)
     def __unicode__(self):
         return self.hrunit_name
@@ -172,12 +172,49 @@ class HrDetails(UserModel):
     Col_8=models.IntegerField()
     Col_9=models.IntegerField()
     def __unicode__(self):
-        return self.hrunit.hrunit_name+" "+self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
+        return self.hrunit.hrunit_name+" "+self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)"""
 
-class Category(models.Model):
+class HrDetails(UserModel):
+    state=models.ForeignKey(State)
+    project=models.ForeignKey(Project)
+    month=models.CharField(max_length=3, choices=Month, db_column="Month")
+    year=models.CharField(max_length=4)
+    Col2_smmu=models.IntegerField()
+    Col3_smmu=models.IntegerField()
+    Col4_smmu=models.IntegerField()
+    Col5_smmu=models.IntegerField()
+    Col6_smmu=models.IntegerField()
+    Col7_smmu=models.IntegerField()
+    Col8_smmu=models.IntegerField()
+    Col9_smmu=models.IntegerField()
+    Col2_dmmu=models.IntegerField()
+    Col3_dmmu=models.IntegerField()
+    Col4_dmmu=models.IntegerField()
+    Col5_dmmu=models.IntegerField()
+    Col6_dmmu=models.IntegerField()
+    Col7_dmmu=models.IntegerField()
+    Col8_dmmu=models.IntegerField()
+    Col9_dmmu=models.IntegerField()
+    Col2_bmmu=models.IntegerField()
+    Col3_bmmu=models.IntegerField()
+    Col4_bmmu=models.IntegerField()
+    Col5_bmmu=models.IntegerField()
+    Col6_bmmu=models.IntegerField()
+    Col7_bmmu=models.IntegerField()
+    Col8_bmmu=models.IntegerField()
+    Col9_bmmu=models.IntegerField()
+    Col4_bmmup=models.IntegerField()
+    Col5_bmmup=models.IntegerField()
+    Col6_bmmup=models.IntegerField()
+    Col8_bmmup=models.IntegerField()
+    Col9_bmmup=models.IntegerField()
+    def __unicode__(self):
+        return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
+
+"""class Category(models.Model):
     category_name=models.CharField(max_length=20, db_column="CATEGORY_NAME", unique=True)
     def __unicode__(self):
-        return self.category_name
+        return self.category_name"""
     
 class FinancialAssistance(UserModel):
 #    user = models.ForeignKey(User, null = True, db_column="USER")
@@ -185,16 +222,44 @@ class FinancialAssistance(UserModel):
     project=models.ForeignKey(Project)
     month=models.CharField(max_length=3, choices=Month, db_column="Month")
     year=models.CharField(max_length=4)
-    category=models.ForeignKey(Category)
-    Col_2=models.IntegerField()
-    Col_3=models.IntegerField()
-    Col_4=models.IntegerField()
-    Col_5=models.DecimalField(max_digits=15, decimal_places=7)
-    Col_6=models.IntegerField()
-    Col_7=models.IntegerField()
-    Col_8=models.DecimalField(max_digits=15, decimal_places=7)
+    #category=models.ForeignKey(Category)
+    Col2_SC=models.IntegerField()
+    Col3_SC=models.IntegerField()
+    Col4_SC=models.IntegerField()
+    Col5_SC=models.DecimalField(max_digits=15, decimal_places=7)
+    Col6_SC=models.IntegerField()
+    Col7_SC=models.IntegerField()
+    Col8_SC=models.DecimalField(max_digits=15, decimal_places=7)
+    Col2_ST=models.IntegerField()
+    Col3_ST=models.IntegerField()
+    Col4_ST=models.IntegerField()
+    Col5_ST=models.DecimalField(max_digits=15, decimal_places=7)
+    Col6_ST=models.IntegerField()
+    Col7_ST=models.IntegerField()
+    Col8_ST=models.DecimalField(max_digits=15, decimal_places=7)
+    Col2_Min=models.IntegerField()
+    Col3_Min=models.IntegerField()
+    Col4_Min=models.IntegerField()
+    Col5_Min=models.DecimalField(max_digits=15, decimal_places=7)
+    Col6_Min=models.IntegerField()
+    Col7_Min=models.IntegerField()
+    Col8_Min=models.DecimalField(max_digits=15, decimal_places=7)
+    Col2_Oth=models.IntegerField()
+    Col3_Oth=models.IntegerField()
+    Col4_Oth=models.IntegerField()
+    Col5_Oth=models.DecimalField(max_digits=15, decimal_places=7)
+    Col6_Oth=models.IntegerField()
+    Col7_Oth=models.IntegerField()
+    Col8_Oth=models.DecimalField(max_digits=15, decimal_places=7)
+    Col2_PWD=models.IntegerField()
+    Col3_PWD=models.IntegerField()
+    Col4_PWD=models.IntegerField()
+    Col5_PWD=models.DecimalField(max_digits=15, decimal_places=7)
+    Col6_PWD=models.IntegerField()
+    Col7_PWD=models.IntegerField()
+    Col8_PWD=models.DecimalField(max_digits=15, decimal_places=7)
     def __unicode__(self):
-        return self.category.category_name+" "+self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
+        return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
     
 """class UserProfile(models.Model):  
     username = models.CharField( max_length=30, unique=True)

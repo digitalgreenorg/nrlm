@@ -1,8 +1,8 @@
-from functools import partial
+
 from tastypie.authorization import Authorization
 from tastypie import fields
 from tastypie.resources import ModelResource
-from forms.models import State,Project, Progress, Target, HrUnit, HrDetails, Category, FinancialAssistance
+from forms.models import State,Project, Progress, Target,  HrDetails, FinancialAssistance #,HrUnit, Category,
 
 class StateResource(ModelResource):
     class Meta:
@@ -74,30 +74,32 @@ class TargetResource(BaseResource):
         authorization= Authorization()
         always_return_data = True
 
-class HrUnitResource(ModelResource):
+"""class HrUnitResource(ModelResource):
     class Meta:
         queryset=HrUnit.objects.all()
         resource_name = 'HrUnit'
         authorization= Authorization()
-        always_return_data = True
+        always_return_data = True"""
 
 class HrDetailsResource(BaseResource):
     state=fields.ForeignKey(StateResource,'state',full=True)
     project=fields.ForeignKey(ProjectResource,'project',full=True)
-    hrunit=fields.ForeignKey(HrUnitResource,'hrunit',full=True)
+    #hrunit=fields.ForeignKey(HrUnitResource,'hrunit',full=True)
     class Meta:
         queryset=HrDetails.objects.all()
         resource_name = 'HrDetails'
         authorization= Authorization()
         always_return_data = True
         
-class CategoryResource(ModelResource):
+"""class CategoryResource(ModelResource):
     class Meta:
         queryset=Category.objects.all()
         resource_name = 'Category'
-        always_return_data = True
+        always_return_data = True"""
 
 class FinancialAssistanceResource(BaseResource):
+    state=fields.ForeignKey(StateResource,'state',full=True)
+    project=fields.ForeignKey(ProjectResource,'project',full=True)
     class Meta:
         queryset=FinancialAssistance.objects.all()
         resource_name = 'FinancialAssistance'

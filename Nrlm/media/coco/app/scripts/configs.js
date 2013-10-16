@@ -207,7 +207,7 @@ function() {
 	        'sort_field': 'state',
 	};
 	
-	var hrunit_configs = {
+	/*var hrunit_configs = {
 			'entity_name' : 'hrunit',
 			'list_table_header_template': 'hrunit_table_template', 
 	        'list_table_row_template': 'hrunit_list_item_template',
@@ -220,9 +220,9 @@ function() {
 	            add: false
 	        },
 	        'sort_field': 'hrunit_name'
-	};
+	};*/
 	
-	var hrdetails_configs = {
+	/*var hrdetails_configs = {
 			'entity_name' : 'hrdetails',
 			'rest_api_url' : '/api/v1/HrDetails/',
 			'dashboard_display' : {
@@ -252,8 +252,13 @@ function() {
 		        	},
 		        	'hrunit':{
 		        		'hrunit':{
+		        			id_field: "hrunit_id",
 		        			'placeholder': 'id_hrunit',
-		        			'name_field': 'hrunit_name'
+		        			//'name_field': 'hrunit_name'
+		        			'expanded': {
+		        				template: 'hrdetails_inline',
+		        				placeholder: 'bulk'
+		        			}
 		        		},
 		        	},
 		        },
@@ -276,8 +281,70 @@ function() {
                         }
                     }
 	        	},
+	        	borrow_fields: ['state', 'project','month','year']
 	        },
+	};*/
+	
+	var hrdetails_configs = {
+			'entity_name' : 'hrdetails',
+			'rest_api_url' : '/api/v1/HrDetails/',
+			'dashboard_display' : {
+	    		listing : true,
+	    		add : true
+	    	},
+			'page_header': 'HR Details',
+			'list_table_header_template': 'hrdetails_table_template',
+			'list_table_row_template': 'hrdetails_list_item_template',
+	    	'add_template_name': 'hrdetails_add_edit_template',
+	        'edit_template_name': 'hrdetails_add_edit_template',
+	        'foreign_entities': {
+	        	'state':{
+	        		'state':{
+	        			'placeholder': 'id_state',
+	        			'name_field': 'state_name'
+	        		},
+	        	},
+	        	'project':{
+	        		'project':{
+	        			'placeholder': 'id_project',
+	        			'name_field': 'project_name'
+	        		},
+	        	},
+	        },
+	        'unique_together_fields': ['state', 'project', 'month','year'],
+	        'sort_field': 'state',
 	};
+	
+	var financialassistance_configs = {
+			'entity_name' : 'financialassistance',
+			'rest_api_url' : '/api/v1/FinancialAssistance/',
+			'dashboard_display' : {
+	    		listing : true,
+	    		add : true
+	    	},
+			'page_header': 'Fin Asst',
+			'list_table_header_template': 'financialassistance_table_template',
+			'list_table_row_template': 'financialassistance_list_item_template',
+	    	'add_template_name': 'financialassistance_add_edit_template',
+	        'edit_template_name': 'financialassistance_add_edit_template',
+	        'foreign_entities': {
+	        	'state':{
+	        		'state':{
+	        			'placeholder': 'id_state',
+	        			'name_field': 'state_name'
+	        		},
+	        	},
+	        	'project':{
+	        		'project':{
+	        			'placeholder': 'id_project',
+	        			'name_field': 'project_name'
+	        		},
+	        	},
+	        },
+	        'unique_together_fields': ['state', 'project', 'month','year'],
+	        'sort_field': 'state',
+	};
+	
         var misc = {
         download_chunk_size: 2000,
         background_download_interval: 5 * 60 * 1000,
@@ -291,8 +358,9 @@ function() {
         project: project_configs,
         progress: progress_configs,
         target: target_configs,
-        hrunit: hrunit_configs,
+        //hrunit: hrunit_configs,
         hrdetails: hrdetails_configs,
+        financialassistance: financialassistance_configs,
         misc:misc
     }
 
