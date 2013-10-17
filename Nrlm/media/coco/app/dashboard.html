@@ -8,6 +8,7 @@
 	<TITLE>Dashboard</TITLE>
 	<LINK REL="stylesheet"  HREF="/media/coco/app/scripts/libs/datatablejs_media/css/demo_table.css">
 	<LINK REL="stylesheet" HREF="/media/coco/app/scripts/libs/bootstrap/css/bootstrap.css">
+	<!-- LINK REL="stylesheet" HREF="/media/coco/app/scripts/libs/bootstrap/css/bootstrap.min3.css" -->
 	<LINK REL="stylesheet" HREF="/media/coco/app/scripts/libs/chosen/chosen.css">
 	<LINK REL="stylesheet"  HREF="/media/coco/app/scripts/libs/bootstrap/css/bootstrap-responsive.css">
 	<LINK REL="stylesheet"  HREF="/media/coco/app/styles/css/coco.css">
@@ -423,7 +424,7 @@
 		<em><p class="help-block"> All fields in bold are required</p></em>
 		<div class="form-group">  
             <label for="target_year"><b>Month</b></label>
-				<select name="month" class="form-control nrlm-select-width-auto" id="target_year">
+				<select name="month" class="form-control nrlm-select-width-auto" id="month">
 					<option value="">Select One</option>
 					<option value="Jan">Jan</option>
 					<option value="Feb">Feb</option>
@@ -439,10 +440,10 @@
 					<option value="Dec">Dec</option>
 				</select>
 			<span class="help-block" >Select the Month for which progress is being reported</span>
-		</div>
+		
 		<div class="form-group">  
             <label for="target_year"><b>Year</b></label>
-				<select name="year" class="form-control nrlm-select-width-auto" id="target_year">
+				<select name="year" class="form-control nrlm-select-width-auto" id="year">
 					<option value="">Select One</option>
 					<option value="2013">2013</option>
 					<option value="2012">2012</option>
@@ -460,14 +461,15 @@
                     
                  </select>
 			
-			<span class="help-block" >Select the name of the state</span> 		
+			<span class="help-block" >Select the name of the State</span>
+			</div> 		
 		</div>		
 		<div class="form-group">
 			<label><b>Project Name</b></label>
             <select class="form-control nrlm-select-width-auto" id="id_project" name="project">
 				
 			</select>
-			<span class="help-block" >Select the name of the state</span> 		
+			<span class="help-block" >Select the name of the Project</span> 		
 		</div>    
 		<fieldset style="display: block;">
             <legend>
@@ -947,8 +949,9 @@
 		<em><p class="help-block"> All fields in bold are required</p></em>
 		<div class="form-group">  
             <label for="target_year"><b>Year</b></label>
-				<select name="year" class="form-control nrlm-select-width-auto" id="target_year">
+				<select name="year" class="form-control nrlm-select-width-auto" id="year">
 					<option value="">Select One</option>
+					<option value="2014">2014</option>
 					<option value="2013">2013</option>
 					<option value="2012">2012</option>
 					<option value="2011">2011</option>
@@ -965,14 +968,14 @@
                     
                  </select>
 			</div>
-			<span class="help-block" >Select the name of the state</span> 		
+			<span class="help-block" >Select the name of the State</span> 		
 		
 		<div class="form-group">
 			<label><b>Project Name</b></label>
             <select class="form-control nrlm-select-width-auto" id="id_project" name="project">
 				
 			</select>
-			<span class="help-block" >Select the name of the state</span> 		
+			<span class="help-block" >Select the name of the Project</span> 		
 		</div>    
 	<fieldset style="display: block;">
             <legend>
@@ -1492,7 +1495,7 @@
 		<em><p class="help-block"> All fields in bold are required</p></em>
 		<div class="form-group">  
             <label for="target_year"><b>Month</b></label>
-				<select name="month" class="form-control nrlm-select-width-auto" id="target_year">
+				<select name="month" class="form-control nrlm-select-width-auto" id="month">
 					<option value="">Select One</option>
 					<option value="Jan">Jan</option>
 					<option value="Feb">Feb</option>
@@ -1511,7 +1514,7 @@
 		</div>
 		<div class="form-group">  
             <label for="target_year"><b>Year</b></label>
-				<select name="year" class="form-control nrlm-select-width-auto" id="target_year">
+				<select name="year" class="form-control nrlm-select-width-auto" id="year">
 					<option value="">Select One</option>
 					<option value="2013">2013</option>
 					<option value="2012">2012</option>
@@ -1529,14 +1532,14 @@
                     
                  </select>
 			</div>
-			<span class="help-block" >Select the name of the state</span> 		
+			<span class="help-block" >Select the name of the State</span> 		
 		
 		<div class="form-group">
 			<label><b>Project Name</b></label>
             <select class="form-control nrlm-select-width-auto" id="id_project" name="project">
 				
 			</select>
-			<span class="help-block" >Select the name of the state</span> 		
+			<span class="help-block" >Select the name of the Project</span> 		
 		</div>    
 	<fieldset style="display: block;">
             <legend>
@@ -1734,7 +1737,7 @@
 		<em><p class="help-block"> All fields in bold are required</p></em>
 		<div class="form-group">  
             <label for="target_year"><b>Month</b></label>
-				<select name="month" class="form-control nrlm-select-width-auto" id="target_year">
+				<select name="month" class="form-control nrlm-select-width-auto" id="month">
 					<option value="">Select One</option>
 					<option value="Jan">Jan</option>
 					<option value="Feb">Feb</option>
@@ -1753,7 +1756,7 @@
 		</div>
 		<div class="form-group">  
             <label for="target_year"><b>Year</b></label>
-				<select name="year" class="form-control nrlm-select-width-auto" id="target_year">
+				<select name="year" class="form-control nrlm-select-width-auto" id="year">
 					<option value="">Select One</option>
 					<option value="2013">2013</option>
 					<option value="2012">2012</option>
@@ -1771,14 +1774,14 @@
                     
                  </select>
 			</div>
-			<span class="help-block" >Select the name of the state</span> 		
+			<span class="help-block" >Select the name of the State</span> 		
 		
 		<div class="form-group">
 			<label><b>Project Name</b></label>
             <select class="form-control nrlm-select-width-auto" id="id_project" name="project">
 				
 			</select>
-			<span class="help-block" >Select the name of the state</span> 		
+			<span class="help-block" >Select the name of the Project</span> 		
 		</div>    
 	<fieldset style="display: block;">
             <legend>

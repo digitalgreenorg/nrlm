@@ -175,6 +175,409 @@ function() {
 	        },
 	        'unique_together_fields': ['state', 'project', 'month', 'year'],
 	        'sort_field': 'state',
+	        'form_field_validation': {
+	        	ignore: [],
+	        	rules: {
+	        		state: "required",
+	        		project: "required",
+	        		Two_1: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Two_2: {
+	        			required: true,
+	        			digits: true
+	        		},
+		    		Two_3: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_1: {
+		    			required: true,
+		    			digits: true
+		    		},
+	        		Three_2: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_4: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_5: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_6: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_7: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_8: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Four_1: {
+		    			digits: true
+		    		},
+		    		Four_2: {
+		    			digits: true
+		    		},
+		    		Four_3: {
+		    			digits: true
+		    		},
+		    		Four_4: {
+		    			digits: true
+		    		},
+		    		Four_5: {
+		    			digits: true
+		    		},
+		    		Four_6: {
+		    			digits: true
+		    		},
+			        Five_1: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_2: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_5: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_6: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_7: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_8: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_9: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_10: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Five_11: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Five_12: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Five_13: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Five_14: {
+		    			required: true,
+		    			number: true
+		    		},
+	        		Six_1: {
+	        			required: true,
+		    			digits: true
+	        		},
+			        Six_2: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_5: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_6: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_7: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_8: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_9: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_10: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Six_11: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Six_12: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Six_13: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Six_14: {
+		    			required: true,
+		    			number: true
+		    		},
+	        		Seven_1: {
+	        			digits: true
+	        		},
+	        		Seven_2: {
+	        			digits: true
+	        		},
+	        		Seven_3: {
+	        			digits: true
+	        		},
+	        		Seven_4: {
+	        			digits: true
+	        		},
+	        		Seven_5: {
+	        			digits: true
+	        		},
+	        		Seven_6: {
+	        			number: true
+	        		},
+	        		Seven_7: {
+	        			digits: true
+	        		},
+	        		Seven_8: {
+	        			digits: true
+	        		},
+	        		Seven_9: {
+	        			number: true
+	        		},
+	        		month: "required",
+	        		year: {
+	        			required:true,
+	        			datecheck: {month : "month"}
+	        		}
+	        	},
+
+	        messages: {
+	        	month: {
+	        		required: "Please select the month for which data is being reported",
+	        	},
+	        	year: {
+	        		required: "Please select the year for which data is being reported",
+	        		datecheck: "Please enter correct and valid date"
+	        	},
+	        	state: "Please select the state for which data is being reported",
+	        	project: "Please select the project name for which data is being reported",
+	        	Two_1: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Two_2: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Two_3: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_1: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_2: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_4: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_5: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_6: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_7: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_8: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_1: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_2: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_3: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_4: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_5: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_6: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_1: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_2: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_5: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_6: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_7: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_8: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_9: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_10: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Five_11: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Five_12: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Five_13: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Five_14: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_1: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_2: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_5: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_6: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_7: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_8: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_9: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_10: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_11: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_12: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_13: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_14: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Seven_1: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_2: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_3: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_4: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_5: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_6: {
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Seven_7: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_8: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_9: {
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        },
+
+            highlight: function(element, errorClass, validClass) {
+                $(element)
+                    .parent('div')
+                    .parent('div')
+                    .addClass("error");
+
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element)
+                    .parent('div')
+                    .parent('div')
+                    .removeClass("error");
+
+            },
+            errorElement: "span",
+            errorClass: "help-inline"
+	    }
 	};
 	
 	var target_configs = {
@@ -205,6 +608,404 @@ function() {
 	        },
 	        'unique_together_fields': ['state', 'project', 'year'],
 	        'sort_field': 'state',
+	        'form_field_validation': {
+	        	ignore: [],
+	        	rules: {
+	        		state: "required",
+	        		project: "required",
+	        		Two_1: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Two_2: {
+	        			required: true,
+	        			digits: true
+	        		},
+		    		Two_3: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_1: {
+		    			required: true,
+		    			digits: true
+		    		},
+	        		Three_2: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_4: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_5: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_6: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_7: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Three_8: {
+		    			required: true,
+		    			digits: true
+		    		},
+		    		Four_1: {
+		    			digits: true
+		    		},
+		    		Four_2: {
+		    			digits: true
+		    		},
+		    		Four_3: {
+		    			digits: true
+		    		},
+		    		Four_4: {
+		    			digits: true
+		    		},
+		    		Four_5: {
+		    			digits: true
+		    		},
+		    		Four_6: {
+		    			digits: true
+		    		},
+			        Five_1: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_2: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_5: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_6: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_7: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_8: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_9: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Five_10: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Five_11: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Five_12: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Five_13: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Five_14: {
+		    			required: true,
+		    			number: true
+		    		},
+	        		Six_1: {
+	        			required: true,
+		    			digits: true
+	        		},
+			        Six_2: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_5: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_6: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_7: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_8: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_9: {
+		    			required: true,
+		    			digits: true
+		    		},
+			        Six_10: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Six_11: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Six_12: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Six_13: {
+		    			required: true,
+		    			number: true
+		    		},
+			        Six_14: {
+		    			required: true,
+		    			number: true
+		    		},
+	        		Seven_1: {
+	        			digits: true
+	        		},
+	        		Seven_2: {
+	        			digits: true
+	        		},
+	        		Seven_3: {
+	        			digits: true
+	        		},
+	        		Seven_4: {
+	        			digits: true
+	        		},
+	        		Seven_5: {
+	        			digits: true
+	        		},
+	        		Seven_6: {
+	        			number: true
+	        		},
+	        		Seven_7: {
+	        			digits: true
+	        		},
+	        		Seven_8: {
+	        			digits: true
+	        		},
+	        		Seven_9: {
+	        			number: true
+	        		},
+	        		year: {
+	        			required: true,
+	        			validateYear: true
+	        		}
+	        	},
+	        messages: {
+	        	year: {
+	        		required: "Please select the year for which data is being reported",
+	        		validateYear: "Please check year"
+	        	},
+	        	state: "Please select the state for which data is being reported",
+	        	project: "Please select the project name for which data is being reported",
+	        	Two_1: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Two_2: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Two_3: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_1: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_2: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_4: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_5: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_6: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_7: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Three_8: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_1: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_2: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_3: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_4: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_5: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Four_6: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_1: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_2: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_5: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_6: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_7: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_8: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_9: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Five_10: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Five_11: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Five_12: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Five_13: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Five_14: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_1: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_2: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_5: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_6: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_7: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_8: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_9: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+	        	},
+	        	Six_10: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_11: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_12: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_13: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Six_14: {
+	        		required: "This question is required, please enter the details",
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Seven_1: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_2: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_3: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_4: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_5: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_6: {
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        	Seven_7: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_8: {
+	        		digits: "Please enter only digits"
+	        	},
+	        	Seven_9: {
+	        		number: "Please enter a valid amount (Rs. in Lakhs)"
+	        	},
+	        },
+
+            highlight: function(element, errorClass, validClass) {
+                $(element)
+                    .parent('div')
+                    .parent('div')
+                    .addClass("error");
+
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element)
+                    .parent('div')
+                    .parent('div')
+                    .removeClass("error");
+
+            },
+            errorElement: "span",
+            errorClass: "help-inline"
+	    }
 	};
 	
 	/*var hrunit_configs = {
@@ -313,6 +1114,276 @@ function() {
 	        },
 	        'unique_together_fields': ['state', 'project', 'month','year'],
 	        'sort_field': 'state',
+	        'form_field_validation': {
+	        	ignore: [],
+	        	rules: {
+	        		month: "required",
+	        		year: {
+	        			required:true,
+	        			datecheck: {month : "month"}
+	        		},
+	        		state: "required",
+	        		project: "required",
+	        		Col2_smmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_smmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_smmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_smmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col6_smmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_smmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_smmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col9_smmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col2_dmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_dmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_dmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_dmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col6_dmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_dmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_dmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col9_dmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col2_bmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_bmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_bmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_bmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col6_bmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_bmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_bmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col9_bmmu: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_bmmup: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_bmmup: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col6_bmmup: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_bmmup: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col9_bmmup: {
+	        			required: true,
+	        			digits: true
+	        		}
+	        	},
+	        messages: {
+	        	month: "Please select the month for which data is being reported",
+	        	year: {
+	        		required: "Please select the year for which data is being reported",
+	        		datecheck: "Please enter correct and valid date"
+	        	},
+	        	state: "Please select the state for which data is being reported",
+	        	project: "Please select the project name for which data is being reported",
+	        	Col2_smmu: {
+	        		required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"
+        		},
+        		Col3_smmu: {
+        			required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"        		
+	        	},
+        		Col4_smmu: {
+        			required: "This question is required, please enter the details",
+	        		digits: "Please enter only digits"        		
+	        	},
+				Col5_smmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col6_smmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_smmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_smmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col9_smmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col2_dmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_dmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_dmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_dmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col6_dmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_dmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_dmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col9_dmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col2_bmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_bmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_bmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_bmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col6_bmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_bmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_bmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col9_bmmu: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_bmmup: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_bmmup: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col6_bmmup: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_bmmup: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col9_bmmup: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		}
+	        },
+
+            highlight: function(element, errorClass, validClass) {
+                $(element)
+                    .parent('div')
+                    .parent('div')
+                    .addClass("error");
+
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element)
+                    .parent('div')
+                    .parent('div')
+                    .removeClass("error");
+
+            },
+            errorElement: "span",
+            errorClass: "help-inline"
+	    }
 	};
 	
 	var financialassistance_configs = {
@@ -343,14 +1414,371 @@ function() {
 	        },
 	        'unique_together_fields': ['state', 'project', 'month','year'],
 	        'sort_field': 'state',
+	        'form_field_validation': {
+	        	ignore: [],
+	        	rules: {
+	        		month: "required",
+	        		year: {
+	        			required:true,
+	        			datecheck: {month : "month"}
+	        		},
+	        		state: "required",
+	        		project: "required",
+	        		Col2_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_SC: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_SC: {
+	        			required: true,
+	        			number: true
+	        		},
+					Col2_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_ST: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_ST: {
+	        			required: true,
+	        			number: true
+	        		},
+					Col2_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_Min: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_Min: {
+	        			required: true,
+	        			number: true
+	        		},
+					Col2_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_Oth: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_Oth: {
+	        			required: true,
+	        			number: true
+	        		},
+					Col2_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_PWD: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_PWD: {
+	        			required: true,
+	        			number: true
+	        		}
+	        	},
+	        	groups: {
+	        		nrlm_date: "month year"
+	        	},
+	        messages: {
+	        	nrlm_date: "",
+	        	month: "Please select the month for which data is being reported",
+	        	year: {
+	        		required: "Please select the year for which data is being reported",
+	        		datecheck: "Please enter correct and valid date"
+	        	},
+	        	state: "Please select the state for which data is being reported",
+	        	project: "Please select the project name for which data is being reported",
+				Col2_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_SC: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_SC: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+				Col2_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_ST: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_ST: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+				Col2_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_Min: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_Min: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+				Col2_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_Oth: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_Oth: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+				Col2_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_PWD: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_PWD: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		}
+	        },
+
+            highlight: function(element, errorClass, validClass) {
+                $(element)
+                    .parent('div')
+                    .parent('div')
+                    .addClass("error");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element)
+                    .parent('div')
+                    .parent('div')
+                    .removeClass("error");
+            },
+            errorElement: "span",
+            errorClass: "help-inline"
+	    }
 	};
-	
         var misc = {
         download_chunk_size: 2000,
         background_download_interval: 5 * 60 * 1000,
         inc_download_url: "/get_log/",
+        afterFullDownload: function(start_time, download_status){
+            return saveTimeTaken();
+            function saveTimeTaken(){
+                var record_endpoint = "/coco/record_full_download_time/"; 
+                return $.post(record_endpoint, {
+                    start_time : start_time,
+                    end_time : new Date().toJSON().replace("Z", "")
+                })    
+            }
+        },
+        onLogin: function(Offline, Auth){
+            getLastDownloadTimestamp()
+                .done(function(timestamp){
+                    askServer(timestamp);
+                });
+            var that = this;    
+            function askServer(timestamp){
+                $.get(that.reset_database_check_url,{
+                    lastdownloadtimestamp: timestamp
+                })
+                    .done(function(resp){
+                        console.log(resp);
+                        if(resp=="1")
+                            Offline.reset_database();
+                    });
+            }   
+            function getLastDownloadTimestamp()
+            {
+                var dfd = new $.Deferred();
+                Offline.fetch_object("meta_data", "key", "last_full_download_start")
+                    .done(function(model){
+                        dfd.resolve(model.get("timestamp"));
+                    })
+                    .fail(function(model, error){
+                    
+                    });
+                return dfd;    
+            } 
+        },
         reset_database_check_url: '/coco/reset_database_check/',
-        
     };
 
     return {

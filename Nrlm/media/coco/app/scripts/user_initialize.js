@@ -22,9 +22,43 @@ define([
 		$.validator.addMethod('dateOrder',
             dateOrder, 'End date should be later than start date'
         );
-        
-        reset_database_check();
+		$.validator.addMethod('datecheck',
+	            datecheck, 'End date should be later than start date'
+	        );
+		$.validator.addMethod('validateYear',
+				validateYear, 'End date should be later than start date'
+	        );
+/*		$.validator.addMethod('CheckDates',function(i,element) 
+				 {
+		      return IsValidDate(element);
+
+		 }, "Please enter a correct date");
+		$.validator.addClassRules({
+		     dateRequired: { required:true, CheckDates:true}
+		 });
+*/        reset_database_check();
     } 
+    
+  /*  function IsValidDate(_element)
+    {
+        // just a hack function to take an element, get the drop down fields within it with a particular class name ending with day /month/ year and perform a basic date time test
+        var $dateFields =  $("#" + _element.id).parent();
+
+        day = 28;
+        month = $dateFields.children(".dateRequired:[name$='month']");
+        year = $dateFields.children(".dateRequired:[name$='year']");
+
+        var $newDate = month.val() + " " + day.val() + " " + year.val();
+        consol.log($newDate)
+        var scratch = new Date($newDate );
+
+        if (scratch.toString() == "NaN" || scratch.toString() == "Invalid Date") 
+        {
+            return false;
+        } else {
+            return true;
+        }
+    } */
      
     function reset_database_check(){
         if(!all_configs.misc.onLogin)
@@ -87,6 +121,37 @@ define([
     	return check;
     }
 
+    function datecheck(value, element, options){
+    	var check = false;
+    	var mon = $('#'+options.month).val();
+    	var year = value;
+    	var mapping = {Jan : 1 , Feb : 2, Mar : 3, Apr : 4, May : 5, Jun : 6, Jul : 7, Aug : 8, Sep : 9, Oct : 10, Nov : 11, Dec : 12};
+    	var month=mapping[mon]-1;
+    	var entry_date=new Date(year,month,1);
+    	var myDate=new Date();
+    	if (myDate>entry_date)
+    	  {
+    	  check=true;
+    	  }
+    	else
+    	  {
+    	  check=false;
+    	  }
+    	return check;
+    }
+ 
+    function validateYear(value){
+    	var check = false;
+    	var fyyear=value;
+    	var now = new Date();
+    	var currentyear= now.getFullYear();
+    	if (currentyear==fyyear-1)
+    		check=true;
+    	else
+    		check=false;
+    	return check;
+    }
+    
 	function dateOrder(value, element, options){
 		var check = false;
 		var start = $('#'+options.video_production_start_date).val();
