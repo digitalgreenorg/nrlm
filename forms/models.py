@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import m2m_changed, pre_delete, post_delete, pre_save, post_save
+import datetime
 # Create your models here.
 
 Month = (
@@ -21,11 +23,15 @@ class State(models.Model):
     state_name=models.CharField(max_length=30, db_column="STATE_NAME", unique=True) #null=True blank=True
     def __unicode__(self):
         return self.state_name
+    def get_state(self):
+        return self.id
     
 class Project(models.Model):
     project_name=models.CharField(max_length=30, db_column="PROJECT_NAME", unique=True)
     def __unicode__(self):
         return self.project_name
+    def get_state(self):
+        return None
 
 class UserModel(models.Model):
     user_created = models.ForeignKey(User, related_name ="%(class)s_created", editable = False, null=True, blank=True)
@@ -35,6 +41,8 @@ class UserModel(models.Model):
   
     class Meta:
         abstract = True
+    def get_state(self):
+        return self.state.id
 
 class Progress(UserModel):
 #    user = models.ForeignKey(User, null = True, db_column="USER")
@@ -93,6 +101,8 @@ class Progress(UserModel):
     Seven_9=models.DecimalField(null=True,blank=True,max_digits=15, decimal_places=7)
     def __unicode__(self):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
+    def get_state(self):
+        return self.state.id
     
 class Target(UserModel):
     #user = models.ForeignKey(User, null = True, db_column="USER")
@@ -150,7 +160,9 @@ class Target(UserModel):
     Seven_9=models.DecimalField(max_digits=15, decimal_places=7)
     def __unicode__(self):
         return self.state.state_name+" "+self.project.project_name+" "+str(self.year)
-    
+    def get_state(self):
+        return self.state.id
+
 """class HrUnit(models.Model):
     hrunit_name=models.CharField(max_length=20, db_column="UNIT_NAME", unique=True)
     def __unicode__(self):
@@ -210,6 +222,8 @@ class HrDetails(UserModel):
     Col9_bmmup=models.IntegerField()
     def __unicode__(self):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
+    def get_state(self):
+        return self.state.id
 
 """class Category(models.Model):
     category_name=models.CharField(max_length=20, db_column="CATEGORY_NAME", unique=True)
@@ -260,7 +274,9 @@ class FinancialAssistance(UserModel):
     Col8_PWD=models.DecimalField(max_digits=15, decimal_places=7)
     def __unicode__(self):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
-    
+    def get_state(self):
+        return self.state.id
+
 """class UserProfile(models.Model):  
     username = models.CharField( max_length=30, unique=True)
     first_name = models.CharField( max_length=30, blank=True)
@@ -281,3 +297,23 @@ class FinancialAssistance(UserModel):
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
 """
+
+class ServerLog(models.Model):
+    timestamp = models.DateTimeField(default=datetime.datetime.utcnow)
+    user = models.ForeignKey(User, null = True)
+    state = models.IntegerField(null = True)
+    action = models.IntegerField()
+    entry_table = models.CharField(max_length=100)
+    model_id = models.IntegerField(null = True)
+    
+class CocoUser(UserModel):
+    user = models.OneToOneField(User)
+    states = models.ManyToManyField(State)
+    
+    def get_state(self):
+        return self.states.all()
+    
+class FullDownloadStats(models.Model):
+    user = models.ForeignKey(User)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()

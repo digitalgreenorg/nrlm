@@ -3,6 +3,8 @@ from django.contrib import auth
 from django.core import urlresolvers
 from django.http import HttpResponse
 from django.shortcuts import render
+from datetime import datetime
+from models import CocoUser, FullDownloadStats
 
 def login(request):
     if request.method == 'POST':
@@ -57,3 +59,23 @@ def debug(request):
  
     res = view.func(request, **view.kwargs)
     return HttpResponse(res._container)
+
+def reset_database_check(request):
+    if not(request.user):
+        return HttpResponse("0")
+    cocouser = CocoUser.objects.get(user = request.user)    
+    if not(cocouser and cocouser.time_modified):
+        return HttpResponse("0")
+    lastdownloadtime = request.GET["lastdownloadtimestamp"]
+    lastdownloadtimestamp = datetime.strptime(lastdownloadtime, '%Y-%m-%dT%H:%M:%S.%f')
+    
+    if lastdownloadtimestamp<=cocouser.time_modified.replace(tzinfo=None):
+        return HttpResponse("1")
+    return HttpResponse("0")   
+
+def record_full_download_time(request):
+    if not(request.user and request.POST["start_time"] and request.POST["end_time"]):
+        return HttpResponse("0")
+    stat = FullDownloadStats(user = request.user, start_time = request.POST["start_time"], end_time = request.POST["end_time"])
+    stat.save()
+    return HttpResponse("1") 

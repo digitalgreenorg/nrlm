@@ -1,7 +1,9 @@
 from django.conf.urls import patterns, include, url
 from forms.api import StateResource, ProjectResource, ProgressResource, TargetResource, HrDetailsResource, FinancialAssistanceResource #,HrUnitResource, CategoryResource,  
-from forms.views import login, logout, debug, coco_v2
+from forms.views import login, logout, debug, coco_v2, reset_database_check, record_full_download_time
 from tastypie.api import Api
+from forms.data_log import send_updated_log
+from django.views.generic.simple import direct_to_template
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -21,8 +23,7 @@ v1_api.register(FinancialAssistanceResource())
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'Nrlm.views.home', name='home'),
-    # url(r'^Nrlm/', include('Nrlm.foo.urls')),
-
+    
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
@@ -31,7 +32,12 @@ urlpatterns = patterns('',
     (r'^api/', include(v1_api.urls)),
     (r'^coco/login/', login),
     (r'^coco/logout/', logout),
+    (r'^coco/reset_database_check/', reset_database_check),
+    (r'^coco/record_full_download_time/', record_full_download_time),
     (r'^forms/debug/', debug),
 #    (r'^get_log/', send_updated_log),
     (r'^forms/$', coco_v2),
+    url(r'^forms/faq/$', direct_to_template, {'template': 'faq.html'}, name="faq"),
+    (r'^get_log/?$', send_updated_log),
+    
 )
