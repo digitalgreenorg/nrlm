@@ -126,7 +126,7 @@ function() {
 	        'rest_api_url': '/api/v1/State/',
 	        'entity_name': 'state',
 	        'dashboard_display': {
-	            listing: true,
+	            listing: false,
 	            add: false
 	        },
 	        'sort_field': 'state_name'
@@ -141,7 +141,7 @@ function() {
 	        'rest_api_url': '/api/v1/Project/',
 	        'entity_name': 'project',
 	        'dashboard_display': {
-	            listing: true,
+	            listing: false,
 	            add: false
 	        },
 	        'sort_field': 'project_name'
@@ -154,7 +154,7 @@ function() {
 	    		listing : true,
 	    		add : true
 	    	},
-			'page_header': 'Progress',
+			'page_header': 'Progres',
 			'list_table_header_template': 'progress_table_template',
 			'list_table_row_template': 'progress_list_item_template',
 	    	'add_template_name': 'progress_add_edit_template',
@@ -1093,7 +1093,7 @@ function() {
 	    		listing : true,
 	    		add : true
 	    	},
-			'page_header': 'HR Details',
+			'page_header': 'HR Detail',
 			'list_table_header_template': 'hrdetails_table_template',
 			'list_table_row_template': 'hrdetails_list_item_template',
 	    	'add_template_name': 'hrdetails_add_edit_template',
