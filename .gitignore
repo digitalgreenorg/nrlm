@@ -33,6 +33,18 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+# /
+*.pyc
+.project
+.pydevproject
+/Nrlm/settings.py
+/sandbox_settings.py
+/gwt/DashboardGwt/war/WEB-INF/*
+/gwt/DashboardGwt/war/dashboardgwt/*
+*.prefs
+.DS_Store
+
+
 /nrlm/settings.py
 .project
 *.pyc
