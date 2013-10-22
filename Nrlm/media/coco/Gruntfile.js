@@ -190,91 +190,92 @@ module.exports = function( grunt ) {
     
     requirejs: {
         compile: {
-            optimize: "none",
-            appDir: "app/",
-            baseUrl: "scripts",
-            // mainConfigFile: "app/scripts/main.js",
-            // out: "../dist",
-            dir: "dist",
-            paths: {
-                    // "jquery": "empty:",
-                    // "underscore": 'empty:',
-                    // 'backbone': 'empty:',
-                    // 'indexeddb-backbone': 'libs/indexeddb-backbonejs-adapter/backbone-indexeddb',
-                    // 'indexeddb-backbone': 'empty:',
-                    // 'datatable':'libs/datatablejs_media/js/jquery.dataTables.min',
-                    // 'form_field_validator': 'empty:',
-                    // 'layoutmanager': 'empty:'
-                    'jquery': 'libs/jquery.min',
-                    'underscore': 'libs/backbone/underscore-min',
-                    'backbone': 'libs/backbone/backbone-min',
-                    'indexeddb-backbone': 'libs/indexeddb-backbonejs-adapter/backbone-indexeddb',
-                    'datatable': 'libs/datatablejs_media/js/jquery.dataTables.min',
-                    'form_field_validator': 'libs/jquery.validate',
-                    'layoutmanager': 'libs/layoutmanager/backbone.layoutmanager',
-                    'syphon':'libs/backbone.syphon',
-                    'bootstrapjs': 'libs/bootstrap/js/bootstrap.min',
-                    'chosen': 'libs/chosen/chosen.jquery.min',
-                    'date_picker': 'libs/bootstrap/js/bootstrap-datepicker',    
-                    'time_picker': 'libs/bootstrap/js/bootstrap-timepicker.min',    
-                    'jquery_cookie':'libs/jquery.cookie'
-                },
-            // name: "main"
-            // out: ""
-            // findNestedDependencies: true,
-            modules: [
-                           //Just specifying a module name means that module will be converted into
-                           //a built file that contains all of its dependencies. If that module or any
-                           //of its dependencies includes i18n bundles, they may not be included in the
-                           //built file unless the locale: section is set above.
-                                           {
-                                               name: "main",
-                                               include: ["router"]
-                           //For build profiles that contain more than one modules entry,
-                           //allow overrides for the properties that set for the whole build,
-                           //for example a different set of pragmas for this module.
-                           //The override's value is an object that can
-                           //contain any of the other build options in this file.
-                           // override: {
-                           //                            pragmas: {
-                           //                                fooExclude: true
-                           //                            }
-                           //                        }
-                                           
-                                              }
-                     ]
-            //                    // {
-                   //                        name: "foo/bar/bop",
-                   // 
-                   //                        //For build profiles that contain more than one modules entry,
-                   //                        //allow overrides for the properties that set for the whole build,
-                   //                        //for example a different set of pragmas for this module.
-                   //                        //The override's value is an object that can
-                   //                        //contain any of the other build options in this file.
-                   //                        override: {
-                   //                            pragmas: {
-                   //                                fooExclude: true
-                   //                            }
-                   //                        }
-                   //                    },
-                   //                    {
-                   //                        name: "foo/bar/bop",
-                   // 
-                   //                        //For build profiles that contain more than one modules entry,
-                   //                        //allow overrides for the properties that set for the whole build,
-                   //                        //for example a different set of pragmas for this module.
-                   //                        //The override's value is an object that can
-                   //                        //contain any of the other build options in this file.
-                   //                        override: {
-                   //                            pragmas: {
-                   //                                fooExclude: true
-                   //                            }
-                   //                        }
-                   //                    },
-                   
-        }
+        	options: {
+	            optimize: "none",
+	            appDir: "app/",
+	            baseUrl: "scripts",
+	            // mainConfigFile: "app/scripts/main.js",
+	            // out: "../dist",
+	            dir: "dist",
+	            paths: {
+	                    // "jquery": "empty:",
+	                    // "underscore": 'empty:',
+	                    // 'backbone': 'empty:',
+	                    // 'indexeddb-backbone': 'libs/indexeddb-backbonejs-adapter/backbone-indexeddb',
+	                    // 'indexeddb-backbone': 'empty:',
+	                    // 'datatable':'libs/datatablejs_media/js/jquery.dataTables.min',
+	                    // 'form_field_validator': 'empty:',
+	                    // 'layoutmanager': 'empty:'
+	                    'jquery': 'libs/jquery.min',
+	                    'underscore': 'libs/backbone/underscore-min',
+	                    'backbone': 'libs/backbone/backbone-min',
+	                    'indexeddb-backbone': 'libs/indexeddb-backbonejs-adapter/backbone-indexeddb',
+	                    'datatable': 'libs/datatablejs_media/js/jquery.dataTables.min',
+	                    'form_field_validator': 'libs/jquery.validate',
+	                    'layoutmanager': 'libs/layoutmanager/backbone.layoutmanager',
+	                    'syphon':'libs/backbone.syphon',
+	                    'bootstrapjs': 'libs/bootstrap/js/bootstrap.min',
+	                    'chosen': 'libs/chosen/chosen.jquery.min',
+	                    'date_picker': 'libs/bootstrap/js/bootstrap-datepicker',    
+	                    'time_picker': 'libs/bootstrap/js/bootstrap-timepicker.min',    
+	                    'jquery_cookie':'libs/jquery.cookie'
+	                },
+	            // name: "main"
+	            // out: ""
+	            // findNestedDependencies: true,
+	            modules: [
+	                           //Just specifying a module name means that module will be converted into
+	                           //a built file that contains all of its dependencies. If that module or any
+	                           //of its dependencies includes i18n bundles, they may not be included in the
+	                           //built file unless the locale: section is set above.
+	                                           {
+	                                               name: "main",
+	                                               include: ["router"]
+	                           //For build profiles that contain more than one modules entry,
+	                           //allow overrides for the properties that set for the whole build,
+	                           //for example a different set of pragmas for this module.
+	                           //The override's value is an object that can
+	                           //contain any of the other build options in this file.
+	                           // override: {
+	                           //                            pragmas: {
+	                           //                                fooExclude: true
+	                           //                            }
+	                           //                        }
+	                                           
+	                                              }
+	                     ]
+	            //                    // {
+	                   //                        name: "foo/bar/bop",
+	                   // 
+	                   //                        //For build profiles that contain more than one modules entry,
+	                   //                        //allow overrides for the properties that set for the whole build,
+	                   //                        //for example a different set of pragmas for this module.
+	                   //                        //The override's value is an object that can
+	                   //                        //contain any of the other build options in this file.
+	                   //                        override: {
+	                   //                            pragmas: {
+	                   //                                fooExclude: true
+	                   //                            }
+	                   //                        }
+	                   //                    },
+	                   //                    {
+	                   //                        name: "foo/bar/bop",
+	                   // 
+	                   //                        //For build profiles that contain more than one modules entry,
+	                   //                        //allow overrides for the properties that set for the whole build,
+	                   //                        //for example a different set of pragmas for this module.
+	                   //                        //The override's value is an object that can
+	                   //                        //contain any of the other build options in this file.
+	                   //                        override: {
+	                   //                            pragmas: {
+	                   //                                fooExclude: true
+	                   //                            }
+	                   //                        }
+	                   //                    },
+	                   
+	        }
       }
-  
+    }
   });
   
   
