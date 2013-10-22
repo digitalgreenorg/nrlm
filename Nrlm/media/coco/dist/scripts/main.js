@@ -10881,10 +10881,10 @@ define('user_initialize',[
     	var mon = $('#'+options.month).val();
     	var year = value;
     	var mapping = {Jan : 1 , Feb : 2, Mar : 3, Apr : 4, May : 5, Jun : 6, Jul : 7, Aug : 8, Sep : 9, Oct : 10, Nov : 11, Dec : 12};
-    	var month=mapping[mon]-1;
+    	var month=mapping[mon];
     	var entry_date=new Date(year,month,1);
     	var myDate=new Date();
-    	if (myDate>entry_date)
+    	if (myDate>=entry_date)
     	  {
     	  check=true;
     	  }
