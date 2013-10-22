@@ -309,7 +309,6 @@ class ServerLog(models.Model):
 class CocoUser(UserModel):
     user = models.OneToOneField(User)
     states = models.ManyToManyField(State)
-    
     def get_state(self):
         return self.states.all()
     

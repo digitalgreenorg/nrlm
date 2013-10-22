@@ -1760,7 +1760,6 @@ function() {
                     lastdownloadtimestamp: timestamp
                 })
                     .done(function(resp){
-                        console.log(resp);
                         if(resp=="1")
                             Offline.reset_database();
                     });
