@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import m2m_changed, pre_delete, post_delete, pre_save, post_save
 import datetime
+from data_log import delete_log, save_log
 # Create your models here.
 
 Month = (
@@ -25,6 +26,8 @@ class State(models.Model):
         return self.state_name
     def get_state(self):
         return self.id
+post_save.connect(save_log, sender = State)
+pre_delete.connect(delete_log, sender = State)
     
 class Project(models.Model):
     project_name=models.CharField(max_length=30, db_column="PROJECT_NAME", unique=True)
@@ -32,6 +35,8 @@ class Project(models.Model):
         return self.project_name
     def get_state(self):
         return None
+post_save.connect(save_log, sender = Project)
+pre_delete.connect(delete_log, sender = Project)
 
 class UserModel(models.Model):
     user_created = models.ForeignKey(User, related_name ="%(class)s_created", editable = False, null=True, blank=True)
@@ -103,6 +108,8 @@ class Progress(UserModel):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
     def get_state(self):
         return self.state.id
+post_save.connect(save_log, sender = Progress)
+pre_delete.connect(delete_log, sender = Progress)
     
 class Target(UserModel):
     #user = models.ForeignKey(User, null = True, db_column="USER")
@@ -162,6 +169,8 @@ class Target(UserModel):
         return self.state.state_name+" "+self.project.project_name+" "+str(self.year)
     def get_state(self):
         return self.state.id
+post_save.connect(save_log, sender = Target)
+pre_delete.connect(delete_log, sender = Target)
 
 """class HrUnit(models.Model):
     hrunit_name=models.CharField(max_length=20, db_column="UNIT_NAME", unique=True)
@@ -224,6 +233,8 @@ class HrDetails(UserModel):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
     def get_state(self):
         return self.state.id
+post_save.connect(save_log, sender = HrDetails)
+pre_delete.connect(delete_log, sender = HrDetails)
 
 """class Category(models.Model):
     category_name=models.CharField(max_length=20, db_column="CATEGORY_NAME", unique=True)
@@ -276,6 +287,8 @@ class FinancialAssistance(UserModel):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
     def get_state(self):
         return self.state.id
+post_save.connect(save_log, sender = FinancialAssistance)
+pre_delete.connect(delete_log, sender = FinancialAssistance)
 
 """class UserProfile(models.Model):  
     username = models.CharField( max_length=30, unique=True)

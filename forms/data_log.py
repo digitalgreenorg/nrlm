@@ -4,7 +4,6 @@ from django.db.models import get_model
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
 from models import User
-from models import ServerLog
 
 class TimestampException(Exception):
     pass
@@ -18,7 +17,9 @@ def save_log(sender, **kwargs ):
     action  = kwargs["created"]
     sender = sender.__name__    # get the name of the table which sent the request
     model_dict = model_to_dict(instance)
+    print "1 why here"
     previous_time_stamp = get_latest_timestamp()
+    print "2 yo here"
     try:
         user = User.objects.get(id = instance.user_modified_id) if instance.user_modified_id else User.objects.get(id = instance.user_created_id)
     except Exception, ex:
@@ -32,7 +33,7 @@ def save_log(sender, **kwargs ):
                     model_id = instance.id)
     log.save()
     ###Raise an exception if timestamp of latest entry is less than the previously saved data timestamp
-    if previous_time_stamp > log.timestamp:
+    if previous_time_stamp.replace(tzinfo=None) > log.timestamp:
         raise TimestampException('timestamp error: Latest entry data time created is less than previous data timecreated')
 #    
 def delete_log(sender, **kwargs ):
@@ -69,5 +70,11 @@ def send_updated_log(request):
     return HttpResponse("0")
 
 def get_latest_timestamp():
-    timestamp = ServerLog.objects.latest('id')
-    return timestamp.timestamp
+    from models import ServerLog
+    try:
+        timestamp = ServerLog.objects.latest('id')
+        print "there"
+        return timestamp.timestamp
+    except ServerLog.DoesNotExist:
+        print "here"
+        return datetime.utcnow()
