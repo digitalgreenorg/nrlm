@@ -2,7 +2,7 @@
 from tastypie.authorization import Authorization
 from tastypie import fields
 from tastypie.resources import ModelResource
-from forms.models import State,Project, Progress, Target,  HrDetails, FinancialAssistance #,HrUnit, Category,
+from forms.models import State,Project, Progress, Target,  HrDetails, FinancialAssistance, ProgressTill13 #,HrUnit, Category,
 
 class StateResource(ModelResource):
     class Meta:
@@ -64,6 +64,15 @@ class ProgressResource(BaseResource):
         always_return_data = True
     #hydrate_state = partial(dict_to_foreign_uri, field_name = 'State', resource_name='State')
     #hydrate_project = partial(dict_to_foreign_uri, field_name = 'Project', resource_name = 'Project')
+
+class ProgressTill13Resource(BaseResource):
+    state=fields.ForeignKey(StateResource,'state',full=True)
+    project=fields.ForeignKey(ProjectResource,'project',full=True)
+    class Meta:
+        queryset=ProgressTill13.objects.all()
+        resource_name = 'ProgressTill13'
+        authorization= Authorization()
+        always_return_data = True
 
 class TargetResource(BaseResource):
     state=fields.ForeignKey(StateResource,'state',full=True)

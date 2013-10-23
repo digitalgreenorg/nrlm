@@ -17,7 +17,7 @@
 	<LINK REL="stylesheet"  HREF="/media/coco/app/styles/css/bootstrap-timepicker.css">
 	<LINK REL="stylesheet"  HREF="/media/coco/app/styles/css/nrlm.css">
     
-    <SCRIPT DATA-MAIN="/media/coco/dist/scripts/main" SRC="/media/coco/app/scripts/libs/require.js"></SCRIPT>
+    <SCRIPT DATA-MAIN="/media/coco/app/scripts/main" SRC="/media/coco/app/scripts/libs/require.js"></SCRIPT>
 	
 	
 	<META NAME="robots" CONTENT="NONE,NOARCHIVE">
@@ -454,11 +454,9 @@
 				<select name="year" class="" id="year">
 					<option value="">------------</option>
 					<option value="2013">2013</option>
-					<option value="2012">2012</option>
-					<option value="2011">2011</option>
-					<option value="2010">2010</option>
-					<option value="2009">2009</option>
-					<option value="2008">2008</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
 				</select>
 			</div>
 			<!--span class="help-block" >Select the Year for which progress is being reported</span-->
@@ -968,7 +966,9 @@
 			<div class="controls">
 				<select name="year" class="" id="year">
 					<option value="">------------</option>
-					<option value="2014">2014</option>
+					<option value="2014">FY 2013-14</option>
+					<option value="2015">FY 2014-15</option>
+					<option value="2016">FY 2015-16</option>
 				</select>
 			</div>
 			<!--span class="help-block" >Select the Year for which target is being reported</span-->
@@ -1438,6 +1438,530 @@
 </SCRIPT>
 <!--//////////////////////////////////////////////////// Target TEMPLATES END ///////////////////////////////////////////////-->
 
+<!--//////////////////////////////////////////////////// ProgressTill13 TEMPLATES Start ///////////////////////////////////////////////-->
+<SCRIPT TYPE="text/template" ID="progresstill13_list_item_template">
+<tr>
+    <%if(typeof(online_id)!="undefined"){%>
+        <td><%= online_id %></td>
+    <%}else{%>    
+        <td>Not uploaded</td>
+    <%}%>        
+    <td><%= state.state_name %></td>
+    <td><%= project.project_name %></td>
+	<td><%= month %></td>
+    <td><%= year %></td>
+    <td>
+	<a href="#progresstill13/edit/<%= id %>" class="edit" title="Edit this entry"><i class="icon-pencil"></i></a>
+    </td>
+</tr>
+</SCRIPT>
+
+<SCRIPT TYPE="text/template" ID="progresstill13_table_template">
+       <tr>
+       <th>Id</th>
+	   <th>State</th>
+	   <th>Project</th>
+	   <th>Till Month</th>
+       <th>Year</th>
+       <th></th>
+	   </tr>
+</SCRIPT>
+
+<SCRIPT TYPE="text/template" ID="progresstill13_add_edit_template">
+	<fieldset>
+        <legend>Current Progress</legend>
+		<p class="bold-helptext"></p>
+        <div class="control-group">
+			<label class="control-label nrlm-bold">
+				Till Month
+			</label>
+			<div class="controls">
+         		<select name="month" class="" id="month">
+					<option value="">------------</option>
+					<option value="Mar">Till March 2013</option>
+					<option value="Sep">April - September 2013</option>
+				</select>
+         	</div>
+			<!--span class="help-block" >Select the Month for which progress is being reported</span-->
+		</div>
+		<div class="control-group">
+			<label class="control-label nrlm-bold">
+				Till Year
+			</label>
+			<div class="controls">
+				<select name="year" class="" id="year">
+					<option value="2013">2013</option>
+				</select>
+			</div>
+			<!--span class="help-block" >Select the Year for which progress is being reported</span-->
+		</div>
+		<div class="control-group">
+			<label class="control-label nrlm-bold">
+				State
+			</label>
+			<div class="controls">
+				<select id = "id_state" name="state" class="chzn-select">
+                </select>
+			</div>
+			<!--span class="help-block" >Select the name of the State</span-->
+		</div>
+		<div class="control-group">
+			<label class="control-label nrlm-bold">
+				Project Name
+			</label>
+			<div class="controls">
+				<select id = "id_project" name="project" class="chzn-select">
+                </select>
+			</div>
+			<!--span class="help-block" >Select the name of the Project</span-->
+		</div>				
+	</fieldset>
+	<fieldset>
+        <legend>
+			<div class="row control-group">
+				<div class="span6">
+					<h4 class="nrlm-color-green">Progress of Implementations in Intensive blocks (Planned/Targeted vs Covered)</h4>
+				</div>
+			</div>
+		</legend>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of Blocks in which intensive strategy implementation is in progress</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Two_1">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of Gram Panchayats in which intensive strategy implementation is in progress</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Two_2">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of villages in which intensive strategy implementation is in progress</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Two_3">
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>
+			<div class="row control-group">
+				<div class="span6">
+					<h4 class="nrlm-color-green">Promotion of New SHGs, Revival of Dormant/Defunct SHGs and Strengthening of SHGs through training</h4>
+				</div>
+			</div></legend>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of new SHGs promoted with NRLM target households</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Three_1">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of new Pre-NRLM SHGs brought into the NRLM fold after revival/training and strengthening</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Three_2">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of new SHGs that are provided with basic SHG training at community level</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Three_4">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of new SHGs in which standard bookkeeping practices is introduced</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Three_5">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of new SHGs that are following Pancha Sutras</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Three_6">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of new SHGs bookkeepers identified and positioned after initial training</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Three_7">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of new internal CRPs identified and trained in the intensive blocks</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Three_8">
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>
+			<div class="row control-group">
+				<div class="span6">
+					<h4 class="nrlm-color-green">Progress of participatory Identification of  the poor (PIP) (Report only if PIP is undertaken)</h4>
+				</div>
+			</div></legend>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of Villages in which PIP process has been completed during the reporting month</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Four_1">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of GPs in which PIP process has been completed during the reporting month</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Four_2">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of Poorest of the Poor (POP)  households identified</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Four_3">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of Poor households identified</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Four_4">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of Non-Poor households identified</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Four_5">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of households having persons with disability member</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Four_6">
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>
+			<div class="row control-group">
+				<div class="span6">
+					<h4 class="nrlm-color-green">Revolving Fund (RF) support in Intensive Blocks (all status under NRLM)</h4>
+				</div>
+			</div></legend>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of SHGs which are more than 3 month old</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_1">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of 3 month old SHGs having bank accounts</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_2">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of predominantly SC-SHGs (SC≥50%) provided RF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_5">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of predominantly ST-SHGs (ST≥50%) provided RF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_6">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of predominantly Minority-SHGs (Minority≥50%) provided RF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_7">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of Other-SHGs (with SC/ST<50%) provided RF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_8">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of predominantly PWD-SHGs (PWD≥50%) provided RF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_9">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of RF provided to predominantly SC-SHGs (SC≥50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_10">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of RF provided to predominantly ST-SHGs (ST≥50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_11">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of RF provided to predominantly Minority-SHGs (Minority≥50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_12">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of RF provided to Other-SHGs (SC/ST<50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_13">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of RF provided to predominantly PWD-SHGs (PWD≥50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Five_14">
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>
+			<div class="row control-group">
+				<div class="span6">
+					<h4 class="nrlm-color-green">CIF/VRF support in intensive Blocks (all status under NRLM)</h4>
+				</div>
+			</div></legend>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of 6 month old SHGs in intensive blocks</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_1">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of SHGs which have prepared Micro Investment Plan (MIP)/Micro Credit Plan (MCP)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_2">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of predominantly SC-SHG (SC≥50%) provided CIF/VRF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_5">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of predominantly ST-SHG (ST≥50%)  provided CIF/VRF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_6">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of predominantly Minority-SHG (Minority≥50%) provided CIF/VRF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_7">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of Other-SHG (with SC/ST<50%)  provided CIF/VRF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_8">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of predominantly PWD-SHG (PWD≥50%) provided CIF/VRF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_9">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of  CIF/VRF provided to predominantly SC-SHG (SC≥50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_10">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of  CIF/VRF provided to predominantly ST-SHG (ST≥50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_11">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of  CIF/VRF provided to predominantly Minority-SHG (Minority≥50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_12">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of  CIF/VRF provided to Other-SHG (SC/ST<50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_13">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of  CIF/VRF provided to predominantly PWD-SHG (PWD≥50%) (Rs. in lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Six_14">
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>
+			<div class="row control-group">
+				<div class="span6">
+					<h4 class="nrlm-color-green">Promotion and Functioning of Village Organizations(Vos)/CLFs  in Intensive Blocks (Fill-in Only if Applicable)</h4>
+				</div>
+			</div></legend>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of new VOs formed</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Seven_1">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of SHGs holding membership in the VOs</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Seven_2">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of VOs provided training on basic VO management</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Seven_3">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of VOs having trained Bookkeeper</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Seven_4">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>New number of VOs provided VRF (CIF)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Seven_5">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of VRF(CIF) provided to VOs (in Rs.Lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Seven_6">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of new CLFs formed</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Seven_7">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Number of CLFs provided CIF</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Seven_8">
+				</div>
+			</div>
+			<div class="row control-group">
+				<div class="span6">
+					<label>Amount of CIF provided to CLFs (in Rs.Lakhs)</label>
+				</div>
+				<div class="span2">
+					<input type="text" placeholder="Enter Progress" name="Seven_9">
+				</div>
+			</div>
+		</fieldset>
+	
+</SCRIPT>
+<!--//////////////////////////////////////////////////// PROGRESStill13 TEMPLATES END ///////////////////////////////////////////////-->
+
+
 <!--/////////////////////////////////////////////////// Project TEMPLATES START ////////////////////////////////////////////-->
 <SCRIPT TYPE="text/template" ID="project_table_template">
        <tr>
@@ -1541,11 +2065,9 @@
 				<select name="year" class="" id="year">
 					<option value="">------------</option>
 					<option value="2013">2013</option>
-					<option value="2012">2012</option>
-					<option value="2011">2011</option>
-					<option value="2010">2010</option>
-					<option value="2009">2009</option>
-					<option value="2008">2008</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
 				</select>
 			</div>
 			<!--span class="help-block" >Select the Year for which data is being reported</span-->
@@ -1603,9 +2125,9 @@
 				<div class="span1">
 					<input class="span1" name="Col2_bmmu" type="text" placeholder="BMMU">
 				</div>
-				<!--<div class="span2">
+				<div class="span2">
 					<input class="span2" name="Col2_bmmup" type="text" placeholder="BMMU (Partnership)">
-				</div-->
+				</div>
 			</div>
 			
 			<div class="row control-group">
@@ -1621,9 +2143,9 @@
 				<div class="span1">
 					<input class="span1" name="Col3_bmmu" type="text" placeholder="BMMU">
 				</div>
-				<!--<div class="span2">
+				<div class="span2">
 					<input class="span2" name="Col3_bmmup" type="text" placeholder="BMMU (Partnership)">
-				</div-->
+				</div>
 			</div>
 			<div class="row control-group">
 				<div class="span5">
@@ -1689,9 +2211,9 @@
 				<div class="span1">
 					<input class="span1" name="Col7_bmmu" type="text" placeholder="BMMU">
 				</div>
-				<!--<div class="span2">
+				<div class="span2">
 					<input class="span2" name="Col7_bmmup" type="text" placeholder="BMMU (Partnership)">
-				</div-->
+				</div>
 			</div>
 			<div class="row control-group">
 				<div class="span5">
@@ -1830,7 +2352,7 @@
             <legend>
 			<div class="row control-group">
 				<div class="span3">
-					<h4 class="nrlm-color-green">Financial Aiistance to SHGs in Intensive Blocks</h4>
+					<h4 class="nrlm-color-green">Financial Assistance to SHGs in Intensive Blocks(for FY 2013-14)</h4>
 				</div>
 				<div class="span1">
 					<h4 class="nrlm-color-green">SC-SHGs</h4>
@@ -1891,7 +2413,7 @@
 			
 			<div class="row control-group">
 				<div class="span3">
-					<label>No of SHG that were given Bank Loan</label>
+					<label>No of SHGs Accessed with Bank Credit</label>
 				</div>
 				<div class="span1">
 					<input class="span1" name="Col4_SC" type="text" placeholder="SC-SHG">
@@ -1911,7 +2433,7 @@
 			</div>
 			<div class="row control-group">
 				<div class="span3">
-					<label>Amount of Loan Given(Rs. In Lakh)</label>
+					<label>Amount of Loan Accessed(Rs. In Lakh)</label>
 				</div>
 				<div class="span1">
 					<input class="span1" name="Col5_SC" type="text" placeholder="SC-SHG">

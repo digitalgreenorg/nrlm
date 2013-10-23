@@ -172,6 +172,67 @@ class Target(UserModel):
 post_save.connect(save_log, sender = Target)
 pre_delete.connect(delete_log, sender = Target)
 
+class ProgressTill13(UserModel):
+    state=models.ForeignKey(State)
+    project=models.ForeignKey(Project)
+    month=models.CharField(max_length=3, choices=Month, db_column="Month")
+    year=models.CharField(max_length=4)
+    Two_1=models.IntegerField()
+    Two_2=models.IntegerField()
+    Two_3=models.IntegerField()
+    Three_1=models.IntegerField()
+    Three_2=models.IntegerField()
+    Three_4=models.IntegerField()
+    Three_5=models.IntegerField()
+    Three_6=models.IntegerField()
+    Three_7=models.IntegerField()
+    Three_8=models.IntegerField()
+    Four_1=models.IntegerField(null=True,blank=True)
+    Four_2=models.IntegerField(null=True,blank=True)
+    Four_3=models.IntegerField(null=True,blank=True)
+    Four_4=models.IntegerField(null=True,blank=True)
+    Four_5=models.IntegerField(null=True,blank=True)
+    Four_6=models.IntegerField(null=True,blank=True)
+    Five_1=models.IntegerField()
+    Five_2=models.IntegerField()
+    Five_5=models.IntegerField()
+    Five_6=models.IntegerField()
+    Five_7=models.IntegerField()
+    Five_8=models.IntegerField()
+    Five_9=models.IntegerField()
+    Five_10=models.DecimalField(max_digits=15, decimal_places=7)
+    Five_11=models.DecimalField(max_digits=15, decimal_places=7)
+    Five_12=models.DecimalField(max_digits=15, decimal_places=7)
+    Five_13=models.DecimalField(max_digits=15, decimal_places=7)
+    Five_14=models.DecimalField(max_digits=15, decimal_places=7)
+    Six_1=models.IntegerField()
+    Six_2=models.IntegerField()
+    Six_5=models.IntegerField()
+    Six_6=models.IntegerField()
+    Six_7=models.IntegerField()
+    Six_8=models.IntegerField()
+    Six_9=models.IntegerField()
+    Six_10=models.DecimalField(max_digits=15, decimal_places=7)
+    Six_11=models.DecimalField(max_digits=15, decimal_places=7)
+    Six_12=models.DecimalField(max_digits=15, decimal_places=7)
+    Six_13=models.DecimalField(max_digits=15, decimal_places=7)
+    Six_14=models.DecimalField(max_digits=15, decimal_places=7)
+    Seven_1=models.IntegerField(null=True,blank=True)
+    Seven_2=models.IntegerField(null=True,blank=True)
+    Seven_3=models.IntegerField(null=True,blank=True)
+    Seven_4=models.IntegerField(null=True,blank=True)
+    Seven_5=models.IntegerField(null=True,blank=True)
+    Seven_6=models.DecimalField(null=True,blank=True,max_digits=15, decimal_places=7)
+    Seven_7=models.IntegerField(null=True,blank=True)
+    Seven_8=models.IntegerField(null=True,blank=True)
+    Seven_9=models.DecimalField(null=True,blank=True,max_digits=15, decimal_places=7)
+    def __unicode__(self):
+        return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
+    def get_state(self):
+        return self.state.id
+post_save.connect(save_log, sender = ProgressTill13)
+pre_delete.connect(delete_log, sender = ProgressTill13)
+
 """class HrUnit(models.Model):
     hrunit_name=models.CharField(max_length=20, db_column="UNIT_NAME", unique=True)
     def __unicode__(self):
@@ -224,9 +285,12 @@ class HrDetails(UserModel):
     Col7_bmmu=models.IntegerField()
     Col8_bmmu=models.IntegerField()
     Col9_bmmu=models.IntegerField()
+    Col2_bmmup=models.IntegerField()
+    Col3_bmmup=models.IntegerField()
     Col4_bmmup=models.IntegerField()
     Col5_bmmup=models.IntegerField()
     Col6_bmmup=models.IntegerField()
+    Col7_bmmup=models.IntegerField()
     Col8_bmmup=models.IntegerField()
     Col9_bmmup=models.IntegerField()
     def __unicode__(self):
@@ -318,12 +382,16 @@ class ServerLog(models.Model):
     action = models.IntegerField()
     entry_table = models.CharField(max_length=100)
     model_id = models.IntegerField(null = True)
+    """def __unicode__(self):
+        return self.user.username +" "+ self.state.state_name+" "+self.timestamp"""
     
 class CocoUser(UserModel):
     user = models.OneToOneField(User)
     states = models.ManyToManyField(State)
     def get_state(self):
         return self.states.all()
+    def __unicode__(self):
+        return self.user.username
     
 class FullDownloadStats(models.Model):
     user = models.ForeignKey(User)
