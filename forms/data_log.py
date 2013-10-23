@@ -17,9 +17,7 @@ def save_log(sender, **kwargs ):
     action  = kwargs["created"]
     sender = sender.__name__    # get the name of the table which sent the request
     model_dict = model_to_dict(instance)
-    print "1 why here"
     previous_time_stamp = get_latest_timestamp()
-    print "2 yo here"
     try:
         user = User.objects.get(id = instance.user_modified_id) if instance.user_modified_id else User.objects.get(id = instance.user_created_id)
     except Exception, ex:
@@ -73,8 +71,6 @@ def get_latest_timestamp():
     from models import ServerLog
     try:
         timestamp = ServerLog.objects.latest('id')
-        print "there"
         return timestamp.timestamp
     except ServerLog.DoesNotExist:
-        print "here"
         return datetime.utcnow()
