@@ -1,16 +1,37 @@
-
+from tastypie.authentication import SessionAuthentication
 from tastypie.authorization import Authorization
 from tastypie import fields
 from tastypie.resources import ModelResource
-from forms.models import State,Project, Progress, Target,  HrDetails, FinancialAssistance, ProgressTill13 #,HrUnit, Category,
+from forms.models import State,Project, Progress, Target,  HrDetails, FinancialAssistance, ProgressTill13, CocoUser #,HrUnit, Category,
+from tastypie.exceptions import NotFound
 
+class StateLevelAuthorization(Authorization):
+    def __init__(self, field):
+        self.state_field = field
+    
+    def read_list(self, object_list, bundle):
+        states = CocoUser.objects.get(user_id= bundle.request.user.id).get_state()
+        kwargs = {}
+        kwargs[self.state_field] = states
+        return object_list.filter(**kwargs).distinct()
+    
+    def read_detail(self, object_list, bundle):
+        # Is the requested object owned by the user?
+        kwargs = {}
+        kwargs[self.state_field] = CocoUser.objects.get(user_id= bundle.request.user.id).get_state()
+        obj = object_list.filter(**kwargs).distinct()
+        if obj:
+            return True
+        else:
+            raise NotFound( "Not allowed to download" )
+    
 class StateResource(ModelResource):
     class Meta:
         queryset=State.objects.all()
         resource_name = 'State'
         always_return_data = True
-        authorization= Authorization()
-        
+        authorization= StateLevelAuthorization('id__in')
+
 class ProjectResource(ModelResource):
     class Meta:
         queryset=Project.objects.all()
@@ -60,8 +81,9 @@ class ProgressResource(BaseResource):
     class Meta:
         queryset=Progress.objects.all()
         resource_name = 'Progress'
-        authorization= Authorization()
+        authorization= StateLevelAuthorization('state__in')
         always_return_data = True
+        authentication = SessionAuthentication()
     #hydrate_state = partial(dict_to_foreign_uri, field_name = 'State', resource_name='State')
     #hydrate_project = partial(dict_to_foreign_uri, field_name = 'Project', resource_name = 'Project')
 
@@ -71,7 +93,8 @@ class ProgressTill13Resource(BaseResource):
     class Meta:
         queryset=ProgressTill13.objects.all()
         resource_name = 'ProgressTill13'
-        authorization= Authorization()
+        authorization= StateLevelAuthorization('state__in')
+        authentication = SessionAuthentication()
         always_return_data = True
 
 class TargetResource(BaseResource):
@@ -80,7 +103,8 @@ class TargetResource(BaseResource):
     class Meta:
         queryset=Target.objects.all()
         resource_name = 'Target'
-        authorization= Authorization()
+        authorization= StateLevelAuthorization('state__in')
+        authentication = SessionAuthentication()
         always_return_data = True
 
 """class HrUnitResource(ModelResource):
@@ -97,7 +121,8 @@ class HrDetailsResource(BaseResource):
     class Meta:
         queryset=HrDetails.objects.all()
         resource_name = 'HrDetails'
-        authorization= Authorization()
+        authorization= StateLevelAuthorization('state__in')
+        authentication = SessionAuthentication()
         always_return_data = True
         
 """class CategoryResource(ModelResource):
@@ -112,5 +137,6 @@ class FinancialAssistanceResource(BaseResource):
     class Meta:
         queryset=FinancialAssistance.objects.all()
         resource_name = 'FinancialAssistance'
-        authorization= Authorization()
+        authorization= StateLevelAuthorization('state__in')
+        authentication = SessionAuthentication()
         always_return_data = True
