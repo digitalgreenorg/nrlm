@@ -1087,9 +1087,11 @@ function() {
 		    			digits: true
 		    		},
 		    		Four_1: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_2: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_3: {
@@ -1280,9 +1282,11 @@ function() {
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_3: {
