@@ -61,18 +61,18 @@ class BaseResource(ModelResource):
         return self.save(bundle)
 
 def dict_to_foreign_uri(bundle, field_name, resource_name=None):
-    if field_name == 'State':
-        field_name = 'state_id'
-    if field_name == 'Project':
-        field_name = 'project_name'
+    #if field_name == 'State':
+    #    field_name = 'state_id'
+    #if field_name == 'Project':
+    #    field_name = 'project_name'
     field_dict = bundle.data.get(field_name)
-    print field_dict, field_name
+    #print field_dict, field_name
     if field_dict:
         bundle.data[field_name] = "/api/v1/%s/%s/"%(resource_name if resource_name else field_name, 
                                                     str(field_dict))
     else:
         bundle.data[field_name] = None
-    print bundle.data[field_name]
+    #print bundle.data[field_name]
     return bundle
 
 class ProgressResource(BaseResource):
