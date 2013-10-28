@@ -221,21 +221,27 @@ function() {
 		    			digits: true
 		    		},
 		    		Four_1: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_2: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_3: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_4: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_5: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_6: {
+		    			required: true,
 		    			digits: true
 		    		},
 			        Five_1: {
@@ -335,30 +341,39 @@ function() {
 		    			number: true
 		    		},
 	        		Seven_1: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_2: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_3: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_4: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_5: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_6: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		Seven_7: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_8: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_9: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		month: "required",
@@ -419,21 +434,27 @@ function() {
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_6: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Five_1: {
@@ -533,30 +554,39 @@ function() {
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_6: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_7: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_8: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_9: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        },
@@ -654,21 +684,27 @@ function() {
 		    			digits: true
 		    		},
 		    		Four_1: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_2: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_3: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_4: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_5: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_6: {
+		    			required: true,
 		    			digits: true
 		    		},
 			        Five_1: {
@@ -768,30 +804,39 @@ function() {
 		    			number: true
 		    		},
 	        		Seven_1: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_2: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_3: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_4: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_5: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_6: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		Seven_7: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_8: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_9: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		month: "required",
@@ -852,21 +897,27 @@ function() {
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_6: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Five_1: {
@@ -966,30 +1017,39 @@ function() {
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_6: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_7: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_8: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_9: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        },
@@ -1095,15 +1155,19 @@ function() {
 		    			digits: true
 		    		},
 		    		Four_3: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_4: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_5: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_6: {
+		    			required: true,
 		    			digits: true
 		    		},
 			        Five_1: {
@@ -1203,30 +1267,39 @@ function() {
 		    			number: true
 		    		},
 	        		Seven_1: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_2: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_3: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_4: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_5: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_6: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		Seven_7: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_8: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_9: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		year: {
@@ -1290,15 +1363,19 @@ function() {
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_6: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Five_1: {
@@ -1398,30 +1475,39 @@ function() {
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_6: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_7: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_8: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_9: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        },
