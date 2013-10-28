@@ -8063,10 +8063,11 @@ define('views/form',[
                 if($f_el.is('select[multiple]'))
                     $f_el.html('');    
                 else
-                    $f_el.html(this.options_inner_template({
+                /*    $f_el.html(this.options_inner_template({
                         id: "",
                         name: "------------"
-                    }));
+                    }));*/
+                	$f_el.html('');
                 $.each(model_array,function(index, f_model){
                     var f_json = f_model; 
                     if(f_model instanceof Backbone.Model)
