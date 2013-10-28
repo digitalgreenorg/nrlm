@@ -221,21 +221,27 @@ function() {
 		    			digits: true
 		    		},
 		    		Four_1: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_2: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_3: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_4: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_5: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_6: {
+		    			required: true,
 		    			digits: true
 		    		},
 			        Five_1: {
@@ -335,30 +341,39 @@ function() {
 		    			number: true
 		    		},
 	        		Seven_1: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_2: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_3: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_4: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_5: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_6: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		Seven_7: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_8: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_9: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		month: "required",
@@ -419,21 +434,27 @@ function() {
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_6: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Five_1: {
@@ -533,30 +554,39 @@ function() {
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_6: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_7: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_8: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_9: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        },
@@ -654,21 +684,27 @@ function() {
 		    			digits: true
 		    		},
 		    		Four_1: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_2: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_3: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_4: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_5: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_6: {
+		    			required: true,
 		    			digits: true
 		    		},
 			        Five_1: {
@@ -768,30 +804,39 @@ function() {
 		    			number: true
 		    		},
 	        		Seven_1: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_2: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_3: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_4: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_5: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_6: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		Seven_7: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_8: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_9: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		month: "required",
@@ -852,21 +897,27 @@ function() {
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_6: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Five_1: {
@@ -966,30 +1017,39 @@ function() {
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_6: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_7: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_8: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_9: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        },
@@ -1095,15 +1155,19 @@ function() {
 		    			digits: true
 		    		},
 		    		Four_3: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_4: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_5: {
+		    			required: true,
 		    			digits: true
 		    		},
 		    		Four_6: {
+		    			required: true,
 		    			digits: true
 		    		},
 			        Five_1: {
@@ -1203,30 +1267,179 @@ function() {
 		    			number: true
 		    		},
 	        		Seven_1: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_2: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_3: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_4: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_5: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_6: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		Seven_7: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_8: {
+	        			required: true,
 	        			digits: true
 	        		},
 	        		Seven_9: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col2_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_SC: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_SC: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_SC: {
+	        			required: true,
+	        			number: true
+	        		},
+					Col2_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_ST: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_ST: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_ST: {
+	        			required: true,
+	        			number: true
+	        		},
+					Col2_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_Min: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_Min: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_Min: {
+	        			required: true,
+	        			number: true
+	        		},
+					Col2_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_Oth: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_Oth: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_Oth: {
+	        			required: true,
+	        			number: true
+	        		},
+					Col2_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col3_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col4_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col5_PWD: {
+	        			required: true,
+	        			number: true
+	        		},
+	        		Col6_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col7_PWD: {
+	        			required: true,
+	        			digits: true
+	        		},
+	        		Col8_PWD: {
+	        			required: true,
 	        			number: true
 	        		},
 	        		year: {
@@ -1290,15 +1503,19 @@ function() {
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Four_6: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Five_1: {
@@ -1398,32 +1615,181 @@ function() {
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_1: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_2: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_3: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_4: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_5: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_6: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
 	        	Seven_7: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_8: {
+	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
 	        	Seven_9: {
+	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
+	        	Col2_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_SC: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_SC: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_SC: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+				Col2_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_ST: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_ST: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_ST: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+				Col2_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_Min: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_Min: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_Min: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+				Col2_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_Oth: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_Oth: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_Oth: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+				Col2_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col3_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col4_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col5_PWD: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
+        		Col6_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col7_PWD: {
+        			required: "This question is required, please enter the details",
+        			digits: "Please enter only digits"
+        		},
+        		Col8_PWD: {
+        			required: "This question is required, please enter the details",
+        			number: "Please enter a valid amount (Rs. in Lakhs)"
+        		},
 	        },
 
             highlight: function(element, errorClass, validClass) {
