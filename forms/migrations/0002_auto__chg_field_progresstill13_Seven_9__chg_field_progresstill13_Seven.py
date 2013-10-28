@@ -1,0 +1,894 @@
+# -*- coding: utf-8 -*-
+import datetime
+from south.db import db
+from south.v2 import SchemaMigration
+from django.db import models
+
+
+class Migration(SchemaMigration):
+
+    def forwards(self, orm):
+
+        # Changing field 'ProgressTill13.Seven_9'
+        db.alter_column('forms_progresstill13', 'Seven_9', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7))
+
+        # Changing field 'ProgressTill13.Seven_8'
+        db.alter_column('forms_progresstill13', 'Seven_8', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Seven_1'
+        db.alter_column('forms_progresstill13', 'Seven_1', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Seven_3'
+        db.alter_column('forms_progresstill13', 'Seven_3', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Seven_2'
+        db.alter_column('forms_progresstill13', 'Seven_2', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Seven_5'
+        db.alter_column('forms_progresstill13', 'Seven_5', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Seven_4'
+        db.alter_column('forms_progresstill13', 'Seven_4', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Seven_7'
+        db.alter_column('forms_progresstill13', 'Seven_7', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Seven_6'
+        db.alter_column('forms_progresstill13', 'Seven_6', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7))
+
+        # Changing field 'ProgressTill13.Four_6'
+        db.alter_column('forms_progresstill13', 'Four_6', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Four_5'
+        db.alter_column('forms_progresstill13', 'Four_5', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Four_4'
+        db.alter_column('forms_progresstill13', 'Four_4', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Four_3'
+        db.alter_column('forms_progresstill13', 'Four_3', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Four_2'
+        db.alter_column('forms_progresstill13', 'Four_2', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'ProgressTill13.Four_1'
+        db.alter_column('forms_progresstill13', 'Four_1', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Seven_9'
+        db.alter_column('forms_progress', 'Seven_9', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7))
+
+        # Changing field 'Progress.Seven_8'
+        db.alter_column('forms_progress', 'Seven_8', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Seven_1'
+        db.alter_column('forms_progress', 'Seven_1', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Seven_3'
+        db.alter_column('forms_progress', 'Seven_3', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Seven_2'
+        db.alter_column('forms_progress', 'Seven_2', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Seven_5'
+        db.alter_column('forms_progress', 'Seven_5', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Seven_4'
+        db.alter_column('forms_progress', 'Seven_4', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Seven_7'
+        db.alter_column('forms_progress', 'Seven_7', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Seven_6'
+        db.alter_column('forms_progress', 'Seven_6', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7))
+
+        # Changing field 'Progress.Four_6'
+        db.alter_column('forms_progress', 'Four_6', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Four_5'
+        db.alter_column('forms_progress', 'Four_5', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Four_4'
+        db.alter_column('forms_progress', 'Four_4', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Four_3'
+        db.alter_column('forms_progress', 'Four_3', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Four_2'
+        db.alter_column('forms_progress', 'Four_2', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Progress.Four_1'
+        db.alter_column('forms_progress', 'Four_1', self.gf('django.db.models.fields.IntegerField')(default=0))
+        # Adding field 'Target.Col2_SC'
+        db.add_column('forms_target', 'Col2_SC',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col3_SC'
+        db.add_column('forms_target', 'Col3_SC',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col4_SC'
+        db.add_column('forms_target', 'Col4_SC',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col5_SC'
+        db.add_column('forms_target', 'Col5_SC',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+        # Adding field 'Target.Col6_SC'
+        db.add_column('forms_target', 'Col6_SC',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col7_SC'
+        db.add_column('forms_target', 'Col7_SC',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col8_SC'
+        db.add_column('forms_target', 'Col8_SC',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+        # Adding field 'Target.Col2_ST'
+        db.add_column('forms_target', 'Col2_ST',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col3_ST'
+        db.add_column('forms_target', 'Col3_ST',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col4_ST'
+        db.add_column('forms_target', 'Col4_ST',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col5_ST'
+        db.add_column('forms_target', 'Col5_ST',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+        # Adding field 'Target.Col6_ST'
+        db.add_column('forms_target', 'Col6_ST',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col7_ST'
+        db.add_column('forms_target', 'Col7_ST',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col8_ST'
+        db.add_column('forms_target', 'Col8_ST',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+        # Adding field 'Target.Col2_Min'
+        db.add_column('forms_target', 'Col2_Min',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col3_Min'
+        db.add_column('forms_target', 'Col3_Min',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col4_Min'
+        db.add_column('forms_target', 'Col4_Min',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col5_Min'
+        db.add_column('forms_target', 'Col5_Min',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+        # Adding field 'Target.Col6_Min'
+        db.add_column('forms_target', 'Col6_Min',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col7_Min'
+        db.add_column('forms_target', 'Col7_Min',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col8_Min'
+        db.add_column('forms_target', 'Col8_Min',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+        # Adding field 'Target.Col2_Oth'
+        db.add_column('forms_target', 'Col2_Oth',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col3_Oth'
+        db.add_column('forms_target', 'Col3_Oth',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col4_Oth'
+        db.add_column('forms_target', 'Col4_Oth',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col5_Oth'
+        db.add_column('forms_target', 'Col5_Oth',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+        # Adding field 'Target.Col6_Oth'
+        db.add_column('forms_target', 'Col6_Oth',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col7_Oth'
+        db.add_column('forms_target', 'Col7_Oth',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col8_Oth'
+        db.add_column('forms_target', 'Col8_Oth',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+        # Adding field 'Target.Col2_PWD'
+        db.add_column('forms_target', 'Col2_PWD',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col3_PWD'
+        db.add_column('forms_target', 'Col3_PWD',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col4_PWD'
+        db.add_column('forms_target', 'Col4_PWD',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col5_PWD'
+        db.add_column('forms_target', 'Col5_PWD',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+        # Adding field 'Target.Col6_PWD'
+        db.add_column('forms_target', 'Col6_PWD',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col7_PWD'
+        db.add_column('forms_target', 'Col7_PWD',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Target.Col8_PWD'
+        db.add_column('forms_target', 'Col8_PWD',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=15, decimal_places=7),
+                      keep_default=False)
+
+
+        # Changing field 'Target.Four_6'
+        db.alter_column('forms_target', 'Four_6', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Target.Four_5'
+        db.alter_column('forms_target', 'Four_5', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Target.Four_4'
+        db.alter_column('forms_target', 'Four_4', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Target.Four_3'
+        db.alter_column('forms_target', 'Four_3', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Target.Four_2'
+        db.alter_column('forms_target', 'Four_2', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+        # Changing field 'Target.Four_1'
+        db.alter_column('forms_target', 'Four_1', self.gf('django.db.models.fields.IntegerField')(default=0))
+
+    def backwards(self, orm):
+
+        # Changing field 'ProgressTill13.Seven_9'
+        db.alter_column('forms_progresstill13', 'Seven_9', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=7))
+
+        # Changing field 'ProgressTill13.Seven_8'
+        db.alter_column('forms_progresstill13', 'Seven_8', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Seven_1'
+        db.alter_column('forms_progresstill13', 'Seven_1', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Seven_3'
+        db.alter_column('forms_progresstill13', 'Seven_3', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Seven_2'
+        db.alter_column('forms_progresstill13', 'Seven_2', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Seven_5'
+        db.alter_column('forms_progresstill13', 'Seven_5', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Seven_4'
+        db.alter_column('forms_progresstill13', 'Seven_4', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Seven_7'
+        db.alter_column('forms_progresstill13', 'Seven_7', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Seven_6'
+        db.alter_column('forms_progresstill13', 'Seven_6', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=7))
+
+        # Changing field 'ProgressTill13.Four_6'
+        db.alter_column('forms_progresstill13', 'Four_6', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Four_5'
+        db.alter_column('forms_progresstill13', 'Four_5', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Four_4'
+        db.alter_column('forms_progresstill13', 'Four_4', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Four_3'
+        db.alter_column('forms_progresstill13', 'Four_3', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Four_2'
+        db.alter_column('forms_progresstill13', 'Four_2', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'ProgressTill13.Four_1'
+        db.alter_column('forms_progresstill13', 'Four_1', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Seven_9'
+        db.alter_column('forms_progress', 'Seven_9', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=7))
+
+        # Changing field 'Progress.Seven_8'
+        db.alter_column('forms_progress', 'Seven_8', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Seven_1'
+        db.alter_column('forms_progress', 'Seven_1', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Seven_3'
+        db.alter_column('forms_progress', 'Seven_3', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Seven_2'
+        db.alter_column('forms_progress', 'Seven_2', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Seven_5'
+        db.alter_column('forms_progress', 'Seven_5', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Seven_4'
+        db.alter_column('forms_progress', 'Seven_4', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Seven_7'
+        db.alter_column('forms_progress', 'Seven_7', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Seven_6'
+        db.alter_column('forms_progress', 'Seven_6', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=15, decimal_places=7))
+
+        # Changing field 'Progress.Four_6'
+        db.alter_column('forms_progress', 'Four_6', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Four_5'
+        db.alter_column('forms_progress', 'Four_5', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Four_4'
+        db.alter_column('forms_progress', 'Four_4', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Four_3'
+        db.alter_column('forms_progress', 'Four_3', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Four_2'
+        db.alter_column('forms_progress', 'Four_2', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Progress.Four_1'
+        db.alter_column('forms_progress', 'Four_1', self.gf('django.db.models.fields.IntegerField')(null=True))
+        # Deleting field 'Target.Col2_SC'
+        db.delete_column('forms_target', 'Col2_SC')
+
+        # Deleting field 'Target.Col3_SC'
+        db.delete_column('forms_target', 'Col3_SC')
+
+        # Deleting field 'Target.Col4_SC'
+        db.delete_column('forms_target', 'Col4_SC')
+
+        # Deleting field 'Target.Col5_SC'
+        db.delete_column('forms_target', 'Col5_SC')
+
+        # Deleting field 'Target.Col6_SC'
+        db.delete_column('forms_target', 'Col6_SC')
+
+        # Deleting field 'Target.Col7_SC'
+        db.delete_column('forms_target', 'Col7_SC')
+
+        # Deleting field 'Target.Col8_SC'
+        db.delete_column('forms_target', 'Col8_SC')
+
+        # Deleting field 'Target.Col2_ST'
+        db.delete_column('forms_target', 'Col2_ST')
+
+        # Deleting field 'Target.Col3_ST'
+        db.delete_column('forms_target', 'Col3_ST')
+
+        # Deleting field 'Target.Col4_ST'
+        db.delete_column('forms_target', 'Col4_ST')
+
+        # Deleting field 'Target.Col5_ST'
+        db.delete_column('forms_target', 'Col5_ST')
+
+        # Deleting field 'Target.Col6_ST'
+        db.delete_column('forms_target', 'Col6_ST')
+
+        # Deleting field 'Target.Col7_ST'
+        db.delete_column('forms_target', 'Col7_ST')
+
+        # Deleting field 'Target.Col8_ST'
+        db.delete_column('forms_target', 'Col8_ST')
+
+        # Deleting field 'Target.Col2_Min'
+        db.delete_column('forms_target', 'Col2_Min')
+
+        # Deleting field 'Target.Col3_Min'
+        db.delete_column('forms_target', 'Col3_Min')
+
+        # Deleting field 'Target.Col4_Min'
+        db.delete_column('forms_target', 'Col4_Min')
+
+        # Deleting field 'Target.Col5_Min'
+        db.delete_column('forms_target', 'Col5_Min')
+
+        # Deleting field 'Target.Col6_Min'
+        db.delete_column('forms_target', 'Col6_Min')
+
+        # Deleting field 'Target.Col7_Min'
+        db.delete_column('forms_target', 'Col7_Min')
+
+        # Deleting field 'Target.Col8_Min'
+        db.delete_column('forms_target', 'Col8_Min')
+
+        # Deleting field 'Target.Col2_Oth'
+        db.delete_column('forms_target', 'Col2_Oth')
+
+        # Deleting field 'Target.Col3_Oth'
+        db.delete_column('forms_target', 'Col3_Oth')
+
+        # Deleting field 'Target.Col4_Oth'
+        db.delete_column('forms_target', 'Col4_Oth')
+
+        # Deleting field 'Target.Col5_Oth'
+        db.delete_column('forms_target', 'Col5_Oth')
+
+        # Deleting field 'Target.Col6_Oth'
+        db.delete_column('forms_target', 'Col6_Oth')
+
+        # Deleting field 'Target.Col7_Oth'
+        db.delete_column('forms_target', 'Col7_Oth')
+
+        # Deleting field 'Target.Col8_Oth'
+        db.delete_column('forms_target', 'Col8_Oth')
+
+        # Deleting field 'Target.Col2_PWD'
+        db.delete_column('forms_target', 'Col2_PWD')
+
+        # Deleting field 'Target.Col3_PWD'
+        db.delete_column('forms_target', 'Col3_PWD')
+
+        # Deleting field 'Target.Col4_PWD'
+        db.delete_column('forms_target', 'Col4_PWD')
+
+        # Deleting field 'Target.Col5_PWD'
+        db.delete_column('forms_target', 'Col5_PWD')
+
+        # Deleting field 'Target.Col6_PWD'
+        db.delete_column('forms_target', 'Col6_PWD')
+
+        # Deleting field 'Target.Col7_PWD'
+        db.delete_column('forms_target', 'Col7_PWD')
+
+        # Deleting field 'Target.Col8_PWD'
+        db.delete_column('forms_target', 'Col8_PWD')
+
+
+        # Changing field 'Target.Four_6'
+        db.alter_column('forms_target', 'Four_6', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Target.Four_5'
+        db.alter_column('forms_target', 'Four_5', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Target.Four_4'
+        db.alter_column('forms_target', 'Four_4', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Target.Four_3'
+        db.alter_column('forms_target', 'Four_3', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Target.Four_2'
+        db.alter_column('forms_target', 'Four_2', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Target.Four_1'
+        db.alter_column('forms_target', 'Four_1', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+    models = {
+        'auth.group': {
+            'Meta': {'object_name': 'Group'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
+            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
+        },
+        'auth.permission': {
+            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
+            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+        },
+        'auth.user': {
+            'Meta': {'object_name': 'User'},
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
+            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
+            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
+            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
+            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
+        },
+        'contenttypes.contenttype': {
+            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
+            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'forms.cocouser': {
+            'Meta': {'object_name': 'CocoUser'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'states': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['forms.State']", 'symmetrical': 'False'}),
+            'time_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
+            'time_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'}),
+            'user_created': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'cocouser_created'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'user_modified': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'cocouser_related_modified'", 'null': 'True', 'to': "orm['auth.User']"})
+        },
+        'forms.financialassistance': {
+            'Col2_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col5_Min': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col5_Oth': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col5_PWD': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col5_SC': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col5_ST': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col6_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col8_Min': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col8_Oth': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col8_PWD': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col8_SC': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col8_ST': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Meta': {'object_name': 'FinancialAssistance'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'month': ('django.db.models.fields.CharField', [], {'max_length': '3', 'db_column': "'Month'"}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.Project']"}),
+            'state': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.State']"}),
+            'time_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
+            'time_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
+            'user_created': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'financialassistance_created'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'user_modified': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'financialassistance_related_modified'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'year': ('django.db.models.fields.CharField', [], {'max_length': '4'})
+        },
+        'forms.fulldownloadstats': {
+            'Meta': {'object_name': 'FullDownloadStats'},
+            'end_time': ('django.db.models.fields.DateTimeField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'start_time': ('django.db.models.fields.DateTimeField', [], {}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+        },
+        'forms.hrdetails': {
+            'Col2_bmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_bmmup': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_dmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_smmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_bmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_bmmup': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_dmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_smmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_bmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_bmmup': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_dmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_smmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col5_bmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col5_bmmup': ('django.db.models.fields.IntegerField', [], {}),
+            'Col5_dmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col5_smmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_bmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_bmmup': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_dmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_smmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_bmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_bmmup': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_dmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_smmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col8_bmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col8_bmmup': ('django.db.models.fields.IntegerField', [], {}),
+            'Col8_dmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col8_smmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col9_bmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col9_bmmup': ('django.db.models.fields.IntegerField', [], {}),
+            'Col9_dmmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Col9_smmu': ('django.db.models.fields.IntegerField', [], {}),
+            'Meta': {'object_name': 'HrDetails'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'month': ('django.db.models.fields.CharField', [], {'max_length': '3', 'db_column': "'Month'"}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.Project']"}),
+            'state': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.State']"}),
+            'time_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
+            'time_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
+            'user_created': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'hrdetails_created'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'user_modified': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'hrdetails_related_modified'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'year': ('django.db.models.fields.CharField', [], {'max_length': '4'})
+        },
+        'forms.progress': {
+            'Five_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_10': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_11': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_12': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_13': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_14': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_9': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_3': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_4': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Meta': {'object_name': 'Progress'},
+            'Seven_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_3': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_4': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_6': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Seven_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_9': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_10': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_11': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_12': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_13': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_14': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_9': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_4': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Two_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Two_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Two_3': ('django.db.models.fields.IntegerField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'month': ('django.db.models.fields.CharField', [], {'max_length': '3', 'db_column': "'Month'"}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.Project']"}),
+            'state': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.State']"}),
+            'time_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
+            'time_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
+            'user_created': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'progress_created'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'user_modified': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'progress_related_modified'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'year': ('django.db.models.fields.CharField', [], {'max_length': '4'})
+        },
+        'forms.progresstill13': {
+            'Five_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_10': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_11': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_12': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_13': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_14': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_9': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_3': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_4': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Meta': {'object_name': 'ProgressTill13'},
+            'Seven_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_3': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_4': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_6': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Seven_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_9': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_10': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_11': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_12': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_13': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_14': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_9': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_4': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Two_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Two_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Two_3': ('django.db.models.fields.IntegerField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'month': ('django.db.models.fields.CharField', [], {'max_length': '3', 'db_column': "'Month'"}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.Project']"}),
+            'state': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.State']"}),
+            'time_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
+            'time_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
+            'user_created': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'progresstill13_created'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'user_modified': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'progresstill13_related_modified'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'year': ('django.db.models.fields.CharField', [], {'max_length': '4'})
+        },
+        'forms.project': {
+            'Meta': {'object_name': 'Project'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'project_name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30', 'db_column': "'PROJECT_NAME'"})
+        },
+        'forms.serverlog': {
+            'Meta': {'object_name': 'ServerLog'},
+            'action': ('django.db.models.fields.IntegerField', [], {}),
+            'entry_table': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'model_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'state': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'timestamp': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.utcnow'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'})
+        },
+        'forms.state': {
+            'Meta': {'object_name': 'State'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'state_name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30', 'db_column': "'STATE_NAME'"})
+        },
+        'forms.target': {
+            'Col2_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col2_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col3_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col4_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col5_Min': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col5_Oth': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col5_PWD': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col5_SC': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col5_ST': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col6_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col6_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_Min': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_Oth': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_PWD': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_SC': ('django.db.models.fields.IntegerField', [], {}),
+            'Col7_ST': ('django.db.models.fields.IntegerField', [], {}),
+            'Col8_Min': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col8_Oth': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col8_PWD': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col8_SC': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Col8_ST': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_10': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_11': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_12': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_13': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_14': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Five_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Five_9': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_3': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_4': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Four_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Meta': {'object_name': 'Target'},
+            'Seven_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_3': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_4': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_6': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Seven_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Seven_9': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_10': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_11': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_12': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_13': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_14': ('django.db.models.fields.DecimalField', [], {'max_digits': '15', 'decimal_places': '7'}),
+            'Six_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Six_9': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_4': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_5': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_6': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_7': ('django.db.models.fields.IntegerField', [], {}),
+            'Three_8': ('django.db.models.fields.IntegerField', [], {}),
+            'Two_1': ('django.db.models.fields.IntegerField', [], {}),
+            'Two_2': ('django.db.models.fields.IntegerField', [], {}),
+            'Two_3': ('django.db.models.fields.IntegerField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.Project']"}),
+            'state': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forms.State']"}),
+            'time_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
+            'time_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
+            'user_created': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'target_created'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'user_modified': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'target_related_modified'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'year': ('django.db.models.fields.CharField', [], {'max_length': '4'})
+        }
+    }
+
+    complete_apps = ['forms']
