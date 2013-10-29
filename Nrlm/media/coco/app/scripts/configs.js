@@ -617,7 +617,7 @@ function() {
 	    		listing : true,
 	    		add : true
 	    	},
-			'page_header': 'Prev Progress',
+			'page_header': 'Prev Prog',
 			'list_table_header_template': 'progresstill13_table_template',
 			'list_table_row_template': 'progresstill13_list_item_template',
 	    	'add_template_name': 'progresstill13_add_edit_template',
