@@ -1154,30 +1154,6 @@ function() {
 		    			required: true,
 		    			digits: true
 		    		},
-		    		Four_3: {
-		    			required: true,
-		    			digits: true
-		    		},
-		    		Four_4: {
-		    			required: true,
-		    			digits: true
-		    		},
-		    		Four_5: {
-		    			required: true,
-		    			digits: true
-		    		},
-		    		Four_6: {
-		    			required: true,
-		    			digits: true
-		    		},
-			        Five_1: {
-		    			required: true,
-		    			digits: true
-		    		},
-			        Five_2: {
-		    			required: true,
-		    			digits: true
-		    		},
 			        Five_5: {
 		    			required: true,
 		    			digits: true
@@ -1218,10 +1194,6 @@ function() {
 		    			required: true,
 		    			number: true
 		    		},
-	        		Six_1: {
-	        			required: true,
-		    			digits: true
-	        		},
 			        Six_2: {
 		    			required: true,
 		    			digits: true
@@ -1302,14 +1274,6 @@ function() {
 	        			required: true,
 	        			number: true
 	        		},
-	        		Col2_SC: {
-	        			required: true,
-	        			digits: true
-	        		},
-	        		Col3_SC: {
-	        			required: true,
-	        			digits: true
-	        		},
 	        		Col4_SC: {
 	        			required: true,
 	        			digits: true
@@ -1317,10 +1281,6 @@ function() {
 	        		Col5_SC: {
 	        			required: true,
 	        			number: true
-	        		},
-	        		Col6_SC: {
-	        			required: true,
-	        			digits: true
 	        		},
 	        		Col7_SC: {
 	        			required: true,
@@ -1330,14 +1290,6 @@ function() {
 	        			required: true,
 	        			number: true
 	        		},
-					Col2_ST: {
-	        			required: true,
-	        			digits: true
-	        		},
-	        		Col3_ST: {
-	        			required: true,
-	        			digits: true
-	        		},
 	        		Col4_ST: {
 	        			required: true,
 	        			digits: true
@@ -1345,10 +1297,6 @@ function() {
 	        		Col5_ST: {
 	        			required: true,
 	        			number: true
-	        		},
-	        		Col6_ST: {
-	        			required: true,
-	        			digits: true
 	        		},
 	        		Col7_ST: {
 	        			required: true,
@@ -1358,14 +1306,6 @@ function() {
 	        			required: true,
 	        			number: true
 	        		},
-					Col2_Min: {
-	        			required: true,
-	        			digits: true
-	        		},
-	        		Col3_Min: {
-	        			required: true,
-	        			digits: true
-	        		},
 	        		Col4_Min: {
 	        			required: true,
 	        			digits: true
@@ -1373,10 +1313,6 @@ function() {
 	        		Col5_Min: {
 	        			required: true,
 	        			number: true
-	        		},
-	        		Col6_Min: {
-	        			required: true,
-	        			digits: true
 	        		},
 	        		Col7_Min: {
 	        			required: true,
@@ -1386,14 +1322,6 @@ function() {
 	        			required: true,
 	        			number: true
 	        		},
-					Col2_Oth: {
-	        			required: true,
-	        			digits: true
-	        		},
-	        		Col3_Oth: {
-	        			required: true,
-	        			digits: true
-	        		},
 	        		Col4_Oth: {
 	        			required: true,
 	        			digits: true
@@ -1401,10 +1329,6 @@ function() {
 	        		Col5_Oth: {
 	        			required: true,
 	        			number: true
-	        		},
-	        		Col6_Oth: {
-	        			required: true,
-	        			digits: true
 	        		},
 	        		Col7_Oth: {
 	        			required: true,
@@ -1414,14 +1338,6 @@ function() {
 	        			required: true,
 	        			number: true
 	        		},
-					Col2_PWD: {
-	        			required: true,
-	        			digits: true
-	        		},
-	        		Col3_PWD: {
-	        			required: true,
-	        			digits: true
-	        		},
 	        		Col4_PWD: {
 	        			required: true,
 	        			digits: true
@@ -1429,10 +1345,6 @@ function() {
 	        		Col5_PWD: {
 	        			required: true,
 	        			number: true
-	        		},
-	        		Col6_PWD: {
-	        			required: true,
-	        			digits: true
 	        		},
 	        		Col7_PWD: {
 	        			required: true,
@@ -1502,30 +1414,6 @@ function() {
 	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
 	        	},
-	        	Four_3: {
-	        		required: "This question is required, please enter the details",
-	        		digits: "Please enter only digits"
-	        	},
-	        	Four_4: {
-	        		required: "This question is required, please enter the details",
-	        		digits: "Please enter only digits"
-	        	},
-	        	Four_5: {
-	        		required: "This question is required, please enter the details",
-	        		digits: "Please enter only digits"
-	        	},
-	        	Four_6: {
-	        		required: "This question is required, please enter the details",
-	        		digits: "Please enter only digits"
-	        	},
-	        	Five_1: {
-	        		required: "This question is required, please enter the details",
-	        		digits: "Please enter only digits"
-	        	},
-	        	Five_2: {
-	        		required: "This question is required, please enter the details",
-	        		digits: "Please enter only digits"
-	        	},
 	        	Five_5: {
 	        		required: "This question is required, please enter the details",
 	        		digits: "Please enter only digits"
@@ -1565,10 +1453,6 @@ function() {
 	        	Five_14: {
 	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
-	        	},
-	        	Six_1: {
-	        		required: "This question is required, please enter the details",
-	        		digits: "Please enter only digits"
 	        	},
 	        	Six_2: {
 	        		required: "This question is required, please enter the details",
@@ -1650,14 +1534,6 @@ function() {
 	        		required: "This question is required, please enter the details",
 	        		number: "Please enter a valid amount (Rs. in Lakhs)"
 	        	},
-	        	Col2_SC: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
-        		Col3_SC: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
         		Col4_SC: {
         			required: "This question is required, please enter the details",
         			digits: "Please enter only digits"
@@ -1665,10 +1541,6 @@ function() {
         		Col5_SC: {
         			required: "This question is required, please enter the details",
         			number: "Please enter a valid amount (Rs. in Lakhs)"
-        		},
-        		Col6_SC: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
         		},
         		Col7_SC: {
         			required: "This question is required, please enter the details",
@@ -1678,14 +1550,6 @@ function() {
         			required: "This question is required, please enter the details",
         			number: "Please enter a valid amount (Rs. in Lakhs)"
         		},
-				Col2_ST: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
-        		Col3_ST: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
         		Col4_ST: {
         			required: "This question is required, please enter the details",
         			digits: "Please enter only digits"
@@ -1693,10 +1557,6 @@ function() {
         		Col5_ST: {
         			required: "This question is required, please enter the details",
         			number: "Please enter a valid amount (Rs. in Lakhs)"
-        		},
-        		Col6_ST: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
         		},
         		Col7_ST: {
         			required: "This question is required, please enter the details",
@@ -1706,14 +1566,6 @@ function() {
         			required: "This question is required, please enter the details",
         			number: "Please enter a valid amount (Rs. in Lakhs)"
         		},
-				Col2_Min: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
-        		Col3_Min: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
         		Col4_Min: {
         			required: "This question is required, please enter the details",
         			digits: "Please enter only digits"
@@ -1721,10 +1573,6 @@ function() {
         		Col5_Min: {
         			required: "This question is required, please enter the details",
         			number: "Please enter a valid amount (Rs. in Lakhs)"
-        		},
-        		Col6_Min: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
         		},
         		Col7_Min: {
         			required: "This question is required, please enter the details",
@@ -1734,14 +1582,6 @@ function() {
         			required: "This question is required, please enter the details",
         			number: "Please enter a valid amount (Rs. in Lakhs)"
         		},
-				Col2_Oth: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
-        		Col3_Oth: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
         		Col4_Oth: {
         			required: "This question is required, please enter the details",
         			digits: "Please enter only digits"
@@ -1749,10 +1589,6 @@ function() {
         		Col5_Oth: {
         			required: "This question is required, please enter the details",
         			number: "Please enter a valid amount (Rs. in Lakhs)"
-        		},
-        		Col6_Oth: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
         		},
         		Col7_Oth: {
         			required: "This question is required, please enter the details",
@@ -1762,14 +1598,6 @@ function() {
         			required: "This question is required, please enter the details",
         			number: "Please enter a valid amount (Rs. in Lakhs)"
         		},
-				Col2_PWD: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
-        		Col3_PWD: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
-        		},
         		Col4_PWD: {
         			required: "This question is required, please enter the details",
         			digits: "Please enter only digits"
@@ -1777,10 +1605,6 @@ function() {
         		Col5_PWD: {
         			required: "This question is required, please enter the details",
         			number: "Please enter a valid amount (Rs. in Lakhs)"
-        		},
-        		Col6_PWD: {
-        			required: "This question is required, please enter the details",
-        			digits: "Please enter only digits"
         		},
         		Col7_PWD: {
         			required: "This question is required, please enter the details",
@@ -1810,84 +1634,6 @@ function() {
             errorClass: "help-inline"
 	    }
 	};
-	
-	/*var hrunit_configs = {
-			'entity_name' : 'hrunit',
-			'list_table_header_template': 'hrunit_table_template', 
-	        'list_table_row_template': 'hrunit_list_item_template',
-	        'page_header' : 'HR Unit',
-	    	//'add_template_name': 'hrunit_add_edit_template',
-	        //'edit_template_name': 'hrunit_add_edit_template',
-	        'rest_api_url': '/api/v1/HrUnit/',
-	        'dashboard_display': {
-	            listing: true,
-	            add: false
-	        },
-	        'sort_field': 'hrunit_name'
-	};*/
-	
-	/*var hrdetails_configs = {
-			'entity_name' : 'hrdetails',
-			'rest_api_url' : '/api/v1/HrDetails/',
-			'dashboard_display' : {
-	    		listing : true,
-	    		add : true
-	    	},
-			'page_header': 'HR Detail',
-			'list_table_header_template': 'hrdetails_table_template',
-			'list_table_row_template': 'hrdetails_list_item_template',
-	    	'add_template_name': 'hrdetails_add_template',
-	        'edit_template_name': 'hrdetails_add_edit_template',
-	        'unique_together_fields': ['state', 'project', 'month', 'year', 'hrunit'],
-	        'sort_field': 'state',
-	        'add':{
-	        	'foreign_entities': {
-		        	'state':{
-		        		'state':{
-		        			'placeholder': 'id_state',
-		        			'name_field': 'state_name'
-		        		},
-		        	},
-		        	'project':{
-		        		'project':{
-		        			'placeholder': 'id_project',
-		        			'name_field': 'project_name'
-		        		},
-		        	},
-		        	'hrunit':{
-		        		'hrunit':{
-		        			id_field: "hrunit_id",
-		        			'placeholder': 'id_hrunit',
-		        			//'name_field': 'hrunit_name'
-		        			'expanded': {
-		        				template: 'hrdetails_inline',
-		        				placeholder: 'bulk'
-		        			}
-		        		},
-		        	},
-		        },
-	        },
-	        'bulk':{
-	        	foreign_fields: {
-	        		"state": {
-                        state: {
-                            'name_field': 'state_name'
-                        }
-                    },
-                    "project": {
-                        project: {
-                            'name_field': 'project_name'
-                        }
-                    },
-                    "hrunit": {
-                        hrunit:{
-                            'name_field': 'hrunit_name'
-                        }
-                    }
-	        	},
-	        	borrow_fields: ['state', 'project','month','year']
-	        },
-	};*/
 	
 	var hrdetails_configs = {
 			'entity_name' : 'hrdetails',
