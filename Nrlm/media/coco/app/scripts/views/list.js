@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'datatable', 'indexeddb_backbone_config', 'layoutmanager', 'views/notification', 'configs', 'offline_utils', 'indexeddb-backbone'], function($, pass, pass, indexeddb, layoutmanager, notifs_view, all_configs, Offline) {
+define(['jquery', 'underscore', 'datatable', 'indexeddb_backbone_config', 'layoutmanager', 'views/notification', 'configs', 'offline_utils', 'indexeddb-backbone', 'tabletools', 'zeroclipboard'], function($, pass, pass, indexeddb, layoutmanager, notifs_view, all_configs, Offline) {
 
     var ListView = Backbone.Layout.extend({
 
@@ -46,7 +46,34 @@ define(['jquery', 'underscore', 'datatable', 'indexeddb_backbone_config', 'layou
             this.$('#list_table')
                 .append(tbody);
             this.$('#list_table')
-                .dataTable();
+                .dataTable({
+            		"sDom": 'T<"clear">lfrtip',
+            		"oTableTools": {
+            				"sSwfPath": "../media/coco/app/scripts/libs/tabletools_media/swf/copy_csv_xls.swf",
+            				"aButtons": [
+//											{
+//											    "sExtends":    "xls",
+//											    "sButtonText": "Hello world",
+//										    	"fnCellRender": function ( sValue, iColumn, nTr, iDataIndex ) {
+//							                        // Append the text 'TableTools' to column 5
+//							                        if ( iColumn === 5 ) {
+//							                            return sValue +" TableTools";
+//							                        }
+//							                        return sValue;
+//							                    }	
+//											},
+            				             	{
+											    "sExtends":    "copy",
+											    "sButtonText": "Copy to Clipboard"
+            				             	},
+            				                {
+            				                    "sExtends":    "xls",
+            				                    "sButtonText": "Download in Excel"
+            				                }
+            				            ]
+            				
+            			}
+            	});
             $("#loaderimg")
                 .hide();
 			$("#sort-helptext").show();
