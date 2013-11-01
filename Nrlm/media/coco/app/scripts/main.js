@@ -8,8 +8,6 @@ require.config({
     'backbone': 'libs/backbone/backbone-min',
     'indexeddb-backbone': 'libs/indexeddb-backbonejs-adapter/backbone-indexeddb',
     'datatable': 'libs/datatablejs_media/js/jquery.dataTables.min',
-    'tabletools': 'libs/tabletools_media/js/Tabletools.min',
-    'zeroclipboard': 'libs/tabletools_media/js/ZeroClipboard',
     'form_field_validator': 'libs/jquery.validate',
     'layoutmanager': 'libs/layoutmanager/backbone.layoutmanager',
     'syphon':'libs/backbone.syphon',
@@ -17,7 +15,10 @@ require.config({
     'chosen': 'libs/chosen/chosen.jquery.min',
     'date_picker': 'libs/bootstrap/js/bootstrap-datepicker',    
     'time_picker': 'libs/bootstrap/js/bootstrap-timepicker.min',    
-    'jquery_cookie':'libs/jquery.cookie'
+    'jquery_cookie':'libs/jquery.cookie',
+    'tabletools': 'libs/tabletools_media/js/Tabletools.min',
+    'zeroclipboard': 'libs/tabletools_media/js/ZeroClipboard',
+    
   },
   
   shim:{
@@ -50,12 +51,12 @@ require.config({
                         },    
     'datatable': {
                     deps:["jquery"]
-                },
+                },                
     'tabletools': {
-    			deps:["datatable"]
+    			deps:['jquery', 'datatable']
     } ,
     'zeroclipboard': {
-    			deps:["datatable", "tabletools"]
+		deps:['tabletools']
     },
      'form_field_validator': {
                  deps:["jquery"]

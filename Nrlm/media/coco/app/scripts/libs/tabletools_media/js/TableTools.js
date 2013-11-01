@@ -16,6 +16,20 @@
  */
 
 /* Global scope for TableTools */
+(function(root, factory) {
+  // Set up DT_bootstrap appropriately for the environment.
+  if (typeof define === 'function' && define.amd) {
+    // AMD
+    define(['jquery', 'datatable', 'tabletools'], function($) {
+      factory($);
+    });
+  } else {
+    // Browser globals
+    factory(root.jQuery);
+  }
+}(this, function($) {
+
+
 var TableTools;
 
 (function($, window, document) {
@@ -2474,3 +2488,4 @@ else
 $.fn.DataTable.TableTools = TableTools;
 
 })(jQuery, window, document);
+}));
