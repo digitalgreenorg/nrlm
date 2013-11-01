@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'datatable', 'indexeddb_backbone_config', 'layoutmanager', 'views/notification', 'configs', 'offline_utils', 'indexeddb-backbone', 'tabletools', 'zeroclipboard'], function($, pass, pass, indexeddb, layoutmanager, notifs_view, all_configs, Offline) {
+define(['jquery', 'underscore', 'datatable', 'indexeddb_backbone_config', 'layoutmanager', 'views/notification', 'configs', 'offline_utils', 'indexeddb-backbone', 'tabletools', 'zeroclipboard'], function($, pass, oDT, indexeddb, layoutmanager, notifs_view, all_configs, Offline) {
 
     var ListView = Backbone.Layout.extend({
 
