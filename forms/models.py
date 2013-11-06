@@ -108,6 +108,8 @@ class Progress(UserModel):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
     def get_state(self):
         return self.state.id
+    class Meta:
+        verbose_name = "Current Progress"
 post_save.connect(save_log, sender = Progress)
 pre_delete.connect(delete_log, sender = Progress)
     
@@ -182,6 +184,8 @@ class Target(UserModel):
         return self.state.state_name+" "+self.project.project_name+" "+str(self.year)
     def get_state(self):
         return self.state.id
+    class Meta:
+        verbose_name = "Annual Target"
 post_save.connect(save_log, sender = Target)
 pre_delete.connect(delete_log, sender = Target)
 
@@ -243,6 +247,8 @@ class ProgressTill13(UserModel):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
     def get_state(self):
         return self.state.id
+    class Meta:
+        verbose_name = "Previous Progress"
 post_save.connect(save_log, sender = ProgressTill13)
 pre_delete.connect(delete_log, sender = ProgressTill13)
 
@@ -310,6 +316,8 @@ class HrDetails(UserModel):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
     def get_state(self):
         return self.state.id
+    class Meta:
+        verbose_name = "HR Details"
 post_save.connect(save_log, sender = HrDetails)
 pre_delete.connect(delete_log, sender = HrDetails)
 
@@ -364,6 +372,8 @@ class FinancialAssistance(UserModel):
         return self.state.state_name+" "+self.project.project_name+" "+self.month+" "+str(self.year)
     def get_state(self):
         return self.state.id
+    class Meta:
+        verbose_name = "Financial Assistance"
 post_save.connect(save_log, sender = FinancialAssistance)
 pre_delete.connect(delete_log, sender = FinancialAssistance)
 
