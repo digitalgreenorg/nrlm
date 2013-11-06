@@ -1,5 +1,5 @@
 from django.contrib import admin
-from forms.models import State,Project, Progress, Target, HrDetails, FinancialAssistance, CocoUser, ServerLog, ProgressTill13 #HrUnit, Category,
+from forms.models import CocoUser, FinancialAssistance, HrDetails, Progress, ProgressTill13, Project, ServerLog, State, Target
 
 class ProgressAdmin(admin.ModelAdmin):
     list_filter = ['year','month','project','state']
