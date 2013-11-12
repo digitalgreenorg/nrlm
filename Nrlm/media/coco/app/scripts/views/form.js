@@ -80,12 +80,36 @@ define([
             }
             else
             {
-                this.form_template = $('#' + this.entity_config.add_template_name).html();
-                if(this.entity_config.add)
+            	var show=false;
+                var add = true;
+                var enable_months = [];
+                if(all_configs[this.entity_name].dashboard_display)
                 {
-                    this.foreign_entities = this.entity_config.add.foreign_entities;
-                    this.inline = this.entity_config.add.inline;
-                    this.bulk = this.entity_config.add.bulk;
+                    listing = all_configs[this.entity_name].dashboard_display.listing;
+                    add = all_configs[this.entity_name].dashboard_display.add;
+                    enable_months = all_configs[this.entity_name].dashboard_display.enable_months;
+                }
+                if(typeof enable_months != 'undefined'){
+                	var d = new Date();
+                    n = d.getMonth();
+                    n=n+1;
+                    res=$.inArray(n, enable_months);
+                    if(res === -1){
+                    	add=false;
+                    }
+                }
+                if(add === true){
+                	this.form_template = $('#' + this.entity_config.add_template_name).html();
+                    if(this.entity_config.add)
+                    {
+                        this.foreign_entities = this.entity_config.add.foreign_entities;
+                        this.inline = this.entity_config.add.inline;
+                        this.bulk = this.entity_config.add.bulk;
+                    }	
+                }
+                else{
+                	this.form_template = $('#' + this.entity_config.error_template_name).html();
+                	//alert($('#' + this.entity_config.error_template_name).html());
                 }
             }
         },

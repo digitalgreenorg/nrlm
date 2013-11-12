@@ -38,34 +38,23 @@ define([
 		 });
 */        reset_database_check();
     } 
-    
-  /*  function IsValidDate(_element)
-    {
-        // just a hack function to take an element, get the drop down fields within it with a particular class name ending with day /month/ year and perform a basic date time test
-        var $dateFields =  $("#" + _element.id).parent();
-
-        day = 28;
-        month = $dateFields.children(".dateRequired:[name$='month']");
-        year = $dateFields.children(".dateRequired:[name$='year']");
-
-        var $newDate = month.val() + " " + day.val() + " " + year.val();
-        consol.log($newDate)
-        var scratch = new Date($newDate );
-
-        if (scratch.toString() == "NaN" || scratch.toString() == "Invalid Date") 
-        {
-            return false;
-        } else {
-            return true;
-        }
-    } */
-     
+    var isonline = function(){
+    	var dfd = new $.Deferred();
+    	  $.get("/coco/check_connectivity/")
+          .done(function(resp){
+        	  return dfd.resolve();
+          })
+          .fail(function(resp){
+        	  return dfd.reject(resp);
+          });    
+          return dfd.promise();
+    }   
     function reset_database_check(){
         if(!all_configs.misc.onLogin)
             return;
         Auth.check_login()
             .done(function(){
-                if(!navigator.onLine)
+                if(!isonline())
                     return;
                 all_configs.misc.onLogin(Offline, Auth);    
             });

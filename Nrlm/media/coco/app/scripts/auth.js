@@ -5,9 +5,18 @@ define([
     'offline_utils',
     'jquery_cookie'
   ], function(User, OfflineAuthBackend, all_configs, Offline){
-      
-  var internet_connected = function(){
-      return navigator.onLine;
+
+  var internet_connected = function(){	  
+	  //return navigator.onLine;
+	  var dfd = new $.Deferred();
+	  $.get("/coco/check_connectivity/")
+      .done(function(resp){
+    	  return dfd.resolve();
+      })
+      .fail(function(resp){
+    	  return dfd.reject(resp);
+      });    
+      return dfd.promise();
   }
         
   var check_login = function(){
@@ -70,7 +79,6 @@ define([
   
   var online_logout = function(){
       var dfd = new $.Deferred();
-
       if(!internet_connected())
           dfd.resolve();
           

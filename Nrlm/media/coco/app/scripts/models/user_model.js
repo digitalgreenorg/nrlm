@@ -13,7 +13,16 @@ define([
         database: indexeddb,
         storeName: "user",
         isOnline: function(){
-            return navigator.onLine;
+        	//return navigator.onLine;
+      	  var dfd = new $.Deferred();
+      	  $.get("/coco/check_connectivity/")
+            .done(function(resp){
+          	  return dfd.resolve();
+            })
+            .fail(function(resp){
+          	  return dfd.reject(resp);
+            });    
+            return dfd.promise();
         },
         isLoggedIn: function(){
             //TODO: should fetch itself first to get latest state?

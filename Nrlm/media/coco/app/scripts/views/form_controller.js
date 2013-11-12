@@ -34,7 +34,8 @@ define([
 
         //setting up the form view
         beforeRender: function() {
-            console.log(this.params);
+            console.log(this.params.entity_name);
+            alert(this.params.entity_name);
             this.params = $.extend(this.params,{
                 serialize: {
                     button1: "Save and Add Another",
@@ -356,7 +357,16 @@ define([
         },
         
         is_internet_connected : function(){
-            return navigator.onLine;
+        	//return navigator.onLine;
+      	  var dfd = new $.Deferred();
+    	  $.get("/coco/check_connectivity/")
+          .done(function(resp){
+        	  return dfd.resolve();
+          })
+          .fail(function(resp){
+        	  return dfd.reject(resp);
+          });    
+          return dfd.promise();
         },       
 
         on_button2: function(e) {

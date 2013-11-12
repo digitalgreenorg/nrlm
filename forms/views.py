@@ -23,6 +23,12 @@ def logout(request):
     auth.logout(request)    
     return HttpResponse("1")
 
+def check_connectivity(request):
+    if request.method == 'GET':
+        return HttpResponse("1")
+    else:
+        return HttpResponse("0")
+
 def coco_v2(request):
     return render(request,'dashboard.html')
 

@@ -152,13 +152,15 @@ function() {
 			'rest_api_url' : '/api/v1/Progress/',
 			'dashboard_display' : {
 	    		listing : true,
-	    		add : true
+	    		add : true,
+	    		enable_months: [1,2,12]
 	    	},
 			'page_header': 'Progres',
 			'list_table_header_template': 'progress_table_template',
 			'list_table_row_template': 'progress_list_item_template',
 	    	'add_template_name': 'progress_add_edit_template',
 	        'edit_template_name': 'progress_add_edit_template',
+	        'error_template_name': 'progress_error_template',
 	        'foreign_entities': {
 	        	'state':{
 	        		'state':{

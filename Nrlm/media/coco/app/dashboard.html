@@ -18,7 +18,7 @@
 	<LINK REL="stylesheet"  HREF="/media/coco/app/styles/css/bootstrap-timepicker.css">
 	<LINK REL="stylesheet"  HREF="/media/coco/app/styles/css/nrlm.css">
     
-    <SCRIPT DATA-MAIN="/media/coco/dist/scripts/main" SRC="/media/coco/app/scripts/libs/require.js"></SCRIPT>
+    <SCRIPT DATA-MAIN="/media/coco/app/scripts/main" SRC="/media/coco/app/scripts/libs/require.js"></SCRIPT>
 	<META NAME="robots" CONTENT="NONE,NOARCHIVE">
 	<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
 
@@ -390,6 +390,11 @@
                                 <!--Core Framework templates end here -->    
 
 <!--//////////////////////////////////////////////////// Progress TEMPLATES Start ///////////////////////////////////////////////-->
+
+<SCRIPT TYPE="text/template" ID="progress_error_template">
+<p>You are not authorised to view this page.</p>
+</SCRIPT>
+
 <SCRIPT TYPE="text/template" ID="progress_list_item_template">
 <tr>
     <%if(typeof(online_id)!="undefined"){%>

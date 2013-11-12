@@ -54,10 +54,21 @@ define([
                     continue;
                 var listing =true;
                 var add = true;
+                var enable_months = [];
                 if(configs[member].dashboard_display)
                 {
                     listing = configs[member].dashboard_display.listing;
                     add = configs[member].dashboard_display.add;
+                    enable_months = configs[member].dashboard_display.enable_months;
+                }
+                if(typeof enable_months != 'undefined'){
+                	var d = new Date();
+                    n = d.getMonth();
+                    n=n+1;
+                    res=$.inArray(n, enable_months);
+                    if(res === -1){
+                    	add=false;
+                    }
                 }
                 if(listing||add)
                 {
@@ -108,12 +119,14 @@ define([
         },
         
 		user_online: function(){
+			//alert("online");
 			$('#sync').removeAttr("disabled");
 			$('#offline').hide();
 			$('#online').show();
 		},
 		
 		user_offline: function(){
+			//alert("Offline");
 			$('#sync').attr('disabled',true);
 			$('#online').hide();
 			$('#offline').show();
@@ -288,7 +301,16 @@ define([
         },
         
         is_internet_connected : function(){
-            return navigator.onLine;
+        	//return navigator.onLine;
+        	  var dfd = new $.Deferred();
+        	  $.get("/coco/check_connectivity/")
+              .done(function(resp){
+            	  return dfd.resolve();
+              })
+              .fail(function(resp){
+            	  return dfd.reject(resp);
+              });    
+              return dfd.promise();
         },               
 
         logout: function(){
