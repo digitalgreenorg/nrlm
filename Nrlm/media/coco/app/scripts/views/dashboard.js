@@ -54,10 +54,21 @@ define([
                     continue;
                 var listing =true;
                 var add = true;
+                var enable_months = [];
                 if(configs[member].dashboard_display)
                 {
                     listing = configs[member].dashboard_display.listing;
                     add = configs[member].dashboard_display.add;
+                    enable_months = configs[member].dashboard_display.enable_months;
+                }
+                if(typeof enable_months != 'undefined'){
+                	var d = new Date();
+                    n = d.getMonth();
+                    n=n+1;
+                    res=$.inArray(n, enable_months);
+                    if(res === -1){
+                    	add=false;
+                    }
                 }
                 if(listing||add)
                 {

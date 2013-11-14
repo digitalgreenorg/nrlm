@@ -7,7 +7,7 @@ require.config({
     'underscore': 'libs/backbone/underscore-min',
     'backbone': 'libs/backbone/backbone-min',
     'indexeddb-backbone': 'libs/indexeddb-backbonejs-adapter/backbone-indexeddb',
-    'datatable': 'libs/datatablejs_media/js/jquery.dataTables.min',
+    'datatable': 'libs/datatablejs_media/js/jquery.dataTables',
     'form_field_validator': 'libs/jquery.validate',
     'layoutmanager': 'libs/layoutmanager/backbone.layoutmanager',
     'syphon':'libs/backbone.syphon',
@@ -16,7 +16,7 @@ require.config({
     'date_picker': 'libs/bootstrap/js/bootstrap-datepicker',    
     'time_picker': 'libs/bootstrap/js/bootstrap-timepicker.min',    
     'jquery_cookie':'libs/jquery.cookie',
-    'tabletools': 'libs/tabletools_media/js/Tabletools.min',
+    'tabletools': 'libs/tabletools_media/js/Tabletools',
     'zeroclipboard': 'libs/tabletools_media/js/ZeroClipboard',
     
   },

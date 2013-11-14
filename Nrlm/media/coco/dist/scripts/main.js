@@ -1093,7 +1093,8 @@ function() {
 			'rest_api_url' : '/api/v1/Target/',
 			'dashboard_display' : {
 	    		listing : true,
-	    		add : true
+	    		add : true,
+	    		enable_months: [4,5,11,12]
 	    	},
 			'page_header': 'Target',
 			'list_table_header_template': 'target_table_template',
@@ -10129,10 +10130,21 @@ define('views/dashboard',[
                     continue;
                 var listing =true;
                 var add = true;
+                var enable_months = [];
                 if(configs[member].dashboard_display)
                 {
                     listing = configs[member].dashboard_display.listing;
                     add = configs[member].dashboard_display.add;
+                    enable_months = configs[member].dashboard_display.enable_months;
+                }
+                if(typeof enable_months != 'undefined'){
+                	var d = new Date();
+                    n = d.getMonth();
+                    n=n+1;
+                    res=$.inArray(n, enable_months);
+                    if(res === -1){
+                    	add=false;
+                    }
                 }
                 if(listing||add)
                 {
@@ -26108,27 +26120,77 @@ define('router',[
                 });
         },
         list: function(entity_name) {
-            this.check_login_wrapper()
+        	if(this.check_url_wrapper(entity_name) && this.check_list_url_remove_wrapper(entity_name)){
+        		this.check_login_wrapper()
                 .done(function(){
                     AppLayout.render_list_view(entity_name);
                 });
+        	}
+        	else{
+        		alert("You are not authorized to view this page. Please contact your administrator.");
+        	}
         },
         add: function(entity_name) {
-            this.check_login_wrapper()
+        	if(this.check_url_wrapper(entity_name) && this.check_add_url_remove_wrapper(entity_name)){
+        		this.check_login_wrapper()
                 .done(function(){
                     AppLayout.render_add_edit_view(entity_name, null);
                 });
+        	}
+        	else{
+        		alert("You are not authorized to view this page. Please contact your administrator.");
+        	}
+            
         },
         edit: function(entity_name, id) {
-            this.check_login_wrapper()
+        	if(this.check_url_wrapper(entity_name) && this.check_add_url_remove_wrapper(entity_name)){
+        		this.check_login_wrapper()
                 .done(function(){
                     AppLayout.render_add_edit_view(entity_name, parseInt(id));
                 });
+        	}
+        	else{
+        		alert("You are not authorized to view this page. Please contact your administrator.");
+        	}
         },
         login: function(){
             AppLayout.render_login();
         },
-                
+        check_url_wrapper: function(entity_name){
+        	if(typeof configs[entity_name] == 'undefined'){
+        		return false;
+        	}
+        	else{
+        		return true;
+        	}
+        },
+        check_list_url_remove_wrapper: function(entity_name){
+            var listing = false;
+            if(configs[entity_name].dashboard_display)
+            {
+            	listing = configs[entity_name].dashboard_display.listing;
+            }
+            return listing;
+        },
+        check_add_url_remove_wrapper: function(entity_name){
+            var add = true;
+            var enable_months = [];
+            if(configs[entity_name].dashboard_display)
+            {
+                add = configs[entity_name].dashboard_display.add;
+                enable_months = configs[entity_name].dashboard_display.enable_months;
+            }
+            if(typeof enable_months != 'undefined'){
+            	var d = new Date();
+                n = d.getMonth();
+                n=n+1;
+                res=$.inArray(n, enable_months);
+                if(res === -1){
+                	add=false;
+                }
+            }
+            return add;
+        },        
         check_login_wrapper: function(){
             var dfd = new $.Deferred();
             console.log("Authenticating before routing");
@@ -26435,7 +26497,7 @@ require.config({
     'underscore': 'libs/backbone/underscore-min',
     'backbone': 'libs/backbone/backbone-min',
     'indexeddb-backbone': 'libs/indexeddb-backbonejs-adapter/backbone-indexeddb',
-    'datatable': 'libs/datatablejs_media/js/jquery.dataTables.min',
+    'datatable': 'libs/datatablejs_media/js/jquery.dataTables',
     'form_field_validator': 'libs/jquery.validate',
     'layoutmanager': 'libs/layoutmanager/backbone.layoutmanager',
     'syphon':'libs/backbone.syphon',
@@ -26444,7 +26506,7 @@ require.config({
     'date_picker': 'libs/bootstrap/js/bootstrap-datepicker',    
     'time_picker': 'libs/bootstrap/js/bootstrap-timepicker.min',    
     'jquery_cookie':'libs/jquery.cookie',
-    'tabletools': 'libs/tabletools_media/js/Tabletools.min',
+    'tabletools': 'libs/tabletools_media/js/Tabletools',
     'zeroclipboard': 'libs/tabletools_media/js/ZeroClipboard',
     
   },
