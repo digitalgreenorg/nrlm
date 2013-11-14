@@ -35,18 +35,48 @@ define([
         //setting up the form view
         beforeRender: function() {
             console.log(this.params.entity_name);
-            alert(this.params.entity_name);
-            this.params = $.extend(this.params,{
-                serialize: {
-                    button1: "Save and Add Another",
-                    button2: null
+            var add = true;
+            var enable_months = [];
+            if(configs[this.params.entity_name].dashboard_display)
+            {
+                listing = configs[this.params.entity_name].dashboard_display.listing;
+                add = configs[this.params.entity_name].dashboard_display.add;
+                enable_months = configs[this.params.entity_name].dashboard_display.enable_months;
+            }
+            if(typeof enable_months != 'undefined'){
+            	var d = new Date();
+                n = d.getMonth();
+                n=n+1;
+                res=$.inArray(n, enable_months);
+                if(res === -1){
+                	add=false;
                 }
-            });
+            }
+            if(add === false){
+            	alert("You are not authorized to view this page. Please contact your administrator for further support.");
+            	this.params = $.extend(this.params,{
+                    serialize: {
+                        button1: null,
+                        button2: null
+                    }
+                });
+            	var form_v = new Form(this.params);
+//                this.setView("#form", form_v);
+            }
+            else{
+            	this.params = $.extend(this.params,{
+                    serialize: {
+                        button1: "Save and Add Another",
+                        button2: null
+                    }
+                });
+            	var form_v = new Form(this.params);
+                this.setView("#form", form_v);
+                this.listenTo(form_v, 'save_clicked', this.on_save);
+                this.listenTo(form_v, 'button2_clicked', this.on_button2);
+            }
             // #form is the id of the element inside template where the new view will be inserted.
-            var form_v = new Form(this.params);
-            this.setView("#form", form_v);
-            this.listenTo(form_v, 'save_clicked', this.on_save);
-            this.listenTo(form_v, 'button2_clicked', this.on_button2);
+            
         },
         
         /*

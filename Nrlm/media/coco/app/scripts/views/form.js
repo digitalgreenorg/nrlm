@@ -80,7 +80,6 @@ define([
             }
             else
             {
-            	var show=false;
                 var add = true;
                 var enable_months = [];
                 if(all_configs[this.entity_name].dashboard_display)
