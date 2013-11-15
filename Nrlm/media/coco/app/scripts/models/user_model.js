@@ -3,17 +3,19 @@ define([
   'backbone',
   'indexeddb_backbone_config',
   'indexeddb-backbone',
-  'collections/upload_collection'
+  'collections/upload_collection',
+  'check_internet_connectivity',
   // Using the Require.js text! plugin, we are loaded raw text
   // which will be used as our views primary template
   // 'text!templates/project/list.html'
-], function(jquery, backbone, indexeddb, idb_backbone_adapter, UploadCollection){
+], function(jquery, backbone, indexeddb, idb_backbone_adapter, UploadCollection,check_connectivity){
     
     var generic_model_offline = Backbone.Model.extend({
         database: indexeddb,
         storeName: "user",
         isOnline: function(){
-            return navigator.onLine;
+        	return check_connectivity.is_internet_connected();
+            //return navigator.onLine;
         },
         isLoggedIn: function(){
             //TODO: should fetch itself first to get latest state?

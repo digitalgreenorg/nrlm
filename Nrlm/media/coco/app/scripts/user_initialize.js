@@ -4,7 +4,8 @@ define([
     'configs',
     'jquery',
     'form_field_validator',
-  ], function(Auth, Offline, all_configs){
+    'check_internet_connectivity',
+  ], function(Auth, Offline, all_configs,pass,pass,check_connectivity){
     
     var run = function(){
         $.validator.addMethod('allowedChar',
@@ -65,7 +66,7 @@ define([
             return;
         Auth.check_login()
             .done(function(){
-                if(!navigator.onLine)
+                if(!check_connectivity.is_internet_connected())
                     return;
                 all_configs.misc.onLogin(Offline, Auth);    
             });

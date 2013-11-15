@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from forms.api import StateResource, ProjectResource, ProgressResource, TargetResource, HrDetailsResource, FinancialAssistanceResource, ProgressTill13Resource #,HrUnitResource, CategoryResource,  
-from forms.views import login, logout, debug, coco_v2, reset_database_check, record_full_download_time
+from forms.views import check_connectivity, login, logout, debug, coco_v2, reset_database_check, record_full_download_time
 from tastypie.api import Api
 from forms.data_log import send_updated_log
 from django.views.generic.simple import direct_to_template
@@ -34,6 +34,7 @@ urlpatterns = patterns('',
     (r'^coco/logout/', logout),
     (r'^coco/reset_database_check/', reset_database_check),
     (r'^coco/record_full_download_time/', record_full_download_time),
+    (r'^coco/check_connectivity/', check_connectivity),
     (r'^forms/debug/', debug),
 #    (r'^get_log/', send_updated_log),
     (r'^forms/$', coco_v2),

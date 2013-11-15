@@ -10,8 +10,9 @@ define([
     'convert_namespace', 
     'offline_utils', 
     'online_utils',
-    'indexeddb-backbone'
-    ], function(jquery, underscore, layoutmanager, notifs_view, indexeddb, configs, Form, upload_collection, ConvertNamespace, Offline, Online) {
+    'indexeddb-backbone',
+    'check_internet_connectivity',
+    ], function(jquery, underscore, layoutmanager, notifs_view, indexeddb, configs, Form, upload_collection, ConvertNamespace, Offline, Online,pass,check_connectivity) {
 
     // FormController: Brings up the Add/Edit form
     
@@ -356,7 +357,8 @@ define([
         },
         
         is_internet_connected : function(){
-            return navigator.onLine;
+        	return check_connectivity.is_internet_connected();
+            //return navigator.onLine;
         },       
 
         on_button2: function(e) {

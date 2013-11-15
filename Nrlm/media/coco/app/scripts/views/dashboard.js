@@ -12,8 +12,9 @@ define([
     'auth',
 	'offline_utils',
 	'views/full_download',
+	'check_internet_connectivity',
     ],
- function(jquery, pass, configs, indexeddb, upload_collection, UploadView, IncDownloadView, notifs_view, layoutmanager,User, Auth, Offline, FullDownloadView) {
+ function(jquery, pass, configs, indexeddb, upload_collection, UploadView, IncDownloadView, notifs_view, layoutmanager,User, Auth, Offline, FullDownloadView, check_connectivity) {
 
     var DashboardView = Backbone.Layout.extend({
         template: "#dashboard",
@@ -299,7 +300,8 @@ define([
         },
         
         is_internet_connected : function(){
-            return navigator.onLine;
+        	//return navigator.onLine;
+            return check_connectivity.is_internet_connected();
         },               
 
         logout: function(){

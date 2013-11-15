@@ -12,8 +12,9 @@ define([
   'indexeddb_backbone_config',
   'configs',
   'offline_utils',
-  'bootstrapjs'                            
-], function(jquery,underscore,layoutmanager,indexeddb, all_configs, Offline){
+  'bootstrapjs',
+  'check_internet_connectivity',
+], function(jquery,underscore,layoutmanager,indexeddb, all_configs, Offline,pass,check_connectivity){
     
     
     //clears objectstores - meta_data, uploadqueue, all config-defined objectstores
@@ -23,7 +24,8 @@ define([
         template: "#download_template",
         
         internet_connected : function(){
-            return navigator.onLine;
+        	return check_connectivity.is_internet_connected();
+            //return navigator.onLine;
         },
         
         initialize: function(){

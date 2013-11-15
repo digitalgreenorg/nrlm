@@ -3,11 +3,13 @@ define([
     'auth_offline_backend',
     'configs',
     'offline_utils',
-    'jquery_cookie'
-  ], function(User, OfflineAuthBackend, all_configs, Offline){
+    'jquery_cookie',
+    'check_internet_connectivity',
+  ], function(User, OfflineAuthBackend, all_configs, Offline,pass,check_connectivity){
       
   var internet_connected = function(){
-      return navigator.onLine;
+      //return navigator.onLine;
+	  return check_connectivity.is_internet_connected();
   }
         
   var check_login = function(){

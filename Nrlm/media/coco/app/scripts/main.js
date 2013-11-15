@@ -52,12 +52,12 @@ require.config({
     'datatable': {
                     deps:["jquery"]
                 },                
-    'tabletools': {
-    			deps:['jquery', 'datatable']
-    } ,
     'zeroclipboard': {
-		deps:['tabletools']
+		deps:['jquery']
     },
+    'tabletools': {
+		deps:['jquery', 'datatable','zeroclipboard']
+    } ,
      'form_field_validator': {
                  deps:["jquery"]
      }  ,
