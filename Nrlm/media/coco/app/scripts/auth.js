@@ -15,20 +15,45 @@ define([
   var check_login = function(){
       var dfd = new $.Deferred()
       console.log("checking login");
-      if(check_online_login())
-      {
+//      if(check_online_login())
+//      {
+//          check_offline_login()
+//              .done(function(){
+//                  dfd.resolve();
+//              })
+//              .fail(function(error){
+//                  dfd.reject(error);
+//              });
+//      }
+//      else
+//      {
+//          dfd.reject("Not logged in on server");
+//      }
+      check_connectivity.is_internet_connected()
+      .fail(function(){
           check_offline_login()
+          .done(function(){
+              dfd.resolve();
+          })
+          .fail(function(error){
+              dfd.reject(error);
+          });
+
+      })
+      .done(function(){
+    	  if($.cookie('sessionid')){
+              check_offline_login()
               .done(function(){
                   dfd.resolve();
               })
               .fail(function(error){
                   dfd.reject(error);
               });
-      }
-      else
-      {
-          dfd.reject("Not logged in on server");
-      }
+    	  }
+    	  else{
+    		  dfd.reject("Not logged in on server");
+    	  }
+      })
       return dfd.promise();
   }
 
@@ -73,17 +98,21 @@ define([
   var online_logout = function(){
       var dfd = new $.Deferred();
 
-      if(!internet_connected())
-          dfd.resolve();
-          
-      $.post("/coco/logout/")
+//      if(!internet_connected())
+//          dfd.resolve();
+      check_connectivity.is_internet_connected()
+      .fail(function(){
+    	  dfd.resolve();
+      })
+      .done(function(){
+          $.post("/coco/logout/")
           .done(function(resp){
               return dfd.resolve();
           })
           .fail(function(resp){
               return dfd.reject(resp);
           });
-
+      })
       return dfd.promise();      
   }
   
@@ -102,67 +131,82 @@ define([
   var login = function(username, password){
       var dfd = new $.Deferred();
       console.log("Attemting login");
-      if(internet_connected())
-      {
-          online_login(username, password)
-              .fail(function(error){
-                  console.log("Online login failed - "+error);
+      
+      check_connectivity.is_internet_connected()
+      .done(function(){
+    	  online_login(username, password)
+          .fail(function(error){
+              console.log("Online login failed - "+error);
+              dfd.reject(error);
+          })
+          .done(function(){
+              offline_login(username, password)
+                  .fail(function(error){
+                      console.log("Offline login failed - "+error);
+                      if(error == "No user found")
+                      {     
+                          offline_register(username, password)
+                              .fail(function(error){
+                                  console.log("Offline register failed - "+error);
+                                  dfd.reject(error);
+                              })
+                              .done(function(){
+                                  console.log("Registered in Offline backend");
+                                  console.log("Login Successfull");
+                                  dfd.resolve();
+                              });      
+                      }
+                      else
+                          dfd.reject(error);
+                  })
+                  .done(function(){
+                      console.log("Login Successfull");
+                      if(all_configs.misc.onLogin)
+                          all_configs.misc.onLogin(Offline, this);
+                      dfd.resolve();
+                  });      
+          });
+      })
+      .fail(function(){
+    	  offline_login(username, password)
+          .fail(function(error){
+              console.log("Offline login failed - "+error);
+              if(error == "No user found")
+                  dfd.reject("You need to be online till database has been downloaded.");
+              else
                   dfd.reject(error);
-              })
-              .done(function(){
-                  offline_login(username, password)
-                      .fail(function(error){
-                          console.log("Offline login failed - "+error);
-                          if(error == "No user found")
-                          {     
-                              offline_register(username, password)
-                                  .fail(function(error){
-                                      console.log("Offline register failed - "+error);
-                                      dfd.reject(error);
-                                  })
-                                  .done(function(){
-                                      console.log("Registered in Offline backend");
-                                      console.log("Login Successfull");
-                                      dfd.resolve();
-                                  });      
-                          }
-                          else
-                              dfd.reject(error);
-                      })
-                      .done(function(){
-                          console.log("Login Successfull");
-                          if(all_configs.misc.onLogin)
-                              all_configs.misc.onLogin(Offline, this);
-                          dfd.resolve();
-                      });      
-              });
-      }
-      else
-      {
-          offline_login(username, password)
-              .fail(function(error){
-                  console.log("Offline login failed - "+error);
-                  if(error == "No user found")
-                      dfd.reject("You need to be online till database has been downloaded.");
-                  else
-                      dfd.reject(error);
-              })
-              .done(function(){
-                  console.log("Login Successfull");
-                  if(all_configs.misc.onLogin)
-                      all_configs.misc.onLogin(Offline, this);
-                  dfd.resolve();
-              });      
-      }
+          })
+          .done(function(){
+              console.log("Login Successfull");
+              if(all_configs.misc.onLogin)
+                  all_configs.misc.onLogin(Offline, this);
+              dfd.resolve();
+          });
+      });
       return dfd;
   }
   
   // resolves if server returns 1 or internet is not connected otherwise rejects
   var online_login = function(username, password){
       var dfd = new $.Deferred();
-      if(!internet_connected())
-          return dfd.resolve();
-      $.post("/coco/login/", { "username": username, "password": password } )
+//      if(!internet_connected())
+//          return dfd.resolve();
+//      $.post("/coco/login/", { "username": username, "password": password } )
+//          .done(function(resp){
+//              if(resp=="1")
+//                  return dfd.resolve();
+//              else 
+//                  return dfd.reject("Username or password is incorrect (Server)");
+//          })
+//          .fail(function(resp){
+//              return dfd.reject("Could not contact server. Try again in a minute.");
+//          });
+      check_connectivity.is_internet_connected()
+      .fail(function(){
+    	  return dfd.resolve();
+      })
+      .done(function(){
+	      $.post("/coco/login/", { "username": username, "password": password } )
           .done(function(resp){
               if(resp=="1")
                   return dfd.resolve();
@@ -172,6 +216,7 @@ define([
           .fail(function(resp){
               return dfd.reject("Could not contact server. Try again in a minute.");
           });
+      });
       return dfd.promise();      
   }
   

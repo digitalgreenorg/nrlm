@@ -22,9 +22,10 @@ define([
             // should this be handled by the auth module
             return this.get("loggedin");
         },
-        canSaveOnline: function(){
-            return this.isOnline() && UploadCollection.fetched && UploadCollection.length===0
-        }
+        //canSaveOnline is never used anywhere in the whole workspace, so commenting it!!
+//        canSaveOnline: function(){
+//            return this.isOnline() && UploadCollection.fetched && UploadCollection.length===0
+//        }
     });
     var user_model = new generic_model_offline();
     user_model.set({key: "user_info"});

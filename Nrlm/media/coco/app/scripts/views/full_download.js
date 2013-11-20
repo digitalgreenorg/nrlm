@@ -61,11 +61,14 @@ define([
         initialize_download: function(){
             //Django complains when Z is present in timestamp bcoz timezone capab is off
             this.start_time = new Date().toJSON().replace("Z", "");
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//checking internet connectivity before calling initialize download. So removing i
             if(!this.internet_connected())
             {
                 dfd.reject("Can't download database. Internet is not connected");
                 return dfd;
             }
+//////////////////////////////////////////////////////////////////////////////////////////////////////
             //intialize UI objects
             this.$('#full_download_modal').modal({
                 keyboard: false,
