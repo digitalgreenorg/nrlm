@@ -17,7 +17,7 @@ require.config({
     'time_picker': 'libs/bootstrap/js/bootstrap-timepicker.min',    
     'jquery_cookie':'libs/jquery.cookie',
     'tabletools': 'libs/tabletools_media/js/Tabletools',
-    'zeroclipboard': 'libs/tabletools_media/js/ZeroClipboard',
+    'zeroclipboard': 'libs/tabletools_media/js/ZeroClipboard.min',
     
   },
   
@@ -56,7 +56,7 @@ require.config({
 		deps:['jquery']
     },
     'tabletools': {
-		deps:['jquery', 'datatable','zeroclipboard']
+		deps:['jquery', 'datatable'/*,'zeroclipboard'*/]
     } ,
      'form_field_validator': {
                  deps:["jquery"]
