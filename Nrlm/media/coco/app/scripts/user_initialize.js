@@ -66,9 +66,13 @@ define([
             return;
         Auth.check_login()
             .done(function(){
-                if(!check_connectivity.is_internet_connected())
-                    return;
-                all_configs.misc.onLogin(Offline, Auth);    
+                check_connectivity.is_internet_connected()
+                .done(function(){
+                	all_configs.misc.onLogin(Offline, Auth);
+                })
+                .fail(function(){
+                	console.log("Reset databast check failed because of no Connectivity");
+                });
             });
     }
     

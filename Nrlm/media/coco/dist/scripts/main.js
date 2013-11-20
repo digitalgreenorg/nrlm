@@ -5510,31 +5510,62 @@ define('views/notification',[
 });
 
 
+define('check_internet_connectivity',['jquery'], function($) {
+	var check_connectivity={
+			is_internet_connected : function(){
+//				return navigator.onLine;
+				return $.get("/coco/check_connectivity/");
+//				var check=false;
+//				var dfd = new $.Deferred();
+//				//var $obj= $.get("/coco/check_connectivity/");
+//				var $obj=$.get({
+//					url: "/coco/check_connectivity/",
+//					cache: false
+//				});
+//				$obj.done(function(resp){
+////					alert("Connectivity true");
+////					check=true;
+//					return dfd.resolve();
+//				})
+//				$obj.fail(function(resp){
+////					alert("connectivity false");
+////					check=false;
+//					return dfd.reject(resp);
+//				})
+////				alert(check);
+//				return dfd.promise();
+	        },
+	}
+	return check_connectivity;
+});
 define('models/user_model',[
   'jquery',
   'backbone',
   'indexeddb_backbone_config',
   'indexeddb-backbone',
-  'collections/upload_collection'
+  'collections/upload_collection',
+  'check_internet_connectivity',
   // Using the Require.js text! plugin, we are loaded raw text
   // which will be used as our views primary template
   // 'text!templates/project/list.html'
-], function(jquery, backbone, indexeddb, idb_backbone_adapter, UploadCollection){
+], function(jquery, backbone, indexeddb, idb_backbone_adapter, UploadCollection,check_connectivity){
     
     var generic_model_offline = Backbone.Model.extend({
         database: indexeddb,
         storeName: "user",
         isOnline: function(){
-            return navigator.onLine;
+        	return check_connectivity.is_internet_connected();
+            //return navigator.onLine;
         },
         isLoggedIn: function(){
             //TODO: should fetch itself first to get latest state?
             // should this be handled by the auth module
             return this.get("loggedin");
         },
-        canSaveOnline: function(){
-            return this.isOnline() && UploadCollection.fetched && UploadCollection.length===0
-        }
+        //canSaveOnline is never used anywhere in the whole workspace, so commenting it!!
+//        canSaveOnline: function(){
+//            return this.isOnline() && UploadCollection.fetched && UploadCollection.length===0
+//        }
     });
     var user_model = new generic_model_offline();
     user_model.set({key: "user_info"});
@@ -9374,30 +9405,57 @@ define('auth',[
     'auth_offline_backend',
     'configs',
     'offline_utils',
-    'jquery_cookie'
-  ], function(User, OfflineAuthBackend, all_configs, Offline){
+    'jquery_cookie',
+    'check_internet_connectivity',
+  ], function(User, OfflineAuthBackend, all_configs, Offline,pass,check_connectivity){
       
   var internet_connected = function(){
-      return navigator.onLine;
+      //return navigator.onLine;
+	  return check_connectivity.is_internet_connected();
   }
         
   var check_login = function(){
       var dfd = new $.Deferred()
       console.log("checking login");
-      if(check_online_login())
-      {
+//      if(check_online_login())
+//      {
+//          check_offline_login()
+//              .done(function(){
+//                  dfd.resolve();
+//              })
+//              .fail(function(error){
+//                  dfd.reject(error);
+//              });
+//      }
+//      else
+//      {
+//          dfd.reject("Not logged in on server");
+//      }
+      check_connectivity.is_internet_connected()
+      .fail(function(){
           check_offline_login()
+          .done(function(){
+              dfd.resolve();
+          })
+          .fail(function(error){
+              dfd.reject(error);
+          });
+
+      })
+      .done(function(){
+    	  if($.cookie('sessionid')){
+              check_offline_login()
               .done(function(){
                   dfd.resolve();
               })
               .fail(function(error){
                   dfd.reject(error);
               });
-      }
-      else
-      {
-          dfd.reject("Not logged in on server");
-      }
+    	  }
+    	  else{
+    		  dfd.reject("Not logged in on server");
+    	  }
+      })
       return dfd.promise();
   }
 
@@ -9442,17 +9500,21 @@ define('auth',[
   var online_logout = function(){
       var dfd = new $.Deferred();
 
-      if(!internet_connected())
-          dfd.resolve();
-          
-      $.post("/coco/logout/")
+//      if(!internet_connected())
+//          dfd.resolve();
+      check_connectivity.is_internet_connected()
+      .fail(function(){
+    	  dfd.resolve();
+      })
+      .done(function(){
+          $.post("/coco/logout/")
           .done(function(resp){
               return dfd.resolve();
           })
           .fail(function(resp){
               return dfd.reject(resp);
           });
-
+      })
       return dfd.promise();      
   }
   
@@ -9471,67 +9533,82 @@ define('auth',[
   var login = function(username, password){
       var dfd = new $.Deferred();
       console.log("Attemting login");
-      if(internet_connected())
-      {
-          online_login(username, password)
-              .fail(function(error){
-                  console.log("Online login failed - "+error);
+      
+      check_connectivity.is_internet_connected()
+      .done(function(){
+    	  online_login(username, password)
+          .fail(function(error){
+              console.log("Online login failed - "+error);
+              dfd.reject(error);
+          })
+          .done(function(){
+              offline_login(username, password)
+                  .fail(function(error){
+                      console.log("Offline login failed - "+error);
+                      if(error == "No user found")
+                      {     
+                          offline_register(username, password)
+                              .fail(function(error){
+                                  console.log("Offline register failed - "+error);
+                                  dfd.reject(error);
+                              })
+                              .done(function(){
+                                  console.log("Registered in Offline backend");
+                                  console.log("Login Successfull");
+                                  dfd.resolve();
+                              });      
+                      }
+                      else
+                          dfd.reject(error);
+                  })
+                  .done(function(){
+                      console.log("Login Successfull");
+                      if(all_configs.misc.onLogin)
+                          all_configs.misc.onLogin(Offline, this);
+                      dfd.resolve();
+                  });      
+          });
+      })
+      .fail(function(){
+    	  offline_login(username, password)
+          .fail(function(error){
+              console.log("Offline login failed - "+error);
+              if(error == "No user found")
+                  dfd.reject("You need to be online till database has been downloaded.");
+              else
                   dfd.reject(error);
-              })
-              .done(function(){
-                  offline_login(username, password)
-                      .fail(function(error){
-                          console.log("Offline login failed - "+error);
-                          if(error == "No user found")
-                          {     
-                              offline_register(username, password)
-                                  .fail(function(error){
-                                      console.log("Offline register failed - "+error);
-                                      dfd.reject(error);
-                                  })
-                                  .done(function(){
-                                      console.log("Registered in Offline backend");
-                                      console.log("Login Successfull");
-                                      dfd.resolve();
-                                  });      
-                          }
-                          else
-                              dfd.reject(error);
-                      })
-                      .done(function(){
-                          console.log("Login Successfull");
-                          if(all_configs.misc.onLogin)
-                              all_configs.misc.onLogin(Offline, this);
-                          dfd.resolve();
-                      });      
-              });
-      }
-      else
-      {
-          offline_login(username, password)
-              .fail(function(error){
-                  console.log("Offline login failed - "+error);
-                  if(error == "No user found")
-                      dfd.reject("You need to be online till database has been downloaded.");
-                  else
-                      dfd.reject(error);
-              })
-              .done(function(){
-                  console.log("Login Successfull");
-                  if(all_configs.misc.onLogin)
-                      all_configs.misc.onLogin(Offline, this);
-                  dfd.resolve();
-              });      
-      }
+          })
+          .done(function(){
+              console.log("Login Successfull");
+              if(all_configs.misc.onLogin)
+                  all_configs.misc.onLogin(Offline, this);
+              dfd.resolve();
+          });
+      });
       return dfd;
   }
   
   // resolves if server returns 1 or internet is not connected otherwise rejects
   var online_login = function(username, password){
       var dfd = new $.Deferred();
-      if(!internet_connected())
-          return dfd.resolve();
-      $.post("/coco/login/", { "username": username, "password": password } )
+//      if(!internet_connected())
+//          return dfd.resolve();
+//      $.post("/coco/login/", { "username": username, "password": password } )
+//          .done(function(resp){
+//              if(resp=="1")
+//                  return dfd.resolve();
+//              else 
+//                  return dfd.reject("Username or password is incorrect (Server)");
+//          })
+//          .fail(function(resp){
+//              return dfd.reject("Could not contact server. Try again in a minute.");
+//          });
+      check_connectivity.is_internet_connected()
+      .fail(function(){
+    	  return dfd.resolve();
+      })
+      .done(function(){
+	      $.post("/coco/login/", { "username": username, "password": password } )
           .done(function(resp){
               if(resp=="1")
                   return dfd.resolve();
@@ -9541,6 +9618,7 @@ define('auth',[
           .fail(function(resp){
               return dfd.reject("Could not contact server. Try again in a minute.");
           });
+      });
       return dfd.promise();      
   }
   
@@ -9590,8 +9668,9 @@ define('views/full_download',[
   'indexeddb_backbone_config',
   'configs',
   'offline_utils',
-  'bootstrapjs'                            
-], function(jquery,underscore,layoutmanager,indexeddb, all_configs, Offline){
+  'bootstrapjs',
+  'check_internet_connectivity',
+], function(jquery,underscore,layoutmanager,indexeddb, all_configs, Offline,pass,check_connectivity){
     
     
     //clears objectstores - meta_data, uploadqueue, all config-defined objectstores
@@ -9601,7 +9680,8 @@ define('views/full_download',[
         template: "#download_template",
         
         internet_connected : function(){
-            return navigator.onLine;
+        	return check_connectivity.is_internet_connected();
+            //return navigator.onLine;
         },
         
         initialize: function(){
@@ -9637,11 +9717,14 @@ define('views/full_download',[
         initialize_download: function(){
             //Django complains when Z is present in timestamp bcoz timezone capab is off
             this.start_time = new Date().toJSON().replace("Z", "");
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//checking internet connectivity before calling initialize download. So removing i
             if(!this.internet_connected())
             {
                 dfd.reject("Can't download database. Internet is not connected");
                 return dfd;
             }
+//////////////////////////////////////////////////////////////////////////////////////////////////////
             //intialize UI objects
             this.$('#full_download_modal').modal({
                 keyboard: false,
@@ -10088,8 +10171,9 @@ define('views/dashboard',[
     'auth',
 	'offline_utils',
 	'views/full_download',
+	'check_internet_connectivity',
     ],
- function(jquery, pass, configs, indexeddb, upload_collection, UploadView, IncDownloadView, notifs_view, layoutmanager,User, Auth, Offline, FullDownloadView) {
+ function(jquery, pass, configs, indexeddb, upload_collection, UploadView, IncDownloadView, notifs_view, layoutmanager,User, Auth, Offline, FullDownloadView, check_connectivity) {
 
     var DashboardView = Backbone.Layout.extend({
         template: "#dashboard",
@@ -10172,18 +10256,27 @@ define('views/dashboard',[
 					return upload_collection.length;
 				});
 			});
-			
-			window.addEventListener("offline", this.user_offline);
-
-			window.addEventListener("online", this.user_online);
-			
-			if (User.isOnline()){
-				this.user_online();
-			}
-			else {
-				this.user_offline();
-			}
+/////////////////////////////////////////////////////////////////////////////////////////////////			
+//			window.addEventListener("offline", this.user_offline);
+//
+//			window.addEventListener("online", this.user_online);
+/////////////////////////////////////////////////////////////////////////////////////////////////			
 			var that = this;
+			
+			User.isOnline()
+			.done(function(){
+				that.user_online();
+			})
+			.fail(function(){
+				that.user_offline();
+			});
+//			if (User.isOnline()){
+//				this.user_online();
+//			}
+//			else {
+//				this.user_offline();
+//			}
+			
 			Offline.fetch_object("meta_data", "key", "last_full_download")
 				
                 .done(function(model){
@@ -10227,62 +10320,70 @@ define('views/dashboard',[
                     alert("Please wait till background download is finished.");
                     return;
             }
-			
-			Offline.fetch_object("meta_data", "key", "last_full_download")
-                .done(function(model){
-					console.log("In Sync: db completely downloaded");
-					that.sync_in_progress = true;
-					that.upload()
-						.done(function(){
-							console.log("UPLOAD FINISHED");
-							notifs_view.add_alert({
-								notif_type: "success",
-								message: "Sync successfully finished"
-							});
-						})
-						.fail(function(error){
-							console.log("ERROR IN UPLOAD :" + error);
-							notifs_view.add_alert({
-								notif_type: "error",
-								message: "Sync Incomplete. Failed to finish upload : "+error
-							});
-						})
-						.always(function(){
-							that.inc_download({background:false})
-								.done(function(){
-									console.log("INC DOWNLOAD FINISHED");
-									that.sync_in_progress = false;
-									
-									notifs_view.add_alert({
+            else{
+            	check_connectivity.is_internet_connected()
+	            .done(function(){
+	            	Offline.fetch_object("meta_data", "key", "last_full_download")
+	                .done(function(model){
+						console.log("In Sync: db completely downloaded");
+						that.sync_in_progress = true;
+						that.upload()
+							.done(function(){
+								console.log("UPLOAD FINISHED");
+								notifs_view.add_alert({
 									notif_type: "success",
-									message: "Incremental download successfully finished"
-									});
-								})
-								.fail(function(error){
-									console.log("ERROR IN INC DOWNLOAD");
-									console.log(error);
-									that.sync_in_progress = false;
-									
-									notifs_view.add_alert({
-										notif_type: "error",
-										message: "Sync Incomplete. Failed to do Incremental Download: "+error
-									});
-									
+									message: "Sync successfully finished"
 								});
-						});
-				
-				})
-				.fail(function(model, error){
-                    if(error == "Not Found")
-                        {
-                            that.render()
-                               .done(function(){
-									console.log("In Sync: db not completely downloaded");
-									that.download();
-                               });
-                        }    
-                });
-				
+							})
+							.fail(function(error){
+								console.log("ERROR IN UPLOAD :" + error);
+								notifs_view.add_alert({
+									notif_type: "error",
+									message: "Sync Incomplete. Failed to finish upload : "+error
+								});
+							})
+							.always(function(){
+								that.inc_download({background:false})
+									.done(function(){
+										console.log("INC DOWNLOAD FINISHED");
+										that.sync_in_progress = false;
+										
+										notifs_view.add_alert({
+										notif_type: "success",
+										message: "Incremental download successfully finished"
+										});
+									})
+									.fail(function(error){
+										console.log("ERROR IN INC DOWNLOAD");
+										console.log(error);
+										that.sync_in_progress = false;
+										
+										notifs_view.add_alert({
+											notif_type: "error",
+											message: "Sync Incomplete. Failed to do Incremental Download: "+error
+										});
+										
+									});
+							});
+					
+					})
+					.fail(function(model, error){
+	                    if(error == "Not Found")
+	                        {
+	                            that.render()
+	                               .done(function(){
+										console.log("In Sync: db not completely downloaded");
+										that.download();
+	                               });
+	                        }    
+	                });
+	            })
+	            //No connectivity
+	            .fail(function(){
+	            	alert("Internet doesn't seem to be connected this computer. Please try sync after some time.");
+	            });
+            }
+	            
         },
 		
 		download: function(){
@@ -10363,9 +10464,17 @@ define('views/dashboard',[
             };
 
             //check if uploadqueue is empty and internet is connected - if both true do the background download
-            if(this.is_uploadqueue_empty() && this.is_internet_connected() && !this.sync_in_progress)
-                this.inc_download({background:true})
+            if(this.is_uploadqueue_empty() && !this.sync_in_progress){
+            	this.is_internet_connected()
+            	.done(function(){
+            		this.inc_download({background:true})
                     .always(call_again);
+            	})
+            	.fail(function(){
+            		console.log("Incremental download failed because there is no connectivity.")
+            		call_again();
+            	})
+            }
             else
                 call_again();
         },
@@ -10375,7 +10484,8 @@ define('views/dashboard',[
         },
         
         is_internet_connected : function(){
-            return navigator.onLine;
+        	//return navigator.onLine;
+            return check_connectivity.is_internet_connected();
         },               
 
         logout: function(){
@@ -10547,23 +10657,18 @@ h?1:e>h?-1:0},"date-pre":function(e){e=Date.parse(e);if(isNaN(e)||""===e)e=Date.
 for(var k=1;k<e.length;k++){h=e.charAt(k);if(-1=="0123456789.".indexOf(h))return null;if("."==h){if(j)return null;j=!0}}return"numeric"},function(e){var h=Date.parse(e);return null!==h&&!isNaN(h)||"string"===typeof e&&0===e.length?"date":null},function(e){return"string"===typeof e&&-1!=e.indexOf("<")&&-1!=e.indexOf(">")?"html":null}]);h.fn.DataTable=j;h.fn.dataTable=j;h.fn.dataTableSettings=j.settings;h.fn.dataTableExt=j.ext};"function"===typeof define&&define.amd?define('datatable',["jquery"],L):jQuery&&!jQuery.fn.dataTable&&
 L(jQuery)})(window,document);
 
-// Simple Set Clipboard System
-// Author: Joseph Huckaby
-var ZeroClipboard_TableTools={version:"1.0.4-TableTools2",clients:{},moviePath:"",nextId:1,$:function(a){"string"==typeof a&&(a=document.getElementById(a));a.addClass||(a.hide=function(){this.style.display="none"},a.show=function(){this.style.display=""},a.addClass=function(a){this.removeClass(a);this.className+=" "+a},a.removeClass=function(a){this.className=this.className.replace(RegExp("\\s*"+a+"\\s*")," ").replace(/^\s+/,"").replace(/\s+$/,"")},a.hasClass=function(a){return!!this.className.match(RegExp("\\s*"+
-a+"\\s*"))});return a},setMoviePath:function(a){this.moviePath=a},dispatch:function(a,b,c){(a=this.clients[a])&&a.receiveEvent(b,c)},register:function(a,b){this.clients[a]=b},getDOMObjectPosition:function(a){var b={left:0,top:0,width:a.width?a.width:a.offsetWidth,height:a.height?a.height:a.offsetHeight};""!=a.style.width&&(b.width=a.style.width.replace("px",""));""!=a.style.height&&(b.height=a.style.height.replace("px",""));for(;a;)b.left+=a.offsetLeft,b.top+=a.offsetTop,a=a.offsetParent;return b},
-Client:function(a){this.handlers={};this.id=ZeroClipboard_TableTools.nextId++;this.movieId="ZeroClipboard_TableToolsMovie_"+this.id;ZeroClipboard_TableTools.register(this.id,this);a&&this.glue(a)}};
-ZeroClipboard_TableTools.Client.prototype={id:0,ready:!1,movie:null,clipText:"",fileName:"",action:"copy",handCursorEnabled:!0,cssEffects:!0,handlers:null,sized:!1,glue:function(a,b){this.domElement=ZeroClipboard_TableTools.$(a);var c=99;this.domElement.style.zIndex&&(c=parseInt(this.domElement.style.zIndex)+1);var d=ZeroClipboard_TableTools.getDOMObjectPosition(this.domElement);this.div=document.createElement("div");var e=this.div.style;e.position="absolute";e.left="0px";e.top="0px";e.width=d.width+
-"px";e.height=d.height+"px";e.zIndex=c;"undefined"!=typeof b&&""!=b&&(this.div.title=b);0!=d.width&&0!=d.height&&(this.sized=!0);this.domElement&&(this.domElement.appendChild(this.div),this.div.innerHTML=this.getHTML(d.width,d.height))},positionElement:function(){var a=ZeroClipboard_TableTools.getDOMObjectPosition(this.domElement),b=this.div.style;b.position="absolute";b.width=a.width+"px";b.height=a.height+"px";0!=a.width&&0!=a.height&&(this.sized=!0,b=this.div.childNodes[0],b.width=a.width,b.height=
-a.height)},getHTML:function(a,b){var c="",d="id="+this.id+"&width="+a+"&height="+b;if(navigator.userAgent.match(/MSIE/))var e=location.href.match(/^https/i)?"https://":"http://",c=c+('<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="'+e+'download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" width="'+a+'" height="'+b+'" id="'+this.movieId+'" align="middle"><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+
-ZeroClipboard_TableTools.moviePath+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+d+'"/><param name="wmode" value="transparent"/></object>');else c+='<embed id="'+this.movieId+'" src="'+ZeroClipboard_TableTools.moviePath+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+a+'" height="'+b+'" name="'+this.movieId+'" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+
-d+'" wmode="transparent" />';return c},hide:function(){this.div&&(this.div.style.left="-2000px")},show:function(){this.reposition()},destroy:function(){if(this.domElement&&this.div){this.hide();this.div.innerHTML="";var a=document.getElementsByTagName("body")[0];try{a.removeChild(this.div)}catch(b){}this.div=this.domElement=null}},reposition:function(a){a&&((this.domElement=ZeroClipboard_TableTools.$(a))||this.hide());if(this.domElement&&this.div){var a=ZeroClipboard_TableTools.getDOMObjectPosition(this.domElement),
-b=this.div.style;b.left=""+a.left+"px";b.top=""+a.top+"px"}},clearText:function(){this.clipText="";this.ready&&this.movie.clearText()},appendText:function(a){this.clipText+=a;this.ready&&this.movie.appendText(a)},setText:function(a){this.clipText=a;this.ready&&this.movie.setText(a)},setCharSet:function(a){this.charSet=a;this.ready&&this.movie.setCharSet(a)},setBomInc:function(a){this.incBom=a;this.ready&&this.movie.setBomInc(a)},setFileName:function(a){this.fileName=a;this.ready&&this.movie.setFileName(a)},
-setAction:function(a){this.action=a;this.ready&&this.movie.setAction(a)},addEventListener:function(a,b){a=a.toString().toLowerCase().replace(/^on/,"");this.handlers[a]||(this.handlers[a]=[]);this.handlers[a].push(b)},setHandCursor:function(a){this.handCursorEnabled=a;this.ready&&this.movie.setHandCursor(a)},setCSSEffects:function(a){this.cssEffects=!!a},receiveEvent:function(a,b){a=a.toString().toLowerCase().replace(/^on/,"");switch(a){case "load":this.movie=document.getElementById(this.movieId);
-if(!this.movie){var c=this;setTimeout(function(){c.receiveEvent("load",null)},1);return}if(!this.ready&&navigator.userAgent.match(/Firefox/)&&navigator.userAgent.match(/Windows/)){c=this;setTimeout(function(){c.receiveEvent("load",null)},100);this.ready=!0;return}this.ready=!0;this.movie.clearText();this.movie.appendText(this.clipText);this.movie.setFileName(this.fileName);this.movie.setAction(this.action);this.movie.setCharSet(this.charSet);this.movie.setBomInc(this.incBom);this.movie.setHandCursor(this.handCursorEnabled);
-break;case "mouseover":this.domElement&&this.cssEffects&&this.recoverActive&&this.domElement.addClass("active");break;case "mouseout":this.domElement&&this.cssEffects&&(this.recoverActive=!1,this.domElement.hasClass("active")&&(this.domElement.removeClass("active"),this.recoverActive=!0));break;case "mousedown":this.domElement&&this.cssEffects&&this.domElement.addClass("active");break;case "mouseup":this.domElement&&this.cssEffects&&(this.domElement.removeClass("active"),this.recoverActive=!1)}if(this.handlers[a])for(var d=
-0,e=this.handlers[a].length;d<e;d++){var f=this.handlers[a][d];if("function"==typeof f)f(this,b);else if("object"==typeof f&&2==f.length)f[0][f[1]](this,b);else if("string"==typeof f)window[f](this,b)}}};
-
-
+(function(root, factory) {
+	  // Set up DT_bootstrap appropriately for the environment.
+	  if (typeof define === 'function' && define.amd) {
+	    // AMD
+	    define('tabletools',['jquery', 'datatable', 'tabletools'], function($) {
+	      factory($);
+	    });
+	  } else {
+	    // Browser globals
+	    factory(root.jQuery);
+	  }
+	}(this, function($) {
 /*
  * File:        TableTools.min.js
  * Version:     2.1.5
@@ -10578,18 +10683,6 @@ break;case "mouseover":this.domElement&&this.cssEffects&&this.recoverActive&&thi
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
  * or FITNESS FOR A PARTICULAR PURPOSE. See the license files for details.
  */
-(function(root, factory) {
-	  // Set up DT_bootstrap appropriately for the environment.
-	  if (typeof define === 'function' && define.amd) {
-	    // AMD
-	    define('tabletools',['jquery', 'datatable', 'tabletools'], function($) {
-	      factory($);
-	    });
-	  } else {
-	    // Browser globals
-	    factory(root.jQuery);
-	  }
-	}(this, function($) {
 var TableTools;
 (function(e,n,g){TableTools=function(a,b){!this instanceof TableTools&&alert("Warning: TableTools must be initialised with the keyword 'new'");this.s={that:this,dt:a.fnSettings(),print:{saveStart:-1,saveLength:-1,saveScroll:-1,funcEnd:function(){}},buttonCounter:0,select:{type:"",selected:[],preRowSelect:null,postSelected:null,postDeselected:null,all:!1,selectedClass:""},custom:{},swfPath:"",buttonSet:[],master:!1,tags:{}};this.dom={container:null,table:null,print:{hidden:[],message:null},collection:{collection:null,
 background:null}};this.classes=e.extend(!0,{},TableTools.classes);this.s.dt.bJUI&&e.extend(!0,this.classes,TableTools.classes_themeroller);this.fnSettings=function(){return this.s};"undefined"==typeof b&&(b={});this._fnConstruct(b);return this};TableTools.prototype={fnGetSelected:function(a){var b=[],c=this.s.dt.aoData,d=this.s.dt.aiDisplay,f;if(a){a=0;for(f=d.length;a<f;a++)c[d[a]]._DTTT_selected&&b.push(c[d[a]].nTr)}else{a=0;for(f=c.length;a<f;a++)c[a]._DTTT_selected&&b.push(c[a].nTr)}return b},
@@ -10639,372 +10732,19 @@ e.fn.DataTable.TableTools=TableTools})(jQuery,window,document);}));
 
 // Simple Set Clipboard System
 // Author: Joseph Huckaby
-
-var ZeroClipboard_TableTools = {
-	
-	version: "1.0.4-TableTools2",
-	clients: {}, // registered upload clients on page, indexed by id
-	moviePath: '', // URL to movie
-	nextId: 1, // ID of next movie
-	
-	$: function(thingy) {
-		// simple DOM lookup utility function
-		if (typeof(thingy) == 'string') thingy = document.getElementById(thingy);
-		if (!thingy.addClass) {
-			// extend element with a few useful methods
-			thingy.hide = function() { this.style.display = 'none'; };
-			thingy.show = function() { this.style.display = ''; };
-			thingy.addClass = function(name) { this.removeClass(name); this.className += ' ' + name; };
-			thingy.removeClass = function(name) {
-				this.className = this.className.replace( new RegExp("\\s*" + name + "\\s*"), " ").replace(/^\s+/, '').replace(/\s+$/, '');
-			};
-			thingy.hasClass = function(name) {
-				return !!this.className.match( new RegExp("\\s*" + name + "\\s*") );
-			}
-		}
-		return thingy;
-	},
-	
-	setMoviePath: function(path) {
-		// set path to ZeroClipboard.swf
-		this.moviePath = path;
-	},
-	
-	dispatch: function(id, eventName, args) {
-		// receive event from flash movie, send to client		
-		var client = this.clients[id];
-		if (client) {
-			client.receiveEvent(eventName, args);
-		}
-	},
-	
-	register: function(id, client) {
-		// register new client to receive events
-		this.clients[id] = client;
-	},
-	
-	getDOMObjectPosition: function(obj) {
-		// get absolute coordinates for dom element
-		var info = {
-			left: 0, 
-			top: 0, 
-			width: obj.width ? obj.width : obj.offsetWidth, 
-			height: obj.height ? obj.height : obj.offsetHeight
-		};
-		
-		if ( obj.style.width != "" )
-			info.width = obj.style.width.replace("px","");
-		
-		if ( obj.style.height != "" )
-			info.height = obj.style.height.replace("px","");
-
-		while (obj) {
-			info.left += obj.offsetLeft;
-			info.top += obj.offsetTop;
-			obj = obj.offsetParent;
-		}
-
-		return info;
-	},
-	
-	Client: function(elem) {
-		// constructor for new simple upload client
-		this.handlers = {};
-		
-		// unique ID
-		this.id = ZeroClipboard_TableTools.nextId++;
-		this.movieId = 'ZeroClipboard_TableToolsMovie_' + this.id;
-		
-		// register client with singleton to receive flash events
-		ZeroClipboard_TableTools.register(this.id, this);
-		
-		// create movie
-		if (elem) this.glue(elem);
-	}
-};
-
-ZeroClipboard_TableTools.Client.prototype = {
-	
-	id: 0, // unique ID for us
-	ready: false, // whether movie is ready to receive events or not
-	movie: null, // reference to movie object
-	clipText: '', // text to copy to clipboard
-	fileName: '', // default file save name
-	action: 'copy', // action to perform
-	handCursorEnabled: true, // whether to show hand cursor, or default pointer cursor
-	cssEffects: true, // enable CSS mouse effects on dom container
-	handlers: null, // user event handlers
-	sized: false,
-	
-	glue: function(elem, title) {
-		// glue to DOM element
-		// elem can be ID or actual DOM element object
-		this.domElement = ZeroClipboard_TableTools.$(elem);
-		
-		// float just above object, or zIndex 99 if dom element isn't set
-		var zIndex = 99;
-		if (this.domElement.style.zIndex) {
-			zIndex = parseInt(this.domElement.style.zIndex) + 1;
-		}
-		
-		// find X/Y position of domElement
-		var box = ZeroClipboard_TableTools.getDOMObjectPosition(this.domElement);
-		
-		// create floating DIV above element
-		this.div = document.createElement('div');
-		var style = this.div.style;
-		style.position = 'absolute';
-		style.left = '0px';
-		style.top = '0px';
-		style.width = (box.width) + 'px';
-		style.height = box.height + 'px';
-		style.zIndex = zIndex;
-		
-		if ( typeof title != "undefined" && title != "" ) {
-			this.div.title = title;
-		}
-		if ( box.width != 0 && box.height != 0 ) {
-			this.sized = true;
-		}
-		
-		// style.backgroundColor = '#f00'; // debug
-		if ( this.domElement ) {
-			this.domElement.appendChild(this.div);
-			this.div.innerHTML = this.getHTML( box.width, box.height );
-		}
-	},
-	
-	positionElement: function() {
-		var box = ZeroClipboard_TableTools.getDOMObjectPosition(this.domElement);
-		var style = this.div.style;
-		
-		style.position = 'absolute';
-		//style.left = (this.domElement.offsetLeft)+'px';
-		//style.top = this.domElement.offsetTop+'px';
-		style.width = box.width + 'px';
-		style.height = box.height + 'px';
-		
-		if ( box.width != 0 && box.height != 0 ) {
-			this.sized = true;
-		} else {
-			return;
-		}
-		
-		var flash = this.div.childNodes[0];
-		flash.width = box.width;
-		flash.height = box.height;
-	},
-	
-	getHTML: function(width, height) {
-		// return HTML for movie
-		var html = '';
-		var flashvars = 'id=' + this.id + 
-			'&width=' + width + 
-			'&height=' + height;
-			
-		if (navigator.userAgent.match(/MSIE/)) {
-			// IE gets an OBJECT tag
-			var protocol = location.href.match(/^https/i) ? 'https://' : 'http://';
-			html += '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="'+protocol+'download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" width="'+width+'" height="'+height+'" id="'+this.movieId+'" align="middle"><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+ZeroClipboard_TableTools.moviePath+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+flashvars+'"/><param name="wmode" value="transparent"/></object>';
-		}
-		else {
-			// all other browsers get an EMBED tag
-			html += '<embed id="'+this.movieId+'" src="'+ZeroClipboard_TableTools.moviePath+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+width+'" height="'+height+'" name="'+this.movieId+'" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+flashvars+'" wmode="transparent" />';
-		}
-		return html;
-	},
-	
-	hide: function() {
-		// temporarily hide floater offscreen
-		if (this.div) {
-			this.div.style.left = '-2000px';
-		}
-	},
-	
-	show: function() {
-		// show ourselves after a call to hide()
-		this.reposition();
-	},
-	
-	destroy: function() {
-		// destroy control and floater
-		if (this.domElement && this.div) {
-			this.hide();
-			this.div.innerHTML = '';
-			
-			var body = document.getElementsByTagName('body')[0];
-			try { body.removeChild( this.div ); } catch(e) {;}
-			
-			this.domElement = null;
-			this.div = null;
-		}
-	},
-	
-	reposition: function(elem) {
-		// reposition our floating div, optionally to new container
-		// warning: container CANNOT change size, only position
-		if (elem) {
-			this.domElement = ZeroClipboard_TableTools.$(elem);
-			if (!this.domElement) this.hide();
-		}
-		
-		if (this.domElement && this.div) {
-			var box = ZeroClipboard_TableTools.getDOMObjectPosition(this.domElement);
-			var style = this.div.style;
-			style.left = '' + box.left + 'px';
-			style.top = '' + box.top + 'px';
-		}
-	},
-	
-	clearText: function() {
-		// clear the text to be copy / saved
-		this.clipText = '';
-		if (this.ready) this.movie.clearText();
-	},
-	
-	appendText: function(newText) {
-		// append text to that which is to be copied / saved
-		this.clipText += newText;
-		if (this.ready) { this.movie.appendText(newText) ;}
-	},
-	
-	setText: function(newText) {
-		// set text to be copied to be copied / saved
-		this.clipText = newText;
-		if (this.ready) { this.movie.setText(newText) ;}
-	},
-	
-	setCharSet: function(charSet) {
-		// set the character set (UTF16LE or UTF8)
-		this.charSet = charSet;
-		if (this.ready) { this.movie.setCharSet(charSet) ;}
-	},
-	
-	setBomInc: function(bomInc) {
-		// set if the BOM should be included or not
-		this.incBom = bomInc;
-		if (this.ready) { this.movie.setBomInc(bomInc) ;}
-	},
-	
-	setFileName: function(newText) {
-		// set the file name
-		this.fileName = newText;
-		if (this.ready) this.movie.setFileName(newText);
-	},
-	
-	setAction: function(newText) {
-		// set action (save or copy)
-		this.action = newText;
-		if (this.ready) this.movie.setAction(newText);
-	},
-	
-	addEventListener: function(eventName, func) {
-		// add user event listener for event
-		// event types: load, queueStart, fileStart, fileComplete, queueComplete, progress, error, cancel
-		eventName = eventName.toString().toLowerCase().replace(/^on/, '');
-		if (!this.handlers[eventName]) this.handlers[eventName] = [];
-		this.handlers[eventName].push(func);
-	},
-	
-	setHandCursor: function(enabled) {
-		// enable hand cursor (true), or default arrow cursor (false)
-		this.handCursorEnabled = enabled;
-		if (this.ready) this.movie.setHandCursor(enabled);
-	},
-	
-	setCSSEffects: function(enabled) {
-		// enable or disable CSS effects on DOM container
-		this.cssEffects = !!enabled;
-	},
-	
-	receiveEvent: function(eventName, args) {
-		// receive event from flash
-		eventName = eventName.toString().toLowerCase().replace(/^on/, '');
-		
-		// special behavior for certain events
-		switch (eventName) {
-			case 'load':
-				// movie claims it is ready, but in IE this isn't always the case...
-				// bug fix: Cannot extend EMBED DOM elements in Firefox, must use traditional function
-				this.movie = document.getElementById(this.movieId);
-				if (!this.movie) {
-					var self = this;
-					setTimeout( function() { self.receiveEvent('load', null); }, 1 );
-					return;
-				}
-				
-				// firefox on pc needs a "kick" in order to set these in certain cases
-				if (!this.ready && navigator.userAgent.match(/Firefox/) && navigator.userAgent.match(/Windows/)) {
-					var self = this;
-					setTimeout( function() { self.receiveEvent('load', null); }, 100 );
-					this.ready = true;
-					return;
-				}
-				
-				this.ready = true;
-				this.movie.clearText();
-				this.movie.appendText( this.clipText );
-				this.movie.setFileName( this.fileName );
-				this.movie.setAction( this.action );
-				this.movie.setCharSet( this.charSet );
-				this.movie.setBomInc( this.incBom );
-				this.movie.setHandCursor( this.handCursorEnabled );
-				break;
-			
-			case 'mouseover':
-				if (this.domElement && this.cssEffects) {
-					//this.domElement.addClass('hover');
-					if (this.recoverActive) this.domElement.addClass('active');
-				}
-				break;
-			
-			case 'mouseout':
-				if (this.domElement && this.cssEffects) {
-					this.recoverActive = false;
-					if (this.domElement.hasClass('active')) {
-						this.domElement.removeClass('active');
-						this.recoverActive = true;
-					}
-					//this.domElement.removeClass('hover');
-				}
-				break;
-			
-			case 'mousedown':
-				if (this.domElement && this.cssEffects) {
-					this.domElement.addClass('active');
-				}
-				break;
-			
-			case 'mouseup':
-				if (this.domElement && this.cssEffects) {
-					this.domElement.removeClass('active');
-					this.recoverActive = false;
-				}
-				break;
-		} // switch eventName
-		
-		if (this.handlers[eventName]) {
-			for (var idx = 0, len = this.handlers[eventName].length; idx < len; idx++) {
-				var func = this.handlers[eventName][idx];
-			
-				if (typeof(func) == 'function') {
-					// actual function reference
-					func(this, args);
-				}
-				else if ((typeof(func) == 'object') && (func.length == 2)) {
-					// PHP style object + method, i.e. [myObject, 'myMethod']
-					func[0][ func[1] ](this, args);
-				}
-				else if (typeof(func) == 'string') {
-					// name of function
-					window[func](this, args);
-				}
-			} // foreach event handler defined
-		} // user defined handler for event
-	}
-	
-};
-
+var ZeroClipboard_TableTools={version:"1.0.4-TableTools2",clients:{},moviePath:"",nextId:1,$:function(a){"string"==typeof a&&(a=document.getElementById(a));a.addClass||(a.hide=function(){this.style.display="none"},a.show=function(){this.style.display=""},a.addClass=function(a){this.removeClass(a);this.className+=" "+a},a.removeClass=function(a){this.className=this.className.replace(RegExp("\\s*"+a+"\\s*")," ").replace(/^\s+/,"").replace(/\s+$/,"")},a.hasClass=function(a){return!!this.className.match(RegExp("\\s*"+
+a+"\\s*"))});return a},setMoviePath:function(a){this.moviePath=a},dispatch:function(a,b,c){(a=this.clients[a])&&a.receiveEvent(b,c)},register:function(a,b){this.clients[a]=b},getDOMObjectPosition:function(a){var b={left:0,top:0,width:a.width?a.width:a.offsetWidth,height:a.height?a.height:a.offsetHeight};""!=a.style.width&&(b.width=a.style.width.replace("px",""));""!=a.style.height&&(b.height=a.style.height.replace("px",""));for(;a;)b.left+=a.offsetLeft,b.top+=a.offsetTop,a=a.offsetParent;return b},
+Client:function(a){this.handlers={};this.id=ZeroClipboard_TableTools.nextId++;this.movieId="ZeroClipboard_TableToolsMovie_"+this.id;ZeroClipboard_TableTools.register(this.id,this);a&&this.glue(a)}};
+ZeroClipboard_TableTools.Client.prototype={id:0,ready:!1,movie:null,clipText:"",fileName:"",action:"copy",handCursorEnabled:!0,cssEffects:!0,handlers:null,sized:!1,glue:function(a,b){this.domElement=ZeroClipboard_TableTools.$(a);var c=99;this.domElement.style.zIndex&&(c=parseInt(this.domElement.style.zIndex)+1);var d=ZeroClipboard_TableTools.getDOMObjectPosition(this.domElement);this.div=document.createElement("div");var e=this.div.style;e.position="absolute";e.left="0px";e.top="0px";e.width=d.width+
+"px";e.height=d.height+"px";e.zIndex=c;"undefined"!=typeof b&&""!=b&&(this.div.title=b);0!=d.width&&0!=d.height&&(this.sized=!0);this.domElement&&(this.domElement.appendChild(this.div),this.div.innerHTML=this.getHTML(d.width,d.height))},positionElement:function(){var a=ZeroClipboard_TableTools.getDOMObjectPosition(this.domElement),b=this.div.style;b.position="absolute";b.width=a.width+"px";b.height=a.height+"px";0!=a.width&&0!=a.height&&(this.sized=!0,b=this.div.childNodes[0],b.width=a.width,b.height=
+a.height)},getHTML:function(a,b){var c="",d="id="+this.id+"&width="+a+"&height="+b;if(navigator.userAgent.match(/MSIE/))var e=location.href.match(/^https/i)?"https://":"http://",c=c+('<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="'+e+'download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" width="'+a+'" height="'+b+'" id="'+this.movieId+'" align="middle"><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+
+ZeroClipboard_TableTools.moviePath+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+d+'"/><param name="wmode" value="transparent"/></object>');else c+='<embed id="'+this.movieId+'" src="'+ZeroClipboard_TableTools.moviePath+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+a+'" height="'+b+'" name="'+this.movieId+'" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+
+d+'" wmode="transparent" />';return c},hide:function(){this.div&&(this.div.style.left="-2000px")},show:function(){this.reposition()},destroy:function(){if(this.domElement&&this.div){this.hide();this.div.innerHTML="";var a=document.getElementsByTagName("body")[0];try{a.removeChild(this.div)}catch(b){}this.div=this.domElement=null}},reposition:function(a){a&&((this.domElement=ZeroClipboard_TableTools.$(a))||this.hide());if(this.domElement&&this.div){var a=ZeroClipboard_TableTools.getDOMObjectPosition(this.domElement),
+b=this.div.style;b.left=""+a.left+"px";b.top=""+a.top+"px"}},clearText:function(){this.clipText="";this.ready&&this.movie.clearText()},appendText:function(a){this.clipText+=a;this.ready&&this.movie.appendText(a)},setText:function(a){this.clipText=a;this.ready&&this.movie.setText(a)},setCharSet:function(a){this.charSet=a;this.ready&&this.movie.setCharSet(a)},setBomInc:function(a){this.incBom=a;this.ready&&this.movie.setBomInc(a)},setFileName:function(a){this.fileName=a;this.ready&&this.movie.setFileName(a)},
+setAction:function(a){this.action=a;this.ready&&this.movie.setAction(a)},addEventListener:function(a,b){a=a.toString().toLowerCase().replace(/^on/,"");this.handlers[a]||(this.handlers[a]=[]);this.handlers[a].push(b)},setHandCursor:function(a){this.handCursorEnabled=a;this.ready&&this.movie.setHandCursor(a)},setCSSEffects:function(a){this.cssEffects=!!a},receiveEvent:function(a,b){a=a.toString().toLowerCase().replace(/^on/,"");switch(a){case "load":this.movie=document.getElementById(this.movieId);
+if(!this.movie){var c=this;setTimeout(function(){c.receiveEvent("load",null)},1);return}if(!this.ready&&navigator.userAgent.match(/Firefox/)&&navigator.userAgent.match(/Windows/)){c=this;setTimeout(function(){c.receiveEvent("load",null)},100);this.ready=!0;return}this.ready=!0;this.movie.clearText();this.movie.appendText(this.clipText);this.movie.setFileName(this.fileName);this.movie.setAction(this.action);this.movie.setCharSet(this.charSet);this.movie.setBomInc(this.incBom);this.movie.setHandCursor(this.handCursorEnabled);
+break;case "mouseover":this.domElement&&this.cssEffects&&this.recoverActive&&this.domElement.addClass("active");break;case "mouseout":this.domElement&&this.cssEffects&&(this.recoverActive=!1,this.domElement.hasClass("active")&&(this.domElement.removeClass("active"),this.recoverActive=!0));break;case "mousedown":this.domElement&&this.cssEffects&&this.domElement.addClass("active");break;case "mouseup":this.domElement&&this.cssEffects&&(this.domElement.removeClass("active"),this.recoverActive=!1)}if(this.handlers[a])for(var d=
+0,e=this.handlers[a].length;d<e;d++){var f=this.handlers[a][d];if("function"==typeof f)f(this,b);else if("object"==typeof f&&2==f.length)f[0][f[1]](this,b);else if("string"==typeof f)window[f](this,b)}}};
 define("zeroclipboard", function(){});
 
 define('views/list',['jquery', 'underscore', 'datatable', 'indexeddb_backbone_config', 'layoutmanager', 'views/notification', 'configs', 'offline_utils', 'indexeddb-backbone', 'tabletools', 'zeroclipboard'], function($, pass, oDT, indexeddb, layoutmanager, notifs_view, all_configs, Offline) {
@@ -11128,8 +10868,9 @@ define('views/form_controller',[
     'convert_namespace', 
     'offline_utils', 
     'online_utils',
-    'indexeddb-backbone'
-    ], function(jquery, underscore, layoutmanager, notifs_view, indexeddb, configs, Form, upload_collection, ConvertNamespace, Offline, Online) {
+    'indexeddb-backbone',
+    'check_internet_connectivity',
+    ], function(jquery, underscore, layoutmanager, notifs_view, indexeddb, configs, Form, upload_collection, ConvertNamespace, Offline, Online,pass,check_connectivity) {
 
     // FormController: Brings up the Add/Edit form
     
@@ -11320,31 +11061,54 @@ define('views/form_controller',[
         save_object: function(json, foreign_entities, entity_name){
             var dfd = new $.Deferred();
             var that =  this;
-            if(this.is_uploadqueue_empty() && this.is_internet_connected())
+            if(this.is_uploadqueue_empty())
             {
                 //Online mode
-                ConvertNamespace.convert(json, foreign_entities, "offlinetoonline")
-                    .done(function(on_off_jsons){
-                        that.save_when_online(entity_name, on_off_jsons)
-                            .done(function(off_json){
-                                call_after_save(off_json)
-                                    .done(function(){
-                                        show_suc_notif();
-                                        dfd.resolve(off_json);
-                                    })
-                                    .fail(function(error){
-                                        alert("afterSave failed for entity - "+entity_name+" - "+error);
-                                    });
-                            })
-                            .fail(function(error){
-                                show_err_notif();
-                                dfd.reject(error);
-                            });                            
-                    })
-                    .fail(function(error){
-                        show_err_notif();
-                        return dfd.reject(error);
-                    });
+            	this.is_internet_connected()
+	            	.done(function(){
+	            		ConvertNamespace.convert(json, foreign_entities, "offlinetoonline")
+	                    .done(function(on_off_jsons){
+	                        that.save_when_online(entity_name, on_off_jsons)
+	                            .done(function(off_json){
+	                                call_after_save(off_json)
+	                                    .done(function(){
+	                                        show_suc_notif();
+	                                        dfd.resolve(off_json);
+	                                    })
+	                                    .fail(function(error){
+	                                    	show_err_notif("afterSave failed for entity - "+entity_name);
+	                                        //alert("afterSave failed for entity - "+entity_name+" - "+error);
+	                                    });
+	                            })
+	                            .fail(function(error){
+	                                show_err_notif("Save when online not working. Please check your form again.");
+	                                dfd.reject(error);
+	                            });                            
+	                    })
+	                    .fail(function(error){
+	                        show_err_notif("Error while converting json. Please check your form again.");
+	                        return dfd.reject(error);
+	                    });
+	            	})
+                .fail(function(){
+                	//Offline mode
+                	that.save_when_offline(entity_name, json)
+                    	.done(function(off_json){
+                    		call_after_save(off_json)
+                            	.done(function(){
+                            		show_suc_notif();
+                            		dfd.resolve(off_json);
+                            	})
+                            	.fail(function(error){
+                            		show_err_notif("afterSave failed for entity - "+entity_name);
+                            		//alert("afterSave failed for entity - "+entity_name+" - "+error);
+                            	});
+                    	})
+	                    .fail(function(error){
+	                        show_err_notif("Unable to save in offline mode. Please check your form again.");
+	                        return dfd.reject(error);
+	                    });
+                });
             }
             else
             {
@@ -11357,11 +11121,12 @@ define('views/form_controller',[
                                 dfd.resolve(off_json);
                             })
                             .fail(function(error){
-                                alert("afterSave failed for entity - "+entity_name+" - "+error);
+                            	show_err_notif("afterSave failed for entity - "+entity_name);
+                                //alert("afterSave failed for entity - "+entity_name+" - "+error);
                             });
                     })
                     .fail(function(error){
-                        show_err_notif();
+                        show_err_notif("Unable to save in offline mode. Please check your form again.");
                         return dfd.reject(error);
                     });
             }
@@ -11381,20 +11146,27 @@ define('views/form_controller',[
                 return dfd.promise();    
             };
             
-            function show_suc_notif(){
+            function show_suc_notif(mess){
                 notifs_view.add_alert({
                     notif_type: "success",
                     message: "Saved "+entity_name
                 });
             };
             
-            function show_err_notif(){
-                notifs_view.add_alert({
-                    notif_type: "error",
-                    message: "Error saving "+entity_name
-                });    
+            function show_err_notif(mess){
+            	if(mess === undefined){
+            		notifs_view.add_alert({
+                        notif_type: "error",
+                        message: "Error saving "+entity_name
+                    });
+            	}
+            	else{
+            		notifs_view.add_alert({
+                        notif_type: "error",
+                        message: "Error saving "+entity_name+". "+mess
+                    });
+            	}
             };
-            
             return dfd.promise();
         },
                 
@@ -11474,7 +11246,8 @@ define('views/form_controller',[
         },
         
         is_internet_connected : function(){
-            return navigator.onLine;
+        	return check_connectivity.is_internet_connected();
+            //return navigator.onLine;
         },       
 
         on_button2: function(e) {
@@ -11883,7 +11656,8 @@ define('user_initialize',[
     'configs',
     'jquery',
     'form_field_validator',
-  ], function(Auth, Offline, all_configs){
+    'check_internet_connectivity',
+  ], function(Auth, Offline, all_configs,pass,pass,check_connectivity){
     
     var run = function(){
         $.validator.addMethod('allowedChar',
@@ -11944,7 +11718,7 @@ define('user_initialize',[
             return;
         Auth.check_login()
             .done(function(){
-                if(!navigator.onLine)
+                if(!check_connectivity.is_internet_connected())
                     return;
                 all_configs.misc.onLogin(Offline, Auth);    
             });
@@ -12162,7 +11936,7 @@ require.config({
     'time_picker': 'libs/bootstrap/js/bootstrap-timepicker.min',    
     'jquery_cookie':'libs/jquery.cookie',
     'tabletools': 'libs/tabletools_media/js/Tabletools',
-    'zeroclipboard': 'libs/tabletools_media/js/ZeroClipboard',
+    'zeroclipboard': 'libs/tabletools_media/js/ZeroClipboard.min',
     
   },
   
@@ -12197,12 +11971,12 @@ require.config({
     'datatable': {
                     deps:["jquery"]
                 },                
-    'tabletools': {
-    			deps:['jquery', 'datatable']
-    } ,
     'zeroclipboard': {
-		deps:['tabletools']
+		deps:['jquery']
     },
+    'tabletools': {
+		deps:['jquery', 'datatable'/*,'zeroclipboard'*/]
+    } ,
      'form_field_validator': {
                  deps:["jquery"]
      }  ,
