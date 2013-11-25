@@ -63,11 +63,11 @@ define([
             this.start_time = new Date().toJSON().replace("Z", "");
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //checking internet connectivity before calling initialize download. So removing i
-            if(!this.internet_connected())
-            {
-                dfd.reject("Can't download database. Internet is not connected");
-                return dfd;
-            }
+//            if(!this.internet_connected())
+//            {
+//                dfd.reject("Can't download database. Internet is not connected");
+//                return dfd;
+//            }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
             //intialize UI objects
             this.$('#full_download_modal').modal({
@@ -139,7 +139,13 @@ define([
         start_full_download: function(){
             this.full_download_dfd = new $.Deferred();
             var that = this;
-            this.initialize_download()
+            this.internet_connected()
+            .fail(function(){
+            	that.remove_ui();
+                that.full_download_dfd.reject("Can't download database. Internet is not connected");
+            })
+            .done(function(){
+            	that.initialize_download()
                 .done(function(){
                     that.iterate_object_stores()
                         .done(function(){
@@ -169,7 +175,7 @@ define([
                     that.remove_ui();
                     that.full_download_dfd.reject(error);
                 });
-                
+            });
             return this.full_download_dfd;    
         },
         

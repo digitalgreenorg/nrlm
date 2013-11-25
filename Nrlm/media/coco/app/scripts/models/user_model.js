@@ -8,7 +8,7 @@ define([
   // Using the Require.js text! plugin, we are loaded raw text
   // which will be used as our views primary template
   // 'text!templates/project/list.html'
-], function(jquery, backbone, indexeddb, idb_backbone_adapter, UploadCollection,check_connectivity){
+], function(jquery, backbone, indexeddb, idb_backbone_adapter, UploadCollection, check_connectivity){
     
     var generic_model_offline = Backbone.Model.extend({
         database: indexeddb,
