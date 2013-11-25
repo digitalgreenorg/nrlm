@@ -79,3 +79,9 @@ def record_full_download_time(request):
     stat = FullDownloadStats(user = request.user, start_time = request.POST["start_time"], end_time = request.POST["end_time"])
     stat.save()
     return HttpResponse("1") 
+
+def check_connectivity(request):
+    if request.method == 'GET':
+        return HttpResponse("1")
+    else:
+        return HttpResponse("0")

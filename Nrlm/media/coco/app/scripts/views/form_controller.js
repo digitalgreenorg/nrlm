@@ -10,8 +10,9 @@ define([
     'convert_namespace', 
     'offline_utils', 
     'online_utils',
-    'indexeddb-backbone'
-    ], function(jquery, underscore, layoutmanager, notifs_view, indexeddb, configs, Form, upload_collection, ConvertNamespace, Offline, Online) {
+    'indexeddb-backbone',
+    'check_internet_connectivity',
+    ], function(jquery, underscore, layoutmanager, notifs_view, indexeddb, configs, Form, upload_collection, ConvertNamespace, Offline, Online,pass,check_connectivity) {
 
     // FormController: Brings up the Add/Edit form
     
@@ -202,31 +203,54 @@ define([
         save_object: function(json, foreign_entities, entity_name){
             var dfd = new $.Deferred();
             var that =  this;
-            if(this.is_uploadqueue_empty() && this.is_internet_connected())
+            if(this.is_uploadqueue_empty())
             {
                 //Online mode
-                ConvertNamespace.convert(json, foreign_entities, "offlinetoonline")
-                    .done(function(on_off_jsons){
-                        that.save_when_online(entity_name, on_off_jsons)
-                            .done(function(off_json){
-                                call_after_save(off_json)
-                                    .done(function(){
-                                        show_suc_notif();
-                                        dfd.resolve(off_json);
-                                    })
-                                    .fail(function(error){
-                                        alert("afterSave failed for entity - "+entity_name+" - "+error);
-                                    });
-                            })
-                            .fail(function(error){
-                                show_err_notif();
-                                dfd.reject(error);
-                            });                            
-                    })
-                    .fail(function(error){
-                        show_err_notif();
-                        return dfd.reject(error);
-                    });
+            	this.is_internet_connected()
+	            	.done(function(){
+	            		ConvertNamespace.convert(json, foreign_entities, "offlinetoonline")
+	                    .done(function(on_off_jsons){
+	                        that.save_when_online(entity_name, on_off_jsons)
+	                            .done(function(off_json){
+	                                call_after_save(off_json)
+	                                    .done(function(){
+	                                        show_suc_notif();
+	                                        dfd.resolve(off_json);
+	                                    })
+	                                    .fail(function(error){
+	                                    	show_err_notif("afterSave failed for entity - "+entity_name);
+	                                        //alert("afterSave failed for entity - "+entity_name+" - "+error);
+	                                    });
+	                            })
+	                            .fail(function(error){
+	                                show_err_notif("Save when online not working. Please check your form again.");
+	                                dfd.reject(error);
+	                            });                            
+	                    })
+	                    .fail(function(error){
+	                        show_err_notif("Error while converting json. Please check your form again.");
+	                        return dfd.reject(error);
+	                    });
+	            	})
+                .fail(function(){
+                	//Offline mode
+                	that.save_when_offline(entity_name, json)
+                    	.done(function(off_json){
+                    		call_after_save(off_json)
+                            	.done(function(){
+                            		show_suc_notif();
+                            		dfd.resolve(off_json);
+                            	})
+                            	.fail(function(error){
+                            		show_err_notif("afterSave failed for entity - "+entity_name);
+                            		//alert("afterSave failed for entity - "+entity_name+" - "+error);
+                            	});
+                    	})
+	                    .fail(function(error){
+	                        show_err_notif("Unable to save in offline mode. Please check your form again.");
+	                        return dfd.reject(error);
+	                    });
+                });
             }
             else
             {
@@ -239,11 +263,12 @@ define([
                                 dfd.resolve(off_json);
                             })
                             .fail(function(error){
-                                alert("afterSave failed for entity - "+entity_name+" - "+error);
+                            	show_err_notif("afterSave failed for entity - "+entity_name);
+                                //alert("afterSave failed for entity - "+entity_name+" - "+error);
                             });
                     })
                     .fail(function(error){
-                        show_err_notif();
+                        show_err_notif("Unable to save in offline mode. Please check your form again.");
                         return dfd.reject(error);
                     });
             }
@@ -263,20 +288,27 @@ define([
                 return dfd.promise();    
             };
             
-            function show_suc_notif(){
+            function show_suc_notif(mess){
                 notifs_view.add_alert({
                     notif_type: "success",
                     message: "Saved "+entity_name
                 });
             };
             
-            function show_err_notif(){
-                notifs_view.add_alert({
-                    notif_type: "error",
-                    message: "Error saving "+entity_name
-                });    
+            function show_err_notif(mess){
+            	if(mess === undefined){
+            		notifs_view.add_alert({
+                        notif_type: "error",
+                        message: "Error saving "+entity_name
+                    });
+            	}
+            	else{
+            		notifs_view.add_alert({
+                        notif_type: "error",
+                        message: "Error saving "+entity_name+". "+mess
+                    });
+            	}
             };
-            
             return dfd.promise();
         },
                 
@@ -356,7 +388,8 @@ define([
         },
         
         is_internet_connected : function(){
-            return navigator.onLine;
+        	return check_connectivity.is_internet_connected();
+            //return navigator.onLine;
         },       
 
         on_button2: function(e) {

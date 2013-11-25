@@ -12,8 +12,9 @@ define([
     'auth',
 	'offline_utils',
 	'views/full_download',
+	'check_internet_connectivity',
     ],
- function(jquery, pass, configs, indexeddb, upload_collection, UploadView, IncDownloadView, notifs_view, layoutmanager,User, Auth, Offline, FullDownloadView) {
+ function(jquery, pass, configs, indexeddb, upload_collection, UploadView, IncDownloadView, notifs_view, layoutmanager,User, Auth, Offline, FullDownloadView, check_connectivity) {
 
     var DashboardView = Backbone.Layout.extend({
         template: "#dashboard",
@@ -54,10 +55,21 @@ define([
                     continue;
                 var listing =true;
                 var add = true;
+                var enable_months = [];
                 if(configs[member].dashboard_display)
                 {
                     listing = configs[member].dashboard_display.listing;
                     add = configs[member].dashboard_display.add;
+                    enable_months = configs[member].dashboard_display.enable_months;
+                }
+                if(typeof enable_months != 'undefined'){
+                	var d = new Date();
+                    n = d.getMonth();
+                    n=n+1;
+                    res=$.inArray(n, enable_months);
+                    if(res === -1){
+                    	add=false;
+                    }
                 }
                 if(listing||add)
                 {
@@ -85,18 +97,27 @@ define([
 					return upload_collection.length;
 				});
 			});
-			
-			window.addEventListener("offline", this.user_offline);
-
-			window.addEventListener("online", this.user_online);
-			
-			if (User.isOnline()){
-				this.user_online();
-			}
-			else {
-				this.user_offline();
-			}
+/////////////////////////////////////////////////////////////////////////////////////////////////			
+//			window.addEventListener("offline", this.user_offline);
+//
+//			window.addEventListener("online", this.user_online);
+/////////////////////////////////////////////////////////////////////////////////////////////////			
 			var that = this;
+			
+			User.isOnline()
+			.done(function(){
+				that.user_online();
+			})
+			.fail(function(){
+				that.user_offline();
+			});
+//			if (User.isOnline()){
+//				this.user_online();
+//			}
+//			else {
+//				this.user_offline();
+//			}
+			
 			Offline.fetch_object("meta_data", "key", "last_full_download")
 				
                 .done(function(model){
@@ -140,62 +161,70 @@ define([
                     alert("Please wait till background download is finished.");
                     return;
             }
-			
-			Offline.fetch_object("meta_data", "key", "last_full_download")
-                .done(function(model){
-					console.log("In Sync: db completely downloaded");
-					that.sync_in_progress = true;
-					that.upload()
-						.done(function(){
-							console.log("UPLOAD FINISHED");
-							notifs_view.add_alert({
-								notif_type: "success",
-								message: "Sync successfully finished"
-							});
-						})
-						.fail(function(error){
-							console.log("ERROR IN UPLOAD :" + error);
-							notifs_view.add_alert({
-								notif_type: "error",
-								message: "Sync Incomplete. Failed to finish upload : "+error
-							});
-						})
-						.always(function(){
-							that.inc_download({background:false})
-								.done(function(){
-									console.log("INC DOWNLOAD FINISHED");
-									that.sync_in_progress = false;
-									
-									notifs_view.add_alert({
+            else{
+            	check_connectivity.is_internet_connected()
+	            .done(function(){
+	            	Offline.fetch_object("meta_data", "key", "last_full_download")
+	                .done(function(model){
+						console.log("In Sync: db completely downloaded");
+						that.sync_in_progress = true;
+						that.upload()
+							.done(function(){
+								console.log("UPLOAD FINISHED");
+								notifs_view.add_alert({
 									notif_type: "success",
-									message: "Incremental download successfully finished"
-									});
-								})
-								.fail(function(error){
-									console.log("ERROR IN INC DOWNLOAD");
-									console.log(error);
-									that.sync_in_progress = false;
-									
-									notifs_view.add_alert({
-										notif_type: "error",
-										message: "Sync Incomplete. Failed to do Incremental Download: "+error
-									});
-									
+									message: "Sync successfully finished"
 								});
-						});
-				
-				})
-				.fail(function(model, error){
-                    if(error == "Not Found")
-                        {
-                            that.render()
-                               .done(function(){
-									console.log("In Sync: db not completely downloaded");
-									that.download();
-                               });
-                        }    
-                });
-				
+							})
+							.fail(function(error){
+								console.log("ERROR IN UPLOAD :" + error);
+								notifs_view.add_alert({
+									notif_type: "error",
+									message: "Sync Incomplete. Failed to finish upload : "+error
+								});
+							})
+							.always(function(){
+								that.inc_download({background:false})
+									.done(function(){
+										console.log("INC DOWNLOAD FINISHED");
+										that.sync_in_progress = false;
+										
+										notifs_view.add_alert({
+										notif_type: "success",
+										message: "Incremental download successfully finished"
+										});
+									})
+									.fail(function(error){
+										console.log("ERROR IN INC DOWNLOAD");
+										console.log(error);
+										that.sync_in_progress = false;
+										
+										notifs_view.add_alert({
+											notif_type: "error",
+											message: "Sync Incomplete. Failed to do Incremental Download: "+error
+										});
+										
+									});
+							});
+					
+					})
+					.fail(function(model, error){
+	                    if(error == "Not Found")
+	                        {
+	                            that.render()
+	                               .done(function(){
+										console.log("In Sync: db not completely downloaded");
+										that.download();
+	                               });
+	                        }    
+	                });
+	            })
+	            //No connectivity
+	            .fail(function(){
+	            	alert("Internet doesn't seem to be connected this computer. Please try sync after some time.");
+	            });
+            }
+	            
         },
 		
 		download: function(){
@@ -276,9 +305,17 @@ define([
             };
 
             //check if uploadqueue is empty and internet is connected - if both true do the background download
-            if(this.is_uploadqueue_empty() && this.is_internet_connected() && !this.sync_in_progress)
-                this.inc_download({background:true})
+            if(this.is_uploadqueue_empty() && !this.sync_in_progress){
+            	this.is_internet_connected()
+            	.done(function(){
+            		this.inc_download({background:true})
                     .always(call_again);
+            	})
+            	.fail(function(){
+            		console.log("Incremental download failed because there is no connectivity.")
+            		call_again();
+            	})
+            }
             else
                 call_again();
         },
@@ -288,7 +325,8 @@ define([
         },
         
         is_internet_connected : function(){
-            return navigator.onLine;
+        	//return navigator.onLine;
+            return check_connectivity.is_internet_connected();
         },               
 
         logout: function(){

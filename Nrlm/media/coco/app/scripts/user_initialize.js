@@ -4,7 +4,8 @@ define([
     'configs',
     'jquery',
     'form_field_validator',
-  ], function(Auth, Offline, all_configs){
+    'check_internet_connectivity',
+  ], function(Auth, Offline, all_configs,pass,pass,check_connectivity){
     
     var run = function(){
         $.validator.addMethod('allowedChar',
@@ -65,9 +66,13 @@ define([
             return;
         Auth.check_login()
             .done(function(){
-                if(!navigator.onLine)
-                    return;
-                all_configs.misc.onLogin(Offline, Auth);    
+                check_connectivity.is_internet_connected()
+                .done(function(){
+                	all_configs.misc.onLogin(Offline, Auth);
+                })
+                .fail(function(){
+                	console.log("Reset databast check failed because of no Connectivity");
+                });
             });
     }
     

@@ -1078,7 +1078,8 @@ function() {
 			'rest_api_url' : '/api/v1/Target/',
 			'dashboard_display' : {
 	    		listing : true,
-	    		add : true
+	    		add : true,
+	    		enable_months: [4,5,11,12]
 	    	},
 			'page_header': 'Target',
 			'list_table_header_template': 'target_table_template',
