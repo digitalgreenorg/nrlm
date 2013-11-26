@@ -1,9 +1,11 @@
 # Create your views here.
+from django.template import loader, Context
 from django.contrib import auth
 from django.core import urlresolvers
 from django.http import HttpResponse
 from django.shortcuts import render
 from datetime import datetime
+from forms.models import Progress
 from models import CocoUser, FullDownloadStats
 
 def login(request):
@@ -78,4 +80,16 @@ def record_full_download_time(request):
         return HttpResponse("0")
     stat = FullDownloadStats(user = request.user, start_time = request.POST["start_time"], end_time = request.POST["end_time"])
     stat.save()
-    return HttpResponse("1") 
+    return HttpResponse("1")
+
+def analytics_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="deleteeee.csv"'
+    csv_data = Progress.objects.values_list('state__state_name', 'project__project_name','month','year','Two_1', 'Two_2')
+    print csv_data
+    t = loader.get_template('my_template_name.txt')
+    c = Context({
+        'data': csv_data,
+    })
+    response.write(t.render(c))
+    return response
