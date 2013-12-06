@@ -173,7 +173,7 @@ function() {
 	        		},
 	        	},
 	        },
-	        'unique_together_fields': ['state', 'project', 'month', 'year'],
+	        'unique_together_fields': ['state.id', 'project.id', 'month', 'year'],
 	        'sort_field': 'state',
 	        'form_field_validation': {
 	        	ignore: [],
@@ -636,7 +636,7 @@ function() {
 	        		},
 	        	},
 	        },
-	        'unique_together_fields': ['state', 'project', 'month', 'year'],
+	        'unique_together_fields': ['state.id', 'project.id', 'month', 'year'],
 	        'sort_field': 'state',
 	        'form_field_validation': {
 	        	ignore: [],
@@ -1099,7 +1099,7 @@ function() {
 	        		},
 	        	},
 	        },
-	        'unique_together_fields': ['state', 'project', 'year'],
+	        'unique_together_fields': ['state.id', 'project.id', 'year'],
 	        'sort_field': 'state',
 	        'form_field_validation': {
 	        	ignore: [],
@@ -1661,7 +1661,7 @@ function() {
 	        		},
 	        	},
 	        },
-	        'unique_together_fields': ['state', 'project', 'month','year'],
+	        'unique_together_fields': ['state.id', 'project.id', 'month','year'],
 	        'sort_field': 'state',
 	        'form_field_validation': {
 	        	ignore: [],
@@ -1985,7 +1985,7 @@ function() {
 	        		},
 	        	},
 	        },
-	        'unique_together_fields': ['state', 'project', 'month','year'],
+	        'unique_together_fields': ['state.id', 'project.id', 'month','year'],
 	        'sort_field': 'state',
 	        'form_field_validation': {
 	        	ignore: [],
