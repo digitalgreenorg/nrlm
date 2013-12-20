@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from datetime import datetime
 from models import CocoUser, FullDownloadStats
+from openpyxl import Workbook
+from openpyxl.writer.excel import save_virtual_workbook
 
 def login(request):
     if request.method == 'POST':
@@ -79,3 +81,18 @@ def record_full_download_time(request):
     stat = FullDownloadStats(user = request.user, start_time = request.POST["start_time"], end_time = request.POST["end_time"])
     stat.save()
     return HttpResponse("1") 
+
+def export_to_excel(request):
+    return render(request,'excel.html')
+
+def excel_download(request):
+    month=request.GET.get('month','')
+    year=request.GET.get('year','')
+    wb = Workbook()
+    ws = wb.get_active_sheet()
+    ws.title = "NRLP"
+    c = ws.cell('A4')
+    c.value = 'hello, world'
+    response = HttpResponse(save_virtual_workbook(wb), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="foo.xls"'
+    return response
