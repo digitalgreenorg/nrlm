@@ -9,6 +9,7 @@ from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
 from openpyxl.style import Alignment, Border, Color, NumberFormat
 from openpyxl.worksheet import RowDimension
+from models import Project, Progress, ProgressTill13, State, Target
 
 def login(request):
     if request.method == 'POST':
@@ -104,12 +105,9 @@ class CustomRowDimension(object):
         self.collapsed = False
         self.style_index = None
 
-def excel_download(request):
-    month=request.GET.get('month','')
-    year=request.GET.get('year','')
-    wb = Workbook()
-    ws = wb.get_active_sheet()
-    ws.title = "NRLP"
+def design_headings_excel(wb,ws):
+    
+    #TODO: "Make headings of target", "progress upto last FY", and "progress upto previous month since" generic
     
     c = ws.cell('A1')
     c.value = 'State'
@@ -118,6 +116,8 @@ def excel_download(request):
     c.style.alignment.horizontal = Alignment.HORIZONTAL_CENTER
     c.style.alignment.vertical = Alignment.VERTICAL_CENTER
     c.style.borders.bottom.border_style = Border.BORDER_THIN
+        
+    #ws.merge_cells(start_row=5,start_column=5,end_row=5,end_column=10)
         
     c = ws.cell('B1')
     c.value = 'Total number of Blocks in which intensive strategy implementation is in progress'
@@ -227,14 +227,14 @@ def excel_download(request):
     ws.merge_cells('DW1:EA1')
     
     for i in xrange(1,131,5):
-        c = ws.cell(row = 0, column = i)
+        c = ws.cell(row=0, column=i)
         c.style.alignment.wrap_text = True
         c.style.alignment.horizontal = Alignment.HORIZONTAL_CENTER
         c.style.alignment.vertical = Alignment.VERTICAL_CENTER
         c.style.borders.left.border_style = Border.BORDER_THIN
         c.style.borders.bottom.border_style = Border.BORDER_THIN
         for j in range(1,5):
-            c = ws.cell(row = 0, column = i+j)
+            c = ws.cell(row=0, column=i+j)
             c.style.borders.bottom.border_style = Border.BORDER_THIN
     c.style.borders.right.border_style = Border.BORDER_THIN        
     
@@ -259,7 +259,318 @@ def excel_download(request):
             else:
                 c.value = "Cummulative progress (since inception of NRLM)"
     c.style.borders.right.border_style = Border.BORDER_THIN
+    return wb, ws
+
+class MonthYear():
+    def __init__(self, month, year):
+        self.month = month
+        self.year = year
+        self.INDEX_TO_MONTH_MAP = {
+            1 : "Jan",
+            2: "Feb",
+            3 : "Mar",
+            4 : "Apr",
+            5 : "May",
+            6 : "Jun",
+            7 : "Jul",
+            8 : "Aug",
+            9 : "Sep",
+            10 : "Oct",
+            11 : "Nov",
+            12 : "Dec",
+        }
+        self.MONTH_TO_INDEX_MAP = {
+            "Jan" : 1,
+            "Feb" : 2,
+            "Mar" : 3,
+            "Apr" : 4,
+            "May" : 5,
+            "Jun" : 6,
+            "Jul" : 7,
+            "Aug" : 8,
+            "Sep" : 9,
+            "Oct" : 10,
+            "Nov" : 11,
+            "Dec" : 12
+        }
+        self.month_index = self.MONTH_TO_INDEX_MAP[self.month]
     
+    def get_financial_year(self):
+        if self.month_index not in [1,2,3]:
+            return self.year + 1
+        return self.year
+    
+    def is_financial_year_2013_14(self):
+        if self.year >= 2014 and self.month_index not in [1,2,3]:
+            return False
+        return True
+    
+    def get_previous_months(self):
+        previous_months = {}
+        if self.year == 2013:
+            if self.month_index > 8:
+                previous_months[2013] = self.get_month_range(9, self.month_index) 
+            else:
+                raise Exception
+        elif self.is_financial_year_2013_14():
+            previous_months[2013] = range(9,13)
+            if month_index > 1:
+                previous_months[2014] = self.get_month_range(1, self.month_index)
+        elif self.month_index in [4,5,6,7,8,9,10,11,12]:
+            previous_months[self.year] = self.get_month_range(4, self.month_index)
+        else:
+            previous_months[self.year-1] = self.get_month_range(4,13)
+            if month > 1:
+                previous_months[self.year] = self.get_month_range(1, self.month_index)
+        return previous_months
+    
+    def get_month_range(self, first_index, last_index):
+        return [self.INDEX_TO_MONTH_MAP[x] for x in range(first_index, last_index)]
+
+def excel_download(request):
+    query_month=request.GET.get('month','')
+    query_year=request.GET.get('year','')
+    query_month = query_month.encode('ascii','ignore')
+    query_year = int(query_year.encode('ascii','ignore'))
+    #TODO: Handle this on client side
+    if query_month in ['Jan','Feb','Apr','May','Jun','Jul','Aug'] and query_year == 2013 :
+        return HttpResponse("0")
+    
+    month_year = MonthYear(query_month, query_year)
+    
+    wb = Workbook()
+    ws = wb.get_active_sheet()
+    ws.title = "NRLP"
+    wb, ws = design_headings_excel(wb, ws)
+    
+    states = State.objects.all()
+    projects = Project.objects.all()
+    program = 'NRLP'
+    
+    ######### DELETE THIS ##############
+    handle1=open('file.txt','w+')
+    
+    state_results = {}
+    for state in states:
+        state_result = {}
+        
+        """Get current month's progress"""
+        try:
+            state_result['Progress'] = Progress.objects.get(state=state, project__project_name__iexact=program, year=month_year.year, month=month_year.month)
+        except Progress.DoesNotExist:
+            state_result['Progress'] = None
+        
+        """Get annual target's data"""
+        financial_year = month_year.get_financial_year()
+        try:
+            state_result['Target'] = Target.objects.get(state=state, project__project_name__iexact=program, year=financial_year)
+        except Target.DoesNotExist:
+            state_result['Target'] = None
+        
+        """Progress till March 2013 for calculating cumulative progress"""
+        try:
+            state_result['TillMar13'] = ProgressTill13.objects.get(state=state, project__project_name__iexact=program, year=2013, month='Mar')
+        except ProgressTill13.DoesNotExist:
+            state_result['TillMar13'] = None
+
+        "Progress till August 2013 for calculating cumulative progress"        
+        try:
+            state_result['TillAug13'] = ProgressTill13.objects.get(state=state, project__project_name__iexact=program, year=2013, month='Aug')
+        except ProgressTill13.DoesNotExist:
+            state_result['TillAug13'] = None
+  
+        #TODO: Add progress till last FY here  
+        
+        """Progress till last month"""        
+        previous_months = month_year.get_previous_months()
+        if previous_months == []:
+            state_result['PrevMonth_length'] = 0
+        else:
+            state_result['PrevMonth_length'] = len(previous_months)
+            num=1
+            for year, month_list in previous_months.iteritems():
+                state_result['PrevMonth'+str(num)] = Progress.objects.filter(state=state, project__project_name__iexact=program, year=year, month__in=month_list)
+                num = num + 1
+        
+        state_results[state.state_name] = state_result
+        
+    wb, ws = insert_data_excel(wb, ws, state_results, month_year)
+            
+    handle1.write(str(state_results))
+    handle1.close();
     response = HttpResponse(save_virtual_workbook(wb), content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename="Analytics.xlsx"'
     return response
+
+def insert_data_excel(wb, ws, state_results, month_year):
+    row_num = 2
+    target_column = 2
+    for state in state_results:
+        
+        #Populate States
+        wb, ws = populate_state_excel(wb, ws, row_num, state)
+        
+        #Populate Target
+        target = state_results[state]['Target']
+        wb, ws = populate_progess_target(wb, ws, row_num, 2, target, 0)
+
+        #Populate current progress
+        progress = state_results[state]['Progress']
+        wb, ws = populate_progess_target(wb, ws, row_num, 4, progress, 1)
+        
+        #Populate progress upto previous month
+        if month_year.is_financial_year_2013_14():
+            pass
+        if state_results[state]['PrevMonth_length'] == 0:
+            wb, ws = populate_progess_target(wb, ws, row_num, 3, None, 1)
+        elif state_results[state]['PrevMonth_length'] == 1:
+            last_month_progress = state_results[state]['PrevMonth1']
+            wb, ws = populate_progess_target(wb, ws, row_num, 3, last_month_progress, 1)
+        else:
+            last_month_progress1 = state_results[state]['PrevMonth1']
+            last_month_progress2 = state_results[state]['PrevMonth2']
+            if not last_month_progress1 and not last_month_progress2:
+                wb, ws = populate_progess_target(wb, ws, row_num, 3, None, 1)
+            else:
+                wb, ws = populate_progress_upto_previous_month_excel(wb, ws, row, col_start, last_month_progress1, last_month_progress2)
+            
+        
+        row_num = row_num + 1
+    return wb, ws
+
+def populate_progress_upto_previous_month_excel(wb, ws, row, col_start, pro1, pro2):
+    
+    
+    return wb, ws
+
+def populate_state_excel(wb, ws, row, state_name):
+    c = ws.cell(row=row, column=0)
+    c.value = state_name
+    return wb, ws
+
+def populate_progess_target(wb, ws, row, col_start, table, progress_true):
+    if table == None:
+        for i in range(col_start,132,5):
+            c = ws.cell(row=row, column=i)
+            c.value = 0
+        return wb, ws
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Two_1
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Two_2
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Two_3
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Three_1
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Three_2
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Three_1 + table.Three_2
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Three_4
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Three_5
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Three_6
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Three_7
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Three_8
+    col_start = col_start + 5
+    
+    if progress_true == 0:
+        c = ws.cell(row=row, column=col_start)
+        c.value = 0
+        col_start = col_start + 5
+    
+        c = ws.cell(row=row, column=col_start)
+        c.value = 0
+        col_start = col_start + 5
+    
+    else:
+        c = ws.cell(row=row, column=col_start)
+        c.value = table.Five_1
+        col_start = col_start + 5
+    
+        c = ws.cell(row=row, column=col_start)
+        c.value = table.Five_2
+        col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Five_5 + table.Five_6 + table.Five_7 + table.Five_8
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Five_10 + table.Five_11 + table.Five_12 + table.Five_13
+    col_start = col_start + 5
+    
+    if progress_true == 0:
+        c = ws.cell(row=row, column=col_start)
+        c.value = 0
+        col_start = col_start + 5
+    else:
+        c = ws.cell(row=row, column=col_start)
+        c.value = table.Six_1
+        col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Six_2
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Six_5 + table.Six_6 + table.Six_7 + table.Six_8
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Six_10 + table.Six_11 + table.Six_12 + table.Six_13
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Seven_1
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Seven_3
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Seven_5
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Seven_6
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Seven_7
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Seven_8
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = table.Seven_9
+    col_start = col_start + 5
+
+    return wb, ws
