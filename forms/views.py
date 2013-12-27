@@ -87,24 +87,12 @@ def record_full_download_time(request):
 
 def export_to_excel(request):
     return render(request,'excel.html')
-
-class CustomRowDimension(object):
-    """Information about the display properties of a row."""
-    __slots__ = ('row_index',
-                 'height',
-                 'visible',
-                 'outline_level',
-                 'collapsed',
-                 'style_index',)
-
-    def __init__(self, index=0):
-        self.row_index = index
-        self.height = 10
-        self.visible = True
-        self.outline_level = 0
-        self.collapsed = False
-        self.style_index = None
-
+    """if ERROR
+                put error = "sjhdsfs" in context dictionary
+                render excel.html with context to request
+            else
+                render excel to request"""
+    
 def design_headings_excel(wb,ws):
     
     #TODO: "Make headings of target", "progress upto last FY", and "progress upto previous month since" generic
@@ -305,6 +293,11 @@ class MonthYear():
             return False
         return True
     
+    def is_financial_year_2014_15(self):
+        if self.year >= 2015 and self.month_index not in [1,2,3]:
+            return False
+        return True
+        
     def get_previous_months(self):
         previous_months = {}
         if self.year == 2013:
@@ -324,6 +317,14 @@ class MonthYear():
                 previous_months[self.year] = self.get_month_range(1, self.month_index)
         return previous_months
     
+    def get_all_months(self):
+        return self.get_month_range(1,13)
+    
+    def get_previous_years(self):
+        year = self.get_financial_year() - 1
+        years = range(2014, year)
+        return years
+        
     def get_month_range(self, first_index, last_index):
         return [self.INDEX_TO_MONTH_MAP[x] for x in range(first_index, last_index)]
 
@@ -337,18 +338,19 @@ def excel_download(request):
         return HttpResponse("0")
     
     month_year = MonthYear(query_month, query_year)
+    program = 'NRLP'
     
     wb = Workbook()
     ws = wb.get_active_sheet()
-    ws.title = "NRLP"
-    wb, ws = design_headings_excel(wb, ws)
     
+    wb, ws = query_db(month_year, wb, ws, program)
+
+    response = HttpResponse(save_virtual_workbook(wb), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="Analytics.xlsx"'
+    return response
+
+def query_db(month_year, wb, ws, program):    
     states = State.objects.all()
-    projects = Project.objects.all()
-    program = 'NRLP'
-    
-    ######### DELETE THIS ##############
-    handle1=open('file.txt','w+')
     
     state_results = {}
     for state in states:
@@ -379,8 +381,17 @@ def excel_download(request):
         except ProgressTill13.DoesNotExist:
             state_result['TillAug13'] = None
   
-        #TODO: Add progress till last FY here  
-        
+        """Add progress till last FY here"""        
+        all_months = month_year.get_all_months();
+        prev_years = month_year.get_previous_years()
+        if not month_year.is_financial_year_2013_14():
+            state_result['LastFy1'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year=2013, month__in=['Sep', 'Oct', 'Nov', 'Dec'])
+            if month_year.is_financial_year_2014_15():
+                state_result['LastFy2'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year=2014, month__in=['Jan', 'Feb', 'Mar'])
+            else:
+                state_result['LastFy2'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year__in=prev_years, month__in=all_months)
+                state_result['LastFy3'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year__in=month_year.get_financial_year()-1, month__in=['Jan', 'Feb', 'Mar'])
+
         """Progress till last month"""        
         previous_months = month_year.get_previous_months()
         if previous_months == []:
@@ -393,16 +404,12 @@ def excel_download(request):
                 num = num + 1
         
         state_results[state.state_name] = state_result
-        
-    wb, ws = insert_data_excel(wb, ws, state_results, month_year)
-            
-    handle1.write(str(state_results))
-    handle1.close();
-    response = HttpResponse(save_virtual_workbook(wb), content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="Analytics.xlsx"'
-    return response
+    wb, ws = insert_data_excel(wb, ws, state_results, month_year, program)
+    return wb, ws
 
-def insert_data_excel(wb, ws, state_results, month_year):
+def insert_data_excel(wb, ws, state_results, month_year, program):
+    ws.title = program
+    wb, ws = design_headings_excel(wb, ws)
     row_num = 2
     target_column = 2
     for state in state_results:
@@ -420,26 +427,244 @@ def insert_data_excel(wb, ws, state_results, month_year):
         
         #Populate progress upto previous month
         if month_year.is_financial_year_2013_14():
-            pass
-        if state_results[state]['PrevMonth_length'] == 0:
-            wb, ws = populate_progess_target(wb, ws, row_num, 3, None, 1)
+            progress_till_aug13 = state_results[state]['TillAug13'] 
+            if month_year.month_index == 9:
+                wb, ws = populate_progess_target(wb, ws, row_num, 3, progress_till_aug13, 1)
+            elif state_results[state]['PrevMonth_length'] == 1:
+                last_month_progress = state_results[state]['PrevMonth1']
+                wb, ws = populate_multi_table_progress(wb, ws, row_num, 3, progress_till_aug13, last_month_progress, None, None)
+            else:
+                last_month_progress1 = state_results[state]['PrevMonth1']
+                last_month_progress2 = state_results[state]['PrevMonth2']
+                wb, ws = populate_multi_table_progress(wb, ws, row_num, 3, progress_till_aug13, last_month_progress1, last_month_progress2, None)
+        elif state_results[state]['PrevMonth_length'] == 0:
+            wb, ws = populate_multi_table_progress(wb, ws, row_num, 3, None, None, None, None)
         elif state_results[state]['PrevMonth_length'] == 1:
             last_month_progress = state_results[state]['PrevMonth1']
-            wb, ws = populate_progess_target(wb, ws, row_num, 3, last_month_progress, 1)
+            wb, ws = populate_multi_table_progress(wb, ws, row_num, 3, None, last_month_progress, None, None)
         else:
             last_month_progress1 = state_results[state]['PrevMonth1']
             last_month_progress2 = state_results[state]['PrevMonth2']
-            if not last_month_progress1 and not last_month_progress2:
-                wb, ws = populate_progess_target(wb, ws, row_num, 3, None, 1)
-            else:
-                wb, ws = populate_progress_upto_previous_month_excel(wb, ws, row, col_start, last_month_progress1, last_month_progress2)
+            wb, ws = populate_multi_table_progress(wb, ws, row_num, 3, None, last_month_progress1, last_month_progress2, None)
             
+        #Populate progress upto last FY
+        fy_progress_2013 = state_results[state]['TillMar13']
+        if month_year.is_financial_year_2013_14:
+            wb, ws = populate_progess_target(wb, ws, row_num, 1, fy_progress_2013, 1)
+        elif month_year.is_financial_year_2014_15:
+            lastfy1 = state_results[state]['LastFy1']
+            lastfy2 = state_results[state]['LastFy2']
+            wb, ws = populate_multi_table_progress(wb, ws, row_num, 1, fy_progress, lastfy1, lastfy2, None)
+        else:
+            lastfy1 = state_results[state]['LastFy1']
+            lastfy2 = state_results[state]['LastFy2']
+            lastfy3 = state_results[state]['LastFy3']
+            wb, ws = populate_multi_table_progress(wb, ws, row_num, 1, fy_progress, lastfy1, lastfy2, lastfy3)
         
+        wb, ws = populate_cummulative(wb, ws, row_num, 5)
         row_num = row_num + 1
     return wb, ws
 
-def populate_progress_upto_previous_month_excel(wb, ws, row, col_start, pro1, pro2):
+def populate_cummulative(wb, ws, row, col_start):
+    for i in range(col_start,132,5):
+            c = ws.cell(row=row, column=i)
+            c.value = ws.cell(row=row, column=i-4).value + ws.cell(row=row, column=i-2).value + ws.cell(row=row, column=i-1).value
+    return wb, ws
     
+def populate_multi_table_progress(wb, ws, row, col_start, non_iterable_object1, table2, table3, table4):
+    if not non_iterable_object1 and not table2 and not table3 and not table4:
+        for i in range(col_start,132,5):
+            c = ws.cell(row=row, column=i)
+            c.value = 0
+        return wb, ws
+    Two_1 = 0
+    Two_2 = 0
+    Two_3 = 0
+    Three_1 = 0 
+    Three_2 = 0
+    Three_3 = 0
+    Three_4 = 0
+    Three_5 = 0
+    Three_6 = 0
+    Three_7 = 0
+    Three_8 = 0
+    Five_1 = 0
+    Five_2 = 0
+    Five_3 = 0
+    Five_4 = 0
+    Six_1 = 0
+    Six_2 = 0
+    Six_3 = 0
+    Six_4 = 0
+    Seven_1 = 0
+    Seven_3 = 0
+    Seven_5 = 0
+    Seven_6 = 0
+    Seven_7 = 0
+    Seven_8 = 0
+    Seven_9 = 0
+
+    if non_iterable_object1:
+        Two_1 += non_iterable_object1.Two_1
+        Two_2 += non_iterable_object1.Two_2
+        Two_3 += non_iterable_object1.Two_3
+        Three_1 += non_iterable_object1.Three_1
+        Three_2 += non_iterable_object1.Three_2
+        Three_3 += Three_1 + Three_2
+        Three_4 += non_iterable_object1.Three_4
+        Three_5 += non_iterable_object1.Three_5
+        Three_6 += non_iterable_object1.Three_6
+        Three_7 += non_iterable_object1.Three_7
+        Three_8 += non_iterable_object1.Three_8
+        Five_1 += non_iterable_object1.Five_1
+        Five_2 += non_iterable_object1.Five_2
+        Five_3 += non_iterable_object1.Five_5 + non_iterable_object1.Five_6 + non_iterable_object1.Five_7 + non_iterable_object1.Five_8
+        Five_4 += non_iterable_object1.Five_10 + non_iterable_object1.Five_11 + non_iterable_object1.Five_12 + non_iterable_object1.Five_13
+        Six_1 += non_iterable_object1.Six_1
+        Six_2 += non_iterable_object1.Six_2
+        Six_3 += non_iterable_object1.Six_5 + non_iterable_object1.Six_6 + non_iterable_object1.Six_7 + non_iterable_object1.Six_8
+        Six_4 += non_iterable_object1.Six_10 + non_iterable_object1.Six_11 + non_iterable_object1.Six_12 + non_iterable_object1.Six_13
+        Seven_1 += non_iterable_object1.Seven_1
+        Seven_3 += non_iterable_object1.Seven_3
+        Seven_5 += non_iterable_object1.Seven_5
+        Seven_6 += non_iterable_object1.Seven_6
+        Seven_7 += non_iterable_object1.Seven_7
+        Seven_8 += non_iterable_object1.Seven_8
+        Seven_9 += non_iterable_object1.Seven_9
+
+    for table in [table2,table3,table4]:
+        if table:
+            for i in table:
+                Two_1 += i.Two_1
+                Two_2 += i.Two_2
+                Two_3 += i.Two_3
+                Three_1 += i.Three_1
+                Three_2 += i.Three_2
+                Three_3 += Three_1 + Three_2
+                Three_4 += i.Three_4
+                Three_5 += i.Three_5
+                Three_6 += i.Three_6
+                Three_7 += i.Three_7
+                Three_8 += i.Three_8
+                Five_1 += i.Five_1
+                Five_2 += i.Five_2
+                Five_3 += i.Five_5 + i.Five_6 + i.Five_7 + i.Five_8
+                Five_4 += i.Five_10 + i.Five_11 + i.Five_12 + i.Five_13
+                Six_1 += i.Six_1
+                Six_2 += i.Six_2
+                Six_3 += i.Six_5 + i.Six_6 + i.Six_7 + i.Six_8
+                Six_4 += i.Six_10 + i.Six_11 + i.Six_12 + i.Six_13
+                Seven_1 += i.Seven_1
+                Seven_3 += i.Seven_3
+                Seven_5 += i.Seven_5
+                Seven_6 += i.Seven_6
+                Seven_7 += i.Seven_7
+                Seven_8 += i.Seven_8
+                Seven_9 += i.Seven_9
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Two_1
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Two_2
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Two_3
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Three_1
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Three_2
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Three_1 + Three_2
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Three_4
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Three_5
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Three_6
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Three_7
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Three_8
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Five_1
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = Five_2
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Five_3
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Five_4
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Six_1
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = Six_2
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Six_3
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Six_4
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Seven_1
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Seven_3
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = Seven_5
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = Seven_6
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = Seven_7
+    col_start = col_start + 5
+    
+    c = ws.cell(row=row, column=col_start)
+    c.value = Seven_8
+    col_start = col_start + 5
+
+    c = ws.cell(row=row, column=col_start)
+    c.value = Seven_9
+    col_start = col_start + 5
     
     return wb, ws
 
