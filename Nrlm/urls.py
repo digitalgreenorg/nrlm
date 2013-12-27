@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from forms.api import StateResource, ProjectResource, ProgressResource, TargetResource, HrDetailsResource, FinancialAssistanceResource, ProgressTill13Resource #,HrUnitResource, CategoryResource,  
-from forms.views import login, logout, debug, coco_v2, reset_database_check, record_full_download_time
+from forms.views import excel_download, export_to_excel, login, logout, debug, coco_v2, reset_database_check, record_full_download_time
 from tastypie.api import Api
 from forms.data_log import send_updated_log
 from django.views.generic.simple import direct_to_template
@@ -39,5 +39,6 @@ urlpatterns = patterns('',
     (r'^forms/$', coco_v2),
     url(r'^forms/faq/$', direct_to_template, {'template': 'faq.html'}, name="faq"),
     (r'^get_log/?$', send_updated_log),
-    
+    (r'^export/$', export_to_excel),
+    (r'^download_excel/$', excel_download),
 )
