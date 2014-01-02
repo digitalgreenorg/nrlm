@@ -83,20 +83,20 @@ def record_full_download_time(request):
     return HttpResponse("1") 
 
 def export_to_excel(request):
-    return render(request,'excel.html')
-    """if ERROR
-                put error = "sjhdsfs" in context dictionary
-                render excel.html with context to request
-            else
-                render excel to request"""
-                
-def excel_download(request):
-    query_month=request.GET.get('month','')
-    query_year=request.GET.get('year','')
-    #TODO: Handle this on client side
-    if query_month in ['Jan','Feb','Apr','May','Jun','Jul','Aug'] and query_year == 2013 :
-        return HttpResponse("0")
-    wb = get_project_excel_sheet(query_month, query_year)
-    response = HttpResponse(save_virtual_workbook(wb), content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="Analytics.xlsx"'
-    return response
+    if request.method == 'GET':
+        return render(request,'excel.html')
+    elif request.method == 'POST':
+        query_month = request.POST.get('month','')
+        query_year = request.POST.get('year','')
+        
+        #TODO: Handle this on client side
+        if query_month in ['Jan','Feb','Apr','May','Jun','Jul','Aug'] and query_year == 2013 :
+            return render(request,'excel.html')
+        
+        wb = get_project_excel_sheet(query_month, query_year)
+        
+        response = HttpResponse(save_virtual_workbook(wb), content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="Analytics.xlsx"'
+        return response
+    else:
+        return render(request,'excel.html')
