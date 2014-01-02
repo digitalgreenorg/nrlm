@@ -5,42 +5,84 @@
 		<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 		<TITLE>Dashboard</TITLE>
 		<LINK REL="stylesheet" HREF="/media/coco/app/scripts/libs/bootstrap/css/bootstrap.css">
-		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 		<script type="text/javascript">
-		(function($,W,D)
-				{
-				    var JQUERY4U = {};
+		$(document).ready(function () {
+			$("#export-to-excel-form").validate({
+				rules: {
+                	month: {
+                		month_select_check : true,
+                		required: true,
+                		
+                	},
+                	year: {
+                		datecheck : {month : "month-list"},
+                		exception : {month : "month-list"}
+                	},
+				},
+			   	highlight: function(element) {
+			        $(element).parent().addClass("error");
+			    },
+			    unhighlight: function(element) {
+			        $(element).parent().removeClass("error");
+			    },
 
-				    JQUERY4U.UTIL =
-				    {
-				        setupFormValidation: function()
-				        {
-				            //form validation rules
-				            $("#export-to-excel-form").validate({
-				                rules: {
-				                    month: "required",
-				                    year: "required",
-				                    
-				                },
-				                messages: {
-				                    month: "Please select Month",
-				                    year: "Please select Year",
-				                },
-				                submitHandler: function(form) {
-				                    form.submit();
-				                }
-				            });
-				        }
-				    }
-
-				    //when the dom has loaded setup form validation rules
-				    $(D).ready(function($) {
-				        JQUERY4U.UTIL.setupFormValidation();
-				    });
-
-				})(jQuery, window, document);
-
+			});
+			jQuery.validator.addMethod('month_select_check', function (value) {
+		        return (value != '0')
+		    }, "Please select month");
+			jQuery.validator.addMethod('datecheck', function (value, element, options) {
+				var check = false;
+		    	var mon = $('#'+options.month).val();
+		    	var year = value;
+		    	var mapping = { Jan : 1 , Feb : 2, Mar : 3, Apr : 4, May : 5, Jun : 6, Jul : 7, Aug : 8, Sep : 9, Oct : 10, Nov : 11, Dec : 12 };
+		    	var month = mapping[mon];
+		    	var entry_date = new Date(year,month,1);
+		    	var myDate = new Date();
+		    	if (myDate > entry_date)
+		    	  {
+		    	  	check = true;
+		    	  }
+		    	else
+		    	  {
+		    	  	check = false;
+		    	  }
+		    	return check;
+		    }, "Data not available for selected month and year");
+			jQuery.validator.addMethod('exception', function (value, element, options) {
+				var check = true;
+		    	var mon = $('#'+options.month).val();
+		    	var year = value;
+		    	var mapping = { Jan : 1 , Feb : 2, Mar : 3, Apr : 4, May : 5, Jun : 6, Jul : 7, Aug : 8, Sep : 9, Oct : 10, Nov : 11, Dec : 12 };
+		    	var month = mapping[mon];
+		    	if (year == "2013")
+		    		{
+		    			if(month < 9 ){
+		    				check = false
+		    			}
+		    		}
+		    	return check;
+			}, "Data not available for selected month and year");
+			$('#export-to-excel-form').on('change', function () {
+		        $(this).valid();
+		    });
+		});
+		</script>
+		<script type="text/javascript">
+			window.onload = function(){
+				var sel = document.getElementById('year-list');
+				var date = new Date(); // 2012-03-31
+				date.setMonth(date.getMonth() - 1);
+				top_year = date.getFullYear();
+				bottom_year = 2013;			
+				for(var year = top_year; year >= bottom_year; year--) {
+					var opt = document.createElement('option');
+					opt.innerHTML = year;
+				    opt.value = year;
+				    sel.appendChild(opt);
+				};
+			};
 		</script>
 	</HEAD>
 	<BODY>
@@ -53,20 +95,23 @@
 						Please select Month
 					</label>
 					<div class="controls">
-		         		<select name="month" class="" id="month">
-<!--  							<option value="Jan">Jan</option>
+		         		<select name="month" class="" id="month-list">
+		         			<option value="0">Month</option>
+  							<option value="Jan">Jan</option>
 							<option value="Feb">Feb</option>
 							<option value="Mar">Mar</option>
 							<option value="Apr">Apr</option>
 							<option value="May">May</option>
 							<option value="Jun">Jun</option>
 							<option value="Jul">Jul</option>
-							<option value="Aug">Aug</option> -->
+							<option value="Aug">Aug</option>
 							<option value="Sep">Sep</option>
 							<option value="Oct">Oct</option>
 							<option value="Nov">Nov</option>
 							<option value="Dec">Dec</option>
 						</select>
+						<br/>
+						<!-- label for="month" class="error"></label-->
 		         	</div>
 		        </div>
 		        <div class="control-group">
@@ -74,10 +119,13 @@
 						Please select Year
 					</label>
 					<div class="controls">
-		         		<select name="year" class="" id="year">
-							<option value="2013">2013</option>
+		         		<select name="year" class="" id="year-list">
+						
 						</select>
 		         	</div>
+		         	<div class="controls" id="error-month-year">
+		        
+		        	</div>
 		        </div>
 		        <div class="control-group">
 					<div class="controls">
