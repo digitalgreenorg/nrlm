@@ -46,8 +46,8 @@
 	<BODY>
 		<div>
 			<legend>Export data to Excel</legend>
-			<form class="form-horizontal" id="export-to-excel-form" action="/download_excel" method="get" novalidate="novalidate">
-				
+			<form class="form-horizontal" id="export-to-excel-form" action="." method="post">
+				{% csrf_token %}
 				<div class="control-group">
 					<label class="control-label">
 						Please select Month
@@ -65,6 +65,7 @@
 							<option value="Sep">Sep</option>
 							<option value="Oct">Oct</option>
 							<option value="Nov">Nov</option>
+							<option value="Dec">Dec</option>
 						</select>
 		         	</div>
 		        </div>
