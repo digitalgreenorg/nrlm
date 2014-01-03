@@ -159,7 +159,7 @@ def query_db(month_year, wb, ws, program):
 
 def insert_data_excel(wb, ws, state_results, month_year, program):
     ws.title = program
-    wb, ws = design_headings_excel(wb, ws)
+    wb, ws = design_headings_excel(wb, ws, month_year)
     row_num = 2
     target_column = 2
     for state in state_results:
@@ -550,10 +550,16 @@ def populate_progess_target(wb, ws, row, col_start, table, progress_true):
 
     return wb, ws
 
-def design_headings_excel(wb,ws):
+def design_headings_excel(wb, ws, month_year):
     
     #TODO: "Make headings of target", "progress upto last FY", and "progress upto previous month since" generic
-
+    year = month_year.get_financial_year()
+    upto_lastfy_heading = "Progress upto Mar'" + str(year - 1)[2:]
+    target_heading = "Annual Target \nFY " + str(year - 1) + "-" + str(year)[2:]
+    upto_prev_month_heading = "Progress upto previous month since Apr'" + str(year - 1)[2:]
+    reporting_month_heading = "Progress during the Reporting Month"
+    cumulative_heading = "Cummulative progress (since inception of NRLM)"
+    
     c = ws.cell('A1')
     c.value = 'State'
     ws.merge_cells('A1:A2')
@@ -694,14 +700,14 @@ def design_headings_excel(wb,ws):
             c.style.borders.top.border_style = Border.BORDER_THIN
             c.style.font.size = 8
             if j == 0:
-                c.value = "Progress upto Mar'13"
+                c.value = upto_lastfy_heading
             elif j == 1:
-                c.value = "Annual Target \nFY 2013-14"
+                c.value = target_heading
             elif j == 2:
-                c.value = "Progress upto previous month since Apr'13"
+                c.value = upto_prev_month_heading
             elif j == 3:
-                c.value = "Progress during the Reporting Month"
+                c.value = reporting_month_heading
             else:
-                c.value = "Cummulative progress (since inception of NRLM)"
+                c.value = cumulative_heading
     c.style.borders.right.border_style = Border.BORDER_THIN
     return wb, ws
