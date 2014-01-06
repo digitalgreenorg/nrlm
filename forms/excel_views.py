@@ -1,3 +1,4 @@
+from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.style import Alignment, Border, Color, NumberFormat
 from openpyxl.worksheet import RowDimension
@@ -9,7 +10,7 @@ class MonthYear():
         self.year = year
         self.INDEX_TO_MONTH_MAP = {
             1 : "Jan",
-            2: "Feb",
+            2 : "Feb",
             3 : "Mar",
             4 : "Apr",
             5 : "May",
@@ -36,6 +37,18 @@ class MonthYear():
             "Dec" : 12
         }
         self.month_index = self.MONTH_TO_INDEX_MAP[self.month]
+    
+    def validate_date(self):
+        exception_months_2013 = ['Sep', 'Oct', 'Nov', 'Dec']
+        now = datetime.now()
+        #Check if date is less than Sep 2013
+        if self.year == 2013 and self.month_index < 9:
+            return False
+        #Check if given month and date is greater than current month and date
+        elif self.year > now.year or (self.year == now.year and self.month_index >= now.month):
+            return False
+        else:
+            return True            
     
     def get_financial_year(self):
         if self.month_index not in [1,2,3]:
@@ -82,10 +95,7 @@ class MonthYear():
     def get_month_range(self, first_index, last_index):
         return [self.INDEX_TO_MONTH_MAP[x] for x in range(first_index, last_index)]
 
-def get_project_excel_sheet(query_month, query_year):
-    query_month = query_month.encode('ascii','ignore')
-    query_year = int(query_year.encode('ascii','ignore'))
-    month_year = MonthYear(query_month, query_year)
+def get_project_excel_sheet(month_year):
     program = 'NRLP'
     wb = Workbook()
     

@@ -1,11 +1,11 @@
 # Create your views here.
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.core import urlresolvers
 from django.http import HttpResponse
 from django.shortcuts import render
 from datetime import datetime
 from models import CocoUser, FullDownloadStats
-from excel_views import get_project_excel_sheet
+from excel_views import get_project_excel_sheet, MonthYear
 from openpyxl.writer.excel import save_virtual_workbook
 
 def login(request):
@@ -84,10 +84,15 @@ def record_full_download_time(request):
 
 def export_to_excel(request):
     if request.method == 'POST':
-        query_month = request.POST.get('month','')
-        query_year = request.POST.get('year','')
+        query_month = request.POST.get('month','').encode('ascii','ignore') 
+        query_year = int(request.POST.get('year','').encode('ascii','ignore'))
+        month_year = MonthYear(query_month, query_year)
         
-        wb = get_project_excel_sheet(query_month, query_year)
+        if month_year.validate_date() == False:
+            messages.error(request, 'Data not available for selected month and year')
+            return render(request,'excel.html')
+        
+        wb = get_project_excel_sheet(month_year)
         response = HttpResponse(save_virtual_workbook(wb), content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="Analytics.xlsx"'
         return response

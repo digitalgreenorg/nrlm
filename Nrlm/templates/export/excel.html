@@ -15,7 +15,6 @@
                 	month: {
                 		month_select_check : true,
                 		required: true,
-                		
                 	},
                 	year: {
                 		datecheck : {month : "month-list"},
@@ -28,7 +27,6 @@
 			    unhighlight: function(element) {
 			        $(element).parent().removeClass("error");
 			    },
-
 			});
 			jQuery.validator.addMethod('month_select_check', function (value) {
 		        return (value != '0')
@@ -87,6 +85,15 @@
 		</script>
 	</HEAD>
 	<BODY>
+		<div>
+			{% if messages %}
+				<ul class="messages">
+				    {% for message in messages %}
+				    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+				    {% endfor %}
+				</ul>
+			{% endif %}
+		</div>
 		<div>
 			<legend>Export data to Excel</legend>
 			<form class="form-horizontal" id="export-to-excel-form" action="." method="post">
