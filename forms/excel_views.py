@@ -96,17 +96,19 @@ class MonthYear():
         return [self.INDEX_TO_MONTH_MAP[x] for x in range(first_index, last_index)]
 
 def get_project_excel_sheet(month_year):
-    program = 'NRLP'
     wb = Workbook()
     
     #Delete default sheet
     sh = wb.get_sheet_by_name('Sheet')
     wb.remove_sheet(sh)
     
-    """Next 3 lines can be put up in for loop if there are multiple programs"""
-    ws = wb.create_sheet(0)
-    state_results = query_db(month_year, wb, ws, program)
-    wb, ws = insert_data_excel(wb, ws, state_results, month_year, program)
+    programs = Project.objects.all()
+    count = 0
+    for program in programs:
+        ws = wb.create_sheet(count)
+        state_results = query_db(month_year, wb, ws, program.project_name)
+        wb, ws = insert_data_excel(wb, ws, state_results, month_year, program.project_name)
+        count = count + 1
     
     return wb
 
