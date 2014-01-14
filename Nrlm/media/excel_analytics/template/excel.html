@@ -1,14 +1,15 @@
 <!DOCTYPE HTML>
-<!-- manifest="/media/coco/cocooffline.appcache" -->
 <HTML XML:LANG="en-us" XMLNS="http://www.w3.org/1999/xhtml" LANG="en-us">
 	<HEAD>
 		<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
-		<TITLE>Dashboard</TITLE>
+		<TITLE>Analytics Tool</TITLE>
 		<LINK REL="stylesheet" HREF="/media/coco/app/scripts/libs/bootstrap/css/bootstrap.css">
 		<LINK REL="stylesheet" HREF="/media/excel_analytics/css/nrlm-export.css">
 		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 		<script type="text/javascript">
+		
+		//Validations for form
 		$(document).ready(function () {
 			$("#export-to-excel-form").validate({
 				rules: {
@@ -17,7 +18,10 @@
                 		required: true,
                 	},
                 	year: {
+                		//datecheck checks if month-year is greater than or equal to current month, in which case error should be displayed
                 		datecheck : {month : "month-list"},
+                		// month-list is the id of month select-box
+                		//Excetion checks if month-year combination results into few months of 2013 for which we don't have any data.
                 		exception : {month : "month-list"}
                 	},
 				},
@@ -55,10 +59,11 @@
 		    	var year = value;
 		    	var mapping = { Jan : 1 , Feb : 2, Mar : 3, Apr : 4, May : 5, Jun : 6, Jul : 7, Aug : 8, Sep : 9, Oct : 10, Nov : 11, Dec : 12 };
 		    	var month = mapping[mon];
+		    	//Special case for 2013, Data not available till August 2013
 		    	if (year == "2013")
 		    		{
 		    			if(month < 9 ){
-		    				check = false
+		    				check = false;
 		    			}
 		    		}
 		    	return check;
@@ -67,21 +72,21 @@
 		        $(this).valid();
 		    });
 		});
-		</script>
-		<script type="text/javascript">
-			window.onload = function(){
-				var sel = document.getElementById('year-list');
-				var date = new Date(); // 2012-03-31
-				date.setMonth(date.getMonth() - 1);
-				top_year = date.getFullYear();
-				bottom_year = 2013;			
-				for(var year = top_year; year >= bottom_year; year--) {
-					var opt = document.createElement('option');
-					opt.innerHTML = year;
-				    opt.value = year;
-				    sel.appendChild(opt);
-				};
+		
+		// Populate the dropdown box of year according to current year. 		
+		window.onload = function(){
+			var sel = document.getElementById('year-list');
+			var date = new Date();
+			date.setMonth(date.getMonth() - 1);
+			top_year = date.getFullYear();
+			bottom_year = 2013;			
+			for(var year = top_year; year >= bottom_year; year--) {
+				var opt = document.createElement('option');
+				opt.innerHTML = year;
+			    opt.value = year;
+			    sel.appendChild(opt);
 			};
+		};
 		</script>
 	</HEAD>
 	<BODY>
@@ -119,7 +124,6 @@
 							<option value="Dec">Dec</option>
 						</select>
 						<br/>
-						<!-- label for="month" class="error"></label-->
 		         	</div>
 		        </div>
 		        <div class="control-group">

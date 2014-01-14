@@ -693,6 +693,7 @@ def design_headings_excel(wb, ws, month_year):
     c.value = 'Amount of CIF provided to CLFs (in Rs.Lakhs)'
     ws.merge_cells('DW1:EA1')
     
+    """131 is the total number of columns in the sheet"""
     for i in xrange(1,131,5):
         c = ws.cell(row=0, column=i)
         c.style.alignment.wrap_text = True
@@ -700,6 +701,7 @@ def design_headings_excel(wb, ws, month_year):
         c.style.alignment.vertical = Alignment.VERTICAL_CENTER
         c.style.borders.left.border_style = Border.BORDER_THIN
         c.style.borders.bottom.border_style = Border.BORDER_THIN
+        """We want to merge 5 cells."""
         for j in range(1,5):
             c = ws.cell(row=0, column=i+j)
             c.style.borders.bottom.border_style = Border.BORDER_THIN
