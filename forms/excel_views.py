@@ -1,3 +1,4 @@
+from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.style import Alignment, Border, Color, NumberFormat
 from openpyxl.worksheet import RowDimension
@@ -9,7 +10,7 @@ class MonthYear():
         self.year = year
         self.INDEX_TO_MONTH_MAP = {
             1 : "Jan",
-            2: "Feb",
+            2 : "Feb",
             3 : "Mar",
             4 : "Apr",
             5 : "May",
@@ -37,20 +38,36 @@ class MonthYear():
         }
         self.month_index = self.MONTH_TO_INDEX_MAP[self.month]
     
+    def validate_date(self):
+        exception_months_2013 = ['Sep', 'Oct', 'Nov', 'Dec']
+        now = datetime.now()
+        #Check if date is less than Sep 2013
+        if self.year == 2013 and self.month_index < 9:
+            return False
+        #Check if given month and date is greater than current month and date
+        elif self.year > now.year or (self.year == now.year and self.month_index >= now.month):
+            return False
+        else:
+            return True            
+    
     def get_financial_year(self):
         if self.month_index not in [1,2,3]:
             return self.year + 1
         return self.year
     
     def is_financial_year_2013_14(self):
-        if self.year >= 2014 and self.month_index not in [1,2,3]:
-            return False
-        return True
+        if self.year == 2013 and self.month_index not in [1,2,3]:
+            return True
+        elif self.year == 2014 and self.month_index in [1,2,3]:
+            return True 
+        return False
     
     def is_financial_year_2014_15(self):
-        if self.year >= 2015 and self.month_index not in [1,2,3]:
-            return False
-        return True
+        if self.year == 2014 and self.month_index not in [1,2,3]:
+            return True
+        elif self.year == 2015 and self.month_index in [1,2,3]:
+            return True 
+        return False
         
     def get_previous_months(self):
         previous_months = {}
@@ -61,13 +78,13 @@ class MonthYear():
                 raise Exception
         elif self.is_financial_year_2013_14():
             previous_months[2013] = range(9,13)
-            if month_index > 1:
+            if self.month_index > 1:
                 previous_months[2014] = self.get_month_range(1, self.month_index)
         elif self.month_index in [4,5,6,7,8,9,10,11,12]:
             previous_months[self.year] = self.get_month_range(4, self.month_index)
         else:
             previous_months[self.year-1] = self.get_month_range(4,13)
-            if month > 1:
+            if self.month_index > 1:
                 previous_months[self.year] = self.get_month_range(1, self.month_index)
         return previous_months
     
@@ -82,21 +99,20 @@ class MonthYear():
     def get_month_range(self, first_index, last_index):
         return [self.INDEX_TO_MONTH_MAP[x] for x in range(first_index, last_index)]
 
-def get_project_excel_sheet(query_month, query_year):
-    query_month = query_month.encode('ascii','ignore')
-    query_year = int(query_year.encode('ascii','ignore'))
-    month_year = MonthYear(query_month, query_year)
-    program = 'NRLP'
+def get_project_excel_sheet(month_year):
     wb = Workbook()
     
     #Delete default sheet
     sh = wb.get_sheet_by_name('Sheet')
     wb.remove_sheet(sh)
     
-    """Next 3 lines can be put up in for loop if there are multiple programs"""
-    ws = wb.create_sheet(0)
-    state_results = query_db(month_year, wb, ws, program)
-    wb, ws = insert_data_excel(wb, ws, state_results, month_year, program)
+    programs = Project.objects.all()
+    count = 0
+    for program in programs:
+        ws = wb.create_sheet(count)
+        state_results = query_db(month_year, wb, ws, program.project_name)
+        wb, ws = insert_data_excel(wb, ws, state_results, month_year, program.project_name)
+        count = count + 1
     
     return wb
 
@@ -141,7 +157,7 @@ def query_db(month_year, wb, ws, program):
                 state_result['LastFy2'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year=2014, month__in=['Jan', 'Feb', 'Mar'])
             else:
                 state_result['LastFy2'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year__in=prev_years, month__in=all_months)
-                state_result['LastFy3'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year__in=month_year.get_financial_year()-1, month__in=['Jan', 'Feb', 'Mar'])
+                state_result['LastFy3'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year=month_year.get_financial_year()-1, month__in=['Jan', 'Feb', 'Mar'])
 
         """Progress till last month"""        
         previous_months = month_year.get_previous_months()
@@ -159,7 +175,7 @@ def query_db(month_year, wb, ws, program):
 
 def insert_data_excel(wb, ws, state_results, month_year, program):
     ws.title = program
-    wb, ws = design_headings_excel(wb, ws)
+    wb, ws = design_headings_excel(wb, ws, month_year)
     row_num = 2
     target_column = 2
     for state in state_results:
@@ -550,10 +566,16 @@ def populate_progess_target(wb, ws, row, col_start, table, progress_true):
 
     return wb, ws
 
-def design_headings_excel(wb,ws):
+def design_headings_excel(wb, ws, month_year):
     
     #TODO: "Make headings of target", "progress upto last FY", and "progress upto previous month since" generic
-
+    year = month_year.get_financial_year()
+    upto_lastfy_heading = "Progress upto Mar'" + str(year - 1)[2:]
+    target_heading = "Annual Target \nFY " + str(year - 1) + "-" + str(year)[2:]
+    upto_prev_month_heading = "Progress upto previous month since Apr'" + str(year - 1)[2:]
+    reporting_month_heading = "Progress during the Reporting Month"
+    cumulative_heading = "Cummulative progress (since inception of NRLM)"
+    
     c = ws.cell('A1')
     c.value = 'State'
     ws.merge_cells('A1:A2')
@@ -671,6 +693,7 @@ def design_headings_excel(wb,ws):
     c.value = 'Amount of CIF provided to CLFs (in Rs.Lakhs)'
     ws.merge_cells('DW1:EA1')
     
+    """131 is the total number of columns in the sheet"""
     for i in xrange(1,131,5):
         c = ws.cell(row=0, column=i)
         c.style.alignment.wrap_text = True
@@ -678,6 +701,7 @@ def design_headings_excel(wb,ws):
         c.style.alignment.vertical = Alignment.VERTICAL_CENTER
         c.style.borders.left.border_style = Border.BORDER_THIN
         c.style.borders.bottom.border_style = Border.BORDER_THIN
+        """We want to merge 5 cells."""
         for j in range(1,5):
             c = ws.cell(row=0, column=i+j)
             c.style.borders.bottom.border_style = Border.BORDER_THIN
@@ -694,14 +718,14 @@ def design_headings_excel(wb,ws):
             c.style.borders.top.border_style = Border.BORDER_THIN
             c.style.font.size = 8
             if j == 0:
-                c.value = "Progress upto Mar'13"
+                c.value = upto_lastfy_heading
             elif j == 1:
-                c.value = "Annual Target \nFY 2013-14"
+                c.value = target_heading
             elif j == 2:
-                c.value = "Progress upto previous month since Apr'13"
+                c.value = upto_prev_month_heading
             elif j == 3:
-                c.value = "Progress during the Reporting Month"
+                c.value = reporting_month_heading
             else:
-                c.value = "Cummulative progress (since inception of NRLM)"
+                c.value = cumulative_heading
     c.style.borders.right.border_style = Border.BORDER_THIN
     return wb, ws
