@@ -56,14 +56,18 @@ class MonthYear():
         return self.year
     
     def is_financial_year_2013_14(self):
-        if self.year >= 2014 and self.month_index not in [1,2,3]:
-            return False
-        return True
+        if self.year == 2013 and self.month_index not in [1,2,3]:
+            return True
+        elif self.year == 2014 and self.month_index in [1,2,3]:
+            return True 
+        return False
     
     def is_financial_year_2014_15(self):
-        if self.year >= 2015 and self.month_index not in [1,2,3]:
-            return False
-        return True
+        if self.year == 2014 and self.month_index not in [1,2,3]:
+            return True
+        elif self.year == 2015 and self.month_index in [1,2,3]:
+            return True 
+        return False
         
     def get_previous_months(self):
         previous_months = {}
@@ -74,13 +78,13 @@ class MonthYear():
                 raise Exception
         elif self.is_financial_year_2013_14():
             previous_months[2013] = range(9,13)
-            if month_index > 1:
+            if self.month_index > 1:
                 previous_months[2014] = self.get_month_range(1, self.month_index)
         elif self.month_index in [4,5,6,7,8,9,10,11,12]:
             previous_months[self.year] = self.get_month_range(4, self.month_index)
         else:
             previous_months[self.year-1] = self.get_month_range(4,13)
-            if month > 1:
+            if self.month_index > 1:
                 previous_months[self.year] = self.get_month_range(1, self.month_index)
         return previous_months
     
@@ -153,7 +157,7 @@ def query_db(month_year, wb, ws, program):
                 state_result['LastFy2'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year=2014, month__in=['Jan', 'Feb', 'Mar'])
             else:
                 state_result['LastFy2'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year__in=prev_years, month__in=all_months)
-                state_result['LastFy3'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year__in=month_year.get_financial_year()-1, month__in=['Jan', 'Feb', 'Mar'])
+                state_result['LastFy3'] = Progress.objects.filter(state=state, project__project_name__iexact=program, year=month_year.get_financial_year()-1, month__in=['Jan', 'Feb', 'Mar'])
 
         """Progress till last month"""        
         previous_months = month_year.get_previous_months()
