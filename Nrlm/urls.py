@@ -3,7 +3,7 @@ from forms.api import StateResource, ProjectResource, ProgressResource, TargetRe
 from forms.views import export_to_excel, login, logout, debug, coco_v2, reset_database_check, record_full_download_time
 from tastypie.api import Api
 from forms.data_log import send_updated_log
-from django.views.generic.simple import direct_to_template
+from django.views.generic import TemplateView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -37,7 +37,7 @@ urlpatterns = patterns('',
     (r'^forms/debug/', debug),
 #    (r'^get_log/', send_updated_log),
     (r'^forms/$', coco_v2),
-    url(r'^forms/faq/$', direct_to_template, {'template': 'faq.html'}, name="faq"),
+    url(r'^forms/faq/$', TemplateView.as_view(template_name='faq.html'), name="faq"),
     (r'^get_log/?$', send_updated_log),
     (r'^export/$', export_to_excel),
 )
